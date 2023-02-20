@@ -1,13 +1,15 @@
 package org.jeecg.modules.business.entity;
 
-public class DataInputTemplate {
+public class DataLoginTemplate {
     String  graphType;
-    Integer subSamplesNum;
+
     Integer subgroupTotal;
-    Integer fixedSubgroupCapacity;
+
+    Integer subgroupCapacity;
+
     Double LSL;
+
     Double USL;
-    Double SL;
 
     public String getGraphType() {
         return graphType;
@@ -15,14 +17,6 @@ public class DataInputTemplate {
 
     public void setGraphType(String graphType) {
         this.graphType = graphType;
-    }
-
-    public Integer getSubSamplesNum() {
-        return subSamplesNum;
-    }
-
-    public void setSubSamplesNum(Integer subSamplesNum) {
-        this.subSamplesNum = subSamplesNum;
     }
 
     public Integer getSubgroupTotal() {
@@ -33,12 +27,12 @@ public class DataInputTemplate {
         this.subgroupTotal = subgroupTotal;
     }
 
-    public Integer getFixedSubgroupCapacity() {
-        return fixedSubgroupCapacity;
+    public Integer getSubgroupCapacity() {
+        return subgroupCapacity;
     }
 
-    public void setFixedSubgroupCapacity(Integer fixedSubgroupCapacity) {
-        this.fixedSubgroupCapacity = fixedSubgroupCapacity;
+    public void setSubgroupCapacity(Integer subgroupCapacity) {
+        this.subgroupCapacity = subgroupCapacity;
     }
 
     public Double getLSL() {
@@ -57,24 +51,14 @@ public class DataInputTemplate {
         this.USL = USL;
     }
 
-    public Double getSL() {
-        return SL;
-    }
-
-    public void setSL(Double SL) {
-        this.SL = SL;
-    }
-
     @Override
     public String toString() {
         return "DataInputTemplate{" +
                 "graphType='" + graphType + '\'' +
-                ", subSamplesNum=" + subSamplesNum +
                 ", subgroupTotal=" + subgroupTotal +
-                ", fixedSubgroupCapacity=" + fixedSubgroupCapacity +
+                ", subgroupCapacity=" + subgroupCapacity +
                 ", LSL=" + LSL +
                 ", USL=" + USL +
-                ", SL=" + SL +
                 '}';
     }
 }

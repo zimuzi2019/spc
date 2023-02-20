@@ -64,6 +64,7 @@
 	<modules>
         <module>jeecg-boot-base-core</module>
         <module>jeecg-module-system</module>
+		<module>jeecg-boot-module-generate</module>
 	</modules>
 
 	<repositories>
@@ -149,6 +150,13 @@
 			<dependency>
 				<groupId>org.jeecgframework.boot</groupId>
 				<artifactId>jeecg-system-biz</artifactId>
+				<version>${jeecgboot.version}</version>
+			</dependency>
+
+			<!-- generate 模块-->
+			<dependency>
+				<groupId>org.jeecgframework.boot</groupId>
+				<artifactId>jeecg-boot-module-generate</artifactId>
 				<version>${jeecgboot.version}</version>
 			</dependency>
 
