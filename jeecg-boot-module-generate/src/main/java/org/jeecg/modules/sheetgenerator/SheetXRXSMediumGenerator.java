@@ -1,4 +1,4 @@
-package org.jeecg.modules.SheetGenerator;
+package org.jeecg.modules.sheetgenerator;
 
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.util.CellRangeAddress;

@@ -1,4 +1,4 @@
-package org.jeecg.modules.SheetGenerator;
+package org.jeecg.modules.sheetgenerator;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;

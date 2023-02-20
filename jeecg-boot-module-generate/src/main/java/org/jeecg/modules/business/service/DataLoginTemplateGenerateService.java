@@ -1,9 +1,9 @@
 package org.jeecg.modules.business.service;
 
-import org.jeecg.modules.SheetGenerator.SheetCnPGenerator;
-import org.jeecg.modules.SheetGenerator.SheetPUGenerator;
-import org.jeecg.modules.SheetGenerator.SheetXMRGenerator;
-import org.jeecg.modules.SheetGenerator.SheetXRXSMediumGenerator;
+import org.jeecg.modules.sheetgenerator.SheetCnPGenerator;
+import org.jeecg.modules.sheetgenerator.SheetPUGenerator;
+import org.jeecg.modules.sheetgenerator.SheetXMRGenerator;
+import org.jeecg.modules.sheetgenerator.SheetXRXSMediumGenerator;
 import org.jeecg.modules.business.entity.DataLoginTemplate;
 import org.springframework.stereotype.Service;
 
