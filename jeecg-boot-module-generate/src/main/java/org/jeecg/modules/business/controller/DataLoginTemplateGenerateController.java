@@ -3,7 +3,10 @@ package org.jeecg.modules.business.controller;
 import org.jeecg.modules.business.entity.DataLoginTemplate;
 import org.jeecg.modules.business.service.DataLoginTemplateGenerateService;
 import lombok.extern.slf4j.Slf4j;
-import org.jeecg.common.api.vo.Result;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,9 +20,10 @@ public class DataLoginTemplateGenerateController {
 
 
     @GetMapping(value = "/generate")
-    public Result<String> generate(DataLoginTemplate dataLoginTemplate) {
-        Result<String> result = new Result<>();
-        result.setResult("Hello!");
+    public ResponseEntity<byte[]> generate(DataLoginTemplate dataLoginTemplate) {
+
+        // System.out.println(dataLoginTemplate);
+        // Result<byte[]> result = new Result<>();
 
         // 参数校验
         String graphType = dataLoginTemplate.getGraphType();
@@ -42,12 +46,18 @@ public class DataLoginTemplateGenerateController {
         }
 
 
-        // System.out.println(dataLoginTemplate);
-        if (flag == false) {
-            result.setSuccess(false); return result;
+        byte[] content = null;
+        if (flag) {
+            content = dataLoginTemplateGenerateService.generate(dataLoginTemplate);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentDispositionFormData("attachment", "file.xlsx");
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            return new ResponseEntity<>(content, headers, HttpStatus.OK);
         } else {
-            dataLoginTemplateGenerateService.generate(dataLoginTemplate);
-            return result;
+            return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
+
     }
 }

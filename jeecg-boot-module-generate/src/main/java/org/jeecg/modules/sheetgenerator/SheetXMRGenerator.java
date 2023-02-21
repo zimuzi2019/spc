@@ -4,12 +4,13 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
 public class SheetXMRGenerator {
-    public void generateXMR(Integer subgroupTotal, Double USL, Double LSL) {
+    public byte[] generateXMR(String graphType, Integer subgroupTotal, Double USL, Double LSL) {
         // 子组批数
         int n = subgroupTotal;
         int rowNum = 0;
@@ -26,35 +27,55 @@ public class SheetXMRGenerator {
         sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum+5, colNum, 25));
         XSSFRow row = sheet.createRow(rowNum);
         XSSFCell cell = row.createCell(colNum);
-        cell.setCellValue("单值和移动极差X-MR图数据登入表");
+        cell.setCellValue("X-MR图数据登入表");
         cell.setCellStyle(titleStyle);
 
         // -----------------------------画出规范标准值单元格----------------------------
         rowNum = 7; colNum=0;
-        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum, 25));
+        XSSFFont cellFont = wb.createFont();
+        XSSFCellStyle cellPropertyStyle = wb.createCellStyle();
+        SetStyle.SetStyle(cellPropertyStyle, cellFont, HSSFColor.BLUE.index, HSSFColor.BLACK.index, (short) 10);
+        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum, colNum+2));
+        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum+3, 25));
         row = sheet.createRow(rowNum);
         cell = row.createCell(colNum);
-        cell.setCellValue("规范标准值");
+        cell.setCellValue("控制图类型");
+        cell.setCellStyle(cellPropertyStyle);
 
-        XSSFFont cellFont = wb.createFont();
-        XSSFCellStyle cellSLTitleStyle = wb.createCellStyle();
-        SetStyle.SetStyle(cellSLTitleStyle, cellFont, HSSFColor.SKY_BLUE.index, HSSFColor.BLACK.index, (short) 10);
-        cell.setCellStyle(cellSLTitleStyle);
+        XSSFCellStyle cellValueStyle = wb.createCellStyle();
+        SetStyle.SetStyle(cellValueStyle, cellFont, HSSFColor.WHITE.index, HSSFColor.BLACK.index, (short) 10);
+        colNum = colNum + 3;
+        cell = row.createCell(colNum);
+        cell.setCellValue(graphType+"图");
+        cell.setCellStyle(cellValueStyle);
+
+        
+        rowNum++; colNum = 0;
+        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum, colNum+2));
+        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum+3, 25));
+        row = sheet.createRow(rowNum);
+        cell = row.createCell(colNum);
+        cell.setCellValue("子组总数");
+        cell.setCellStyle(cellPropertyStyle);
+
+        colNum = colNum + 3;
+        cell = row.createCell(colNum);
+        cell.setCellValue(subgroupTotal);
+        cell.setCellStyle(cellValueStyle);
 
 
-        rowNum++;
-        XSSFCellStyle cellSLStyle = wb.createCellStyle();
-        SetStyle.SetStyle(cellSLStyle, cellFont, HSSFColor.BLUE.index, HSSFColor.BLACK.index, (short) 10);
+        rowNum++; colNum = 0;
         sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum, colNum+2));
         sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum+3, 25));
         row = sheet.createRow(rowNum);
         cell = row.createCell(colNum);
         cell.setCellValue("上限值USL");
-        cell.setCellStyle(cellSLStyle);
+        cell.setCellStyle(cellPropertyStyle);
 
         colNum = colNum + 3;
         cell = row.createCell(colNum);
         cell.setCellValue(USL);
+        cell.setCellStyle(cellValueStyle);
 
 
         rowNum++; colNum = 0;
@@ -63,12 +84,13 @@ public class SheetXMRGenerator {
         row = sheet.createRow(rowNum);
         cell = row.createCell(colNum);
         cell.setCellValue("中心值SL");
-        cell.setCellStyle(cellSLStyle);
+        cell.setCellStyle(cellPropertyStyle);
 
         double SL = (USL + LSL) / 2;
         colNum = colNum + 3;
         cell = row.createCell(colNum);
         cell.setCellValue(SL);
+        cell.setCellStyle(cellValueStyle);
 
 
 
@@ -78,12 +100,13 @@ public class SheetXMRGenerator {
         row = sheet.createRow(rowNum);
         cell = row.createCell(colNum);
         cell.setCellValue("下限值LSL");
-        cell.setCellStyle(cellSLStyle);
+        cell.setCellStyle(cellPropertyStyle);
 
 
         colNum = colNum + 3;
         cell = row.createCell(colNum);
         cell.setCellValue(LSL);
+        cell.setCellStyle(cellValueStyle);
 
         // --------------------------数据部分----------------------------------------
         XSSFCellStyle cellStyle1 = wb.createCellStyle();
@@ -93,7 +116,7 @@ public class SheetXMRGenerator {
         SetStyle.SetStyle(cellStyle2, cellFont, HSSFColor.LIGHT_ORANGE.index, HSSFColor.BLACK.index, (short) 8);
 
 
-        rowNum = 12; colNum = 0;
+        rowNum = 13; colNum = 0;
 
         double cnt1 = 0; int cnt2 = 1;
         do {
@@ -111,7 +134,7 @@ public class SheetXMRGenerator {
         } while (cnt1 < n/25.0);
 
 
-        rowNum = 13; colNum = 0; cnt1 = 0;
+        rowNum = 14; colNum = 0; cnt1 = 0;
         do {
             row = sheet.createRow(rowNum);
             cell = row.createCell(colNum);
@@ -134,14 +157,26 @@ public class SheetXMRGenerator {
         //cell.setCellValue("备注：");
         //cell.setCellStyle(cellLastStyle);
 
-        // ----------------------文件输出----------------------
-        OutputStream fileOut = null;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        byte[] content = null;
         try {
-            fileOut = new FileOutputStream("D://X-MR数据登入表.xlsx");
-            wb.write(fileOut);
-            fileOut.close();
+            wb.write(stream);
+            content = stream.toByteArray();
+            stream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return content;
+
+        // ----------------------文件输出----------------------
+        //OutputStream fileOut = null;
+        //try {
+        //    fileOut = new FileOutputStream("D://X-MR数据登入表.xlsx");
+        //    wb.write(fileOut);
+        //    fileOut.close();
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
     }
 }

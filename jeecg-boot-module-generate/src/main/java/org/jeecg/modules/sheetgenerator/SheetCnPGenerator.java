@@ -4,12 +4,13 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
 public class SheetCnPGenerator {
-    public void generateCnP (Integer subgroupTotal, Integer subgroupCapacity){
+    public byte[] generateCnP (String graphType, Integer subgroupTotal, Integer subgroupCapacity){
         // 子组总数
         int n = subgroupTotal;
         int rowNum = 0;
@@ -27,6 +28,7 @@ public class SheetCnPGenerator {
         sheet.addMergedRegion(new CellRangeAddress(0, 5, 0, 25));
         XSSFRow row = sheet.createRow(rowNum);
         XSSFCell cell = row.createCell(colNum);
+
         cell.setCellValue("nP图、C图数据登入表");
         cell.setCellStyle(cellTitleStyle);
 
@@ -43,21 +45,54 @@ public class SheetCnPGenerator {
         XSSFCellStyle cellStyle3 = wb.createCellStyle();
         SetStyle.SetStyle(cellStyle3, cellFont, HSSFColor.LIGHT_GREEN.index, HSSFColor.BLACK.index, (short) 8);
 
+        XSSFCellStyle cellStyle4 = wb.createCellStyle();
+        SetStyle.SetStyle(cellStyle4, cellFont, HSSFColor.WHITE.index, HSSFColor.BLACK.index, (short) 8);
+
         // ---------------------------------------------------------------------------------------
         rowNum = 7; colNum = 0;
         sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 1));
         row = sheet.createRow(rowNum);
         cell = row.createCell(colNum);
-        cell.setCellValue("固定子组容量");
+        cell.setCellValue("控制图类型");
+        cell.setCellStyle(cellStyle3);
+
+        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 2, 25));
+        colNum = colNum+2;
+        cell = row.createCell(colNum);
+        cell.setCellValue(graphType+"图");
+        cell.setCellStyle(cellStyle4);
+
+
+        rowNum++; colNum = 0;
+        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 1));
+        row = sheet.createRow(rowNum);
+        cell = row.createCell(colNum);
+        cell.setCellValue("子组总数");
         cell.setCellStyle(cellStyle3);
 
         sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 2, 25));
         colNum = colNum+2;
         cell = row.createCell(colNum);
         cell.setCellValue(subgroupCapacity);
+        cell.setCellStyle(cellStyle4);
 
 
-        rowNum = rowNum+2; colNum = 0;
+
+        rowNum++; colNum = 0;
+        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 1));
+        row = sheet.createRow(rowNum);
+        cell = row.createCell(colNum);
+        cell.setCellValue("子组容量");
+        cell.setCellStyle(cellStyle3);
+
+        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 2, 25));
+        colNum = colNum+2;
+        cell = row.createCell(colNum);
+        cell.setCellValue(subgroupCapacity);
+        cell.setCellStyle(cellStyle4);
+
+
+        rowNum = 11; colNum = 0;
         double cnt1 = 0;
         int cnt2 = 1;
         do {
@@ -76,7 +111,7 @@ public class SheetCnPGenerator {
 
 
 
-        rowNum = 10; colNum = 0; cnt1 = 0;
+        rowNum = 12; colNum = 0; cnt1 = 0;
         do {
             row = sheet.createRow(rowNum);
             cell = row.createCell(colNum);
@@ -100,16 +135,26 @@ public class SheetCnPGenerator {
         //cell.setCellStyle(cellLastStyle);
 
 
-
-
-
-        OutputStream fileOut = null;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        byte[] content = null;
         try {
-            fileOut = new FileOutputStream("D://nP、C图数据登入表.xlsx");
-            wb.write(fileOut);
-            fileOut.close();
+            wb.write(stream);
+            content = stream.toByteArray();
+            stream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return content;
+
+
+        //OutputStream fileOut = null;
+        //try {
+        //    fileOut = new FileOutputStream("D://nP、C图数据登入表.xlsx");
+        //    wb.write(fileOut);
+        //    fileOut.close();
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
     }
 }

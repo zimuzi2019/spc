@@ -53,7 +53,7 @@ public class DataLoginTemplate {
 
     @Override
     public String toString() {
-        return "DataInputTemplate{" +
+        return "DataLoginTemplate{" +
                 "graphType='" + graphType + '\'' +
                 ", subgroupTotal=" + subgroupTotal +
                 ", subgroupCapacity=" + subgroupCapacity +

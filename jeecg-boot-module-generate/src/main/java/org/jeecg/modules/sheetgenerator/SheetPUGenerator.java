@@ -4,12 +4,13 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
 public class SheetPUGenerator {
-    public void generatePU(Integer subgroupTotal) {
+    public byte[] generatePU(String graphType, Integer subgroupTotal) {
         // 子组总数
         int n = subgroupTotal;
         int rowNum = 0;
@@ -29,9 +30,41 @@ public class SheetPUGenerator {
         cell.setCellValue("P图、U图数据登入表");
         cell.setCellStyle(cellTitleStyle);
 
+        rowNum = 7; colNum = 0;
+        XSSFFont cellFont = wb.createFont();
+        XSSFCellStyle cellPropertyStyle = wb.createCellStyle();
+        SetStyle.SetStyle(cellPropertyStyle, cellFont, HSSFColor.BLUE.index, HSSFColor.BLACK.index, (short) 10);
+        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum, colNum+2));
+        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum+3, 25));
+        row = sheet.createRow(rowNum);
+        cell = row.createCell(colNum);
+        cell.setCellValue("控制图类型");
+        cell.setCellStyle(cellPropertyStyle);
+
+        XSSFCellStyle cellValueStyle = wb.createCellStyle();
+        SetStyle.SetStyle(cellValueStyle, cellFont, HSSFColor.WHITE.index, HSSFColor.BLACK.index, (short) 10);
+        colNum = colNum + 3;
+        cell = row.createCell(colNum);
+        cell.setCellValue(graphType+"图");
+        cell.setCellStyle(cellValueStyle);
+
+
+
+        rowNum++; colNum = 0;
+        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum, colNum+2));
+        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum+3, 25));
+        row = sheet.createRow(rowNum);
+        cell = row.createCell(colNum);
+        cell.setCellValue("子组总数");
+        cell.setCellStyle(cellPropertyStyle);
+
+        colNum = colNum + 3;
+        cell = row.createCell(colNum);
+        cell.setCellValue(subgroupTotal);
+        cell.setCellStyle(cellValueStyle);
+
 
         // ------------------------------------------------------------------------------------------
-        XSSFFont cellFont = wb.createFont();
         XSSFCellStyle cellStyle1 = wb.createCellStyle();
 
         SetStyle.SetStyle(cellStyle1, cellFont, HSSFColor.LIGHT_BLUE.index, HSSFColor.BLACK.index, (short) 8);
@@ -44,7 +77,7 @@ public class SheetPUGenerator {
 
 
 
-        rowNum = 7; colNum = 0;
+        rowNum = 10; colNum = 0;
 
         double cnt1 = 0;
         int cnt2 = 1;
@@ -62,7 +95,7 @@ public class SheetPUGenerator {
             cnt1++;
         } while (cnt1 < n/25.0);
 
-        rowNum = 8; colNum = 0; cnt1 = 0;
+        rowNum = 11; colNum = 0; cnt1 = 0;
         do {
             row = sheet.createRow(rowNum);
             cell = row.createCell(colNum);
@@ -72,7 +105,7 @@ public class SheetPUGenerator {
             cnt1++;
         }while (cnt1 < n/25.0);
 
-        rowNum = 9; colNum = 0; cnt1 = 0;
+        rowNum = 12; colNum = 0; cnt1 = 0;
         do {
             row = sheet.createRow(rowNum);
             cell = row.createCell(colNum);
@@ -97,14 +130,25 @@ public class SheetPUGenerator {
         //cell.setCellStyle(cellLastStyle);
 
 
-
-        OutputStream fileOut = null;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        byte[] content = null;
         try {
-            fileOut = new FileOutputStream("D://P图、U图数据登入表.xlsx");
-            wb.write(fileOut);
-            fileOut.close();
+            wb.write(stream);
+            content = stream.toByteArray();
+            stream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return content;
+
+        //OutputStream fileOut = null;
+        //try {
+        //    fileOut = new FileOutputStream("D://P图、U图数据登入表.xlsx");
+        //    wb.write(fileOut);
+        //    fileOut.close();
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
     }
 }
