@@ -65,7 +65,8 @@
         <module>jeecg-boot-base-core</module>
         <module>jeecg-module-system</module>
 		<module>jeecg-boot-module-generate</module>
-	</modules>
+        <module>jeecg-boot-module-draw</module>
+    </modules>
 
 	<repositories>
 		<repository>
@@ -157,6 +158,13 @@
 			<dependency>
 				<groupId>org.jeecgframework.boot</groupId>
 				<artifactId>jeecg-boot-module-generate</artifactId>
+				<version>${jeecgboot.version}</version>
+			</dependency>
+
+			<!-- draw 模块-->
+			<dependency>
+				<groupId>org.jeecgframework.boot</groupId>
+				<artifactId>jeecg-boot-module-draw</artifactId>
 				<version>${jeecgboot.version}</version>
 			</dependency>
 

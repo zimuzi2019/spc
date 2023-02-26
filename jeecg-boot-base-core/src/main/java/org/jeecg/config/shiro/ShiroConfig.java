@@ -155,6 +155,7 @@ public class ShiroConfig {
         // 自己加的
         filterChainDefinitionMap.put("/test/jeecgDemo/hello","anon");
         filterChainDefinitionMap.put("/generate","anon");
+        filterChainDefinitionMap.put("/draw","anon");
 
         // 添加自己的过滤器并且取名为jwt
         Map<String, Filter> filterMap = new HashMap<String, Filter>(1);

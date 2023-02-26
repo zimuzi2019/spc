@@ -28,5 +28,12 @@
             <artifactId>jeecg-boot-module-generate</artifactId>
             <version>${jeecgboot.version}</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.jeecgframework.boot</groupId>
+            <artifactId>jeecg-boot-module-draw</artifactId>
+            <version>${jeecgboot.version}</version>
+        </dependency>
     </dependencies>
 </project>
