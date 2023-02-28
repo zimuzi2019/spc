@@ -50,28 +50,28 @@ public class SheetCnPGenerator {
 
         // ---------------------------------------------------------------------------------------
         rowNum = 7; colNum = 0;
-        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 1));
+        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 2));
         row = sheet.createRow(rowNum);
         cell = row.createCell(colNum);
         cell.setCellValue("控制图类型");
         cell.setCellStyle(cellStyle3);
 
-        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 2, 25));
-        colNum = colNum+2;
+        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 3, 25));
+        colNum = colNum+3;
         cell = row.createCell(colNum);
         cell.setCellValue(graphType+"图");
         cell.setCellStyle(cellStyle4);
 
 
         rowNum++; colNum = 0;
-        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 1));
+        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 2));
         row = sheet.createRow(rowNum);
         cell = row.createCell(colNum);
         cell.setCellValue("子组总数");
         cell.setCellStyle(cellStyle3);
 
-        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 2, 25));
-        colNum = colNum+2;
+        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 3, 25));
+        colNum = colNum+3;
         cell = row.createCell(colNum);
         cell.setCellValue(subgroupCapacity);
         cell.setCellStyle(cellStyle4);
@@ -79,14 +79,14 @@ public class SheetCnPGenerator {
 
 
         rowNum++; colNum = 0;
-        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 1));
+        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 2));
         row = sheet.createRow(rowNum);
         cell = row.createCell(colNum);
         cell.setCellValue("子组容量");
         cell.setCellStyle(cellStyle3);
 
-        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 2, 25));
-        colNum = colNum+2;
+        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 3, 25));
+        colNum = colNum+3;
         cell = row.createCell(colNum);
         cell.setCellValue(subgroupCapacity);
         cell.setCellStyle(cellStyle4);

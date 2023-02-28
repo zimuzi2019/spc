@@ -11,6 +11,8 @@ public class Draw {
 
     double usl;
 
+    double sl;
+
     double lsl;
 
     double[][] dataArrayXRXSMedium;
@@ -52,6 +54,14 @@ public class Draw {
 
     public void setUsl(double usl) {
         this.usl = usl;
+    }
+
+    public double getSl() {
+        return sl;
+    }
+
+    public void setSl(double sl) {
+        this.sl = sl;
     }
 
     public double getLsl() {
@@ -109,6 +119,7 @@ public class Draw {
                 ", subgroupTotal=" + subgroupTotal +
                 ", subgroupCapacity=" + subgroupCapacity +
                 ", usl=" + usl +
+                ", sl=" + sl +
                 ", lsl=" + lsl +
                 ", dataArrayXRXSMedium=" + Arrays.toString(dataArrayXRXSMedium) +
                 ", dataArrayXMR=" + Arrays.toString(dataArrayXMR) +
