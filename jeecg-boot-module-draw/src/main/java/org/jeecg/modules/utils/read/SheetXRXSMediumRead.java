@@ -1,10 +1,10 @@
-package org.jeecg.modules.utils;
+package org.jeecg.modules.utils.read;
 
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.jeecg.modules.business.entity.Draw;
 
-public class SheetXMRRead {
+public class SheetXRXSMediumRead {
 
     public Draw read(Workbook workbook) {
         Draw drawData = new Draw();
@@ -19,30 +19,32 @@ public class SheetXMRRead {
         int subgroupTotal = (int) ( sheet.getRow(8).getCell(3).getNumericCellValue() );
         drawData.setSubgroupTotal(subgroupTotal);
 
+        // 读取子组容量
+        int subgroupCapacity = (int) ( sheet.getRow(9).getCell(3).getNumericCellValue() );
+        drawData.setSubgroupCapacity(subgroupCapacity);
+
         // 读取USL
-        double usl = sheet.getRow(9).getCell(3).getNumericCellValue();
+        double usl = sheet.getRow(10).getCell(3).getNumericCellValue();
         drawData.setUsl(usl);
 
         // 读取SL
-        double sl = sheet.getRow(10).getCell(3).getNumericCellValue();
+        double sl = sheet.getRow(11).getCell(3).getNumericCellValue();
         drawData.setSl(sl);
 
         // 读取LSL
-        double lsl = sheet.getRow(11).getCell(3).getNumericCellValue();
+        double lsl = sheet.getRow(12).getCell(3).getNumericCellValue();
         drawData.setLsl(lsl);
 
-        // 读取X-MR表数据
-        double[] dataArrayXMR = new double[subgroupTotal];
-        int rowNum = 14; int colNum = 1;
+        // 读取X-R表、X-S表、中位数图数据
+        double[][] dataArrayXRXSMedium = new double[subgroupTotal][subgroupCapacity];
+        int rowNum = 16; int colNum = 2;
+
         for (int i = 0; i < subgroupTotal; i++) {
-            dataArrayXMR[i] = sheet.getRow(rowNum).getCell(colNum).getNumericCellValue();
-            colNum++;
-            if ( colNum == 26) {
-                colNum = 1;
-                rowNum = rowNum+2;
+            for (int j = 0; j < subgroupCapacity; j++) {
+                dataArrayXRXSMedium[i][j] = sheet.getRow(rowNum+j).getCell(colNum+i).getNumericCellValue();
             }
         }
-        drawData.setDataArrayXMR(dataArrayXMR);
+        drawData.setDataArrayXRXSMedium(dataArrayXRXSMedium);
 
         return drawData;
     }

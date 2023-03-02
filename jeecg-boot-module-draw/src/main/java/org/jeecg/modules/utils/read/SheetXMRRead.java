@@ -1,10 +1,10 @@
-package org.jeecg.modules.utils;
+package org.jeecg.modules.utils.read;
 
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.jeecg.modules.business.entity.Draw;
 
-public class SheetPURead {
+public class SheetXMRRead {
 
     public Draw read(Workbook workbook) {
         Draw drawData = new Draw();
@@ -19,22 +19,30 @@ public class SheetPURead {
         int subgroupTotal = (int) ( sheet.getRow(8).getCell(3).getNumericCellValue() );
         drawData.setSubgroupTotal(subgroupTotal);
 
-        // 读取P、U表数据
-        double[] dataArrayPU1 = new double[subgroupTotal];
-        double[] dataArrayPU2 = new double[subgroupTotal];
-        int rowNum = 11; int colNum = 1;
-        for (int i = 0; i < subgroupTotal; i++) {
-            dataArrayPU1[i] = sheet.getRow(rowNum).getCell(colNum).getNumericCellValue();
-            dataArrayPU2[i] = sheet.getRow(rowNum+1).getCell(colNum).getNumericCellValue();
+        // 读取USL
+        double usl = sheet.getRow(9).getCell(3).getNumericCellValue();
+        drawData.setUsl(usl);
 
+        // 读取SL
+        double sl = sheet.getRow(10).getCell(3).getNumericCellValue();
+        drawData.setSl(sl);
+
+        // 读取LSL
+        double lsl = sheet.getRow(11).getCell(3).getNumericCellValue();
+        drawData.setLsl(lsl);
+
+        // 读取X-MR表数据
+        double[] dataArrayXMR = new double[subgroupTotal];
+        int rowNum = 14; int colNum = 1;
+        for (int i = 0; i < subgroupTotal; i++) {
+            dataArrayXMR[i] = sheet.getRow(rowNum).getCell(colNum).getNumericCellValue();
             colNum++;
             if ( colNum == 26) {
                 colNum = 1;
-                rowNum = rowNum+3;
+                rowNum = rowNum+2;
             }
         }
-        drawData.setDataArrayPU1(dataArrayPU1);
-        drawData.setDataArrayPU2(dataArrayPU2);
+        drawData.setDataArrayXMR(dataArrayXMR);
 
         return drawData;
     }
