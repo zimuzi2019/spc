@@ -20,12 +20,12 @@ public class SheetPURead {
         drawData.setSubgroupTotal(subgroupTotal);
 
         // 读取P、U表数据
-        double[] dataArrayPU1 = new double[subgroupTotal];
-        double[] dataArrayPU2 = new double[subgroupTotal];
+        int[] dataArrayPUSubgroupsCapacity = new int[subgroupTotal];
+        int[] dataArrayPUDefectsNum = new int[subgroupTotal];
         int rowNum = 11; int colNum = 1;
         for (int i = 0; i < subgroupTotal; i++) {
-            dataArrayPU1[i] = sheet.getRow(rowNum).getCell(colNum).getNumericCellValue();
-            dataArrayPU2[i] = sheet.getRow(rowNum+1).getCell(colNum).getNumericCellValue();
+            dataArrayPUSubgroupsCapacity[i] = (int)(sheet.getRow(rowNum).getCell(colNum).getNumericCellValue() );
+            dataArrayPUDefectsNum[i] = (int)(sheet.getRow(rowNum+1).getCell(colNum).getNumericCellValue() );
 
             colNum++;
             if ( colNum == 26) {
@@ -33,8 +33,8 @@ public class SheetPURead {
                 rowNum = rowNum+3;
             }
         }
-        drawData.setDataArrayPU1(dataArrayPU1);
-        drawData.setDataArrayPU2(dataArrayPU2);
+        drawData.setDataArrayPUSubgroupsCapacity(dataArrayPUSubgroupsCapacity);
+        drawData.setDataArrayPUDefectsNum(dataArrayPUDefectsNum);
 
         return drawData;
     }

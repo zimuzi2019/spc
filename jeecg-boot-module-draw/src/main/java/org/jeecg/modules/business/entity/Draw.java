@@ -21,8 +21,8 @@ public class Draw {
 
     double[] dataArrayCnP;
 
-    double[] dataArrayPU1;
-    double[] dataArrayPU2;
+    int[] dataArrayPUSubgroupsCapacity;
+    int[] dataArrayPUDefectsNum;
 
     public String getGraphType() {
         return graphType;
@@ -96,20 +96,20 @@ public class Draw {
         this.dataArrayCnP = dataArrayCnP;
     }
 
-    public double[] getDataArrayPU1() {
-        return dataArrayPU1;
+    public int[] getDataArrayPUSubgroupsCapacity() {
+        return dataArrayPUSubgroupsCapacity;
     }
 
-    public void setDataArrayPU1(double[] dataArrayPU1) {
-        this.dataArrayPU1 = dataArrayPU1;
+    public void setDataArrayPUSubgroupsCapacity(int[] dataArrayPUSubgroupsCapacity) {
+        this.dataArrayPUSubgroupsCapacity = dataArrayPUSubgroupsCapacity;
     }
 
-    public double[] getDataArrayPU2() {
-        return dataArrayPU2;
+    public int[] getDataArrayPUDefectsNum() {
+        return dataArrayPUDefectsNum;
     }
 
-    public void setDataArrayPU2(double[] dataArrayPU2) {
-        this.dataArrayPU2 = dataArrayPU2;
+    public void setDataArrayPUDefectsNum(int[] dataArrayPUDefectsNum) {
+        this.dataArrayPUDefectsNum = dataArrayPUDefectsNum;
     }
 
     @Override
@@ -124,8 +124,8 @@ public class Draw {
                 ", dataArrayXRXSMedium=" + Arrays.toString(dataArrayXRXSMedium) +
                 ", dataArrayXMR=" + Arrays.toString(dataArrayXMR) +
                 ", dataArrayCnP=" + Arrays.toString(dataArrayCnP) +
-                ", dataArrayPU1=" + Arrays.toString(dataArrayPU1) +
-                ", dataArrayPU2=" + Arrays.toString(dataArrayPU2) +
+                ", dataArrayPUSubgroupsCapacity=" + Arrays.toString(dataArrayPUSubgroupsCapacity) +
+                ", dataArrayPUDefectsNum=" + Arrays.toString(dataArrayPUDefectsNum) +
                 '}';
     }
 }

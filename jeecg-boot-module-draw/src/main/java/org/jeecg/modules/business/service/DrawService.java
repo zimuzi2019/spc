@@ -1,10 +1,7 @@
 package org.jeecg.modules.business.service;
 
 import org.jeecg.modules.business.entity.Draw;
-import org.jeecg.modules.utils.compute.MediumCompute;
-import org.jeecg.modules.utils.compute.XMRCompute;
-import org.jeecg.modules.utils.compute.XRCompute;
-import org.jeecg.modules.utils.compute.XSCompute;
+import org.jeecg.modules.utils.compute.*;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,16 +23,16 @@ public class DrawService {
             XMRCompute.compute(drawData);
         }
         if (graphType.equals("C")) {
-
+            CCompute.compute(drawData);
         }
         if (graphType.equals("nP")) {
-
+            NPCompute.compute(drawData);
         }
         if (graphType.equals("P") ) {
-
+            PCompute.compute(drawData);
         }
         if (graphType.equals("U")) {
-
+            UCompute.compute(drawData);
         }
     }
 }
