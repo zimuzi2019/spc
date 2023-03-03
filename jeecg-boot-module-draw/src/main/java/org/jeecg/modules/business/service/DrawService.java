@@ -23,7 +23,7 @@ public class DrawService {
             MediumCompute.compute(drawData);
         }
         if (graphType.equals("X-MR") ) {
-
+            XMRCompute.compute(drawData);
         }
         if (graphType.equals("C")) {
 

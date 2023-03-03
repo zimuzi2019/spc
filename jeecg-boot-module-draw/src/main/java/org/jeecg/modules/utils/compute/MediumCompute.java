@@ -109,6 +109,6 @@ public class MediumCompute {
         double intervalXMedium = (uclXMedium - xMediumBar) / 3;
         double intervalR =    (uclR - rBar) / 3;
         double[] intervalValuesXBar = new double[]{uclXMedium, xMediumBar+intervalXMedium*2, xMediumBar+intervalXMedium, xMediumBar, xMediumBar-intervalXMedium, xMediumBar-intervalXMedium*2, lclXMedium};
-        double[] intervalValuesR    = new double[]{uclR,    rBar+intervalR*2 ,         rBar+intervalR ,         rBar,       rBar-intervalR,          rBar-intervalR*2,          lclR};
+        double[] intervalValuesR    = new double[]{uclR,       rBar+intervalR*2 ,            rBar+intervalR ,            rBar,       rBar-intervalR,             rBar-intervalR*2,             lclR};
     }
 }
