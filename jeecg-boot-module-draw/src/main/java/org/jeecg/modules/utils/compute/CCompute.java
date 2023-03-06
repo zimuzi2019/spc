@@ -3,6 +3,7 @@ package org.jeecg.modules.utils.compute;
 import org.jeecg.modules.business.entity.Draw;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.DoubleStream;
 
@@ -33,7 +34,7 @@ public class CCompute {
 
         // 分析
         // 超出控制线的点
-        List<Integer> specialPointsC = new ArrayList<Integer>();
+        List<Integer> specialPointsC = new ArrayList<>();
 
         for (int i = 0; i < subgroupTotal; i++) {
             if (c[i] < lclC || c[i] > uclC)    specialPointsC.add(i+1);
@@ -60,6 +61,23 @@ public class CCompute {
         // 明显非随机图形
         // ......
         double intervalC = (uclC -cBar) / 3;
-        double[] intervalValuesPt = new double[]{uclC, cBar+intervalC*2, cBar+intervalC, cBar, cBar-intervalC, cBar-intervalC*2, lclC};
+        double[] intervalValuesC = new double[]{uclC, cBar+intervalC*2, cBar+intervalC, cBar, cBar-intervalC, cBar-intervalC*2, lclC};
+
+
+
+
+        // 调试代码
+        System.out.println("c = " + Arrays.toString(c));
+        System.out.println("cBar = " + cBar);
+        System.out.println("graduation = " + graduation);
+        System.out.println("uclC = " + uclC);
+        System.out.println("lclC = " + lclC);
+        System.out.println("specialPointsC = " + specialPointsC);
+        System.out.println("descendChainCList = " + descendChainCList);
+        System.out.println("ascendChainCList = " + ascendChainCList);
+        System.out.println("upperChainCList = " + upperChainCList);
+        System.out.println("lowerChainCList = " + lowerChainCList);
+        System.out.println("intervalValuesC = " + Arrays.toString(intervalValuesC));
+        //
     }
 }

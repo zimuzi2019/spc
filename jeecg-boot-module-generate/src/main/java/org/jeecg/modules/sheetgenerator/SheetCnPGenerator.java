@@ -73,7 +73,7 @@ public class SheetCnPGenerator {
         sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 3, 25));
         colNum = colNum+3;
         cell = row.createCell(colNum);
-        cell.setCellValue(subgroupCapacity);
+        cell.setCellValue(subgroupTotal);
         cell.setCellStyle(cellStyle4);
 
 

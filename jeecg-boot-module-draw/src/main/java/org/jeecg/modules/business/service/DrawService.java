@@ -10,6 +10,18 @@ public class DrawService {
         System.out.println(drawData);
 
         String graphType = drawData.getGraphType();
+        // 调试代码
+        if (graphType.equals("X-R") || graphType.equals("X-S") || graphType.equals("中位数")) {
+            double[][] dataArray = drawData.getDataArrayXRXSMedium();
+            for (int i = 0; i < drawData.getSubgroupTotal(); i++) {
+                for (int j = 0; j < drawData.getSubgroupCapacity(); j++){
+                    System.out.print(dataArray[i][j] + " ");
+                }
+                System.out.println();
+            }
+        }
+        //
+
         if (graphType.equals("X-R") ) {
             XRCompute.compute(drawData);
         }

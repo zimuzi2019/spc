@@ -4,6 +4,7 @@ import org.jeecg.modules.business.entity.Draw;
 import org.jeecg.modules.utils.TableCoefficient;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.DoubleStream;
 
@@ -29,7 +30,7 @@ public class XSCompute {
             for (double x : dataArray[i]) {
                 sum = sum + Math.pow(x - xBar[i], 2);
             }
-            s[i] = Math.sqrt(sum / (subgroupTotal-1) );
+            s[i] = Math.sqrt(sum / (subgroupCapacity-1) );
         }
 
         // 过程均值
@@ -39,20 +40,20 @@ public class XSCompute {
         double sBar = DoubleStream.of(s).sum() / subgroupTotal;
 
         // 控制界限
-        double uclXBar; double lclXBar; double uclR; double lclR;
+        double uclXBar; double lclXBar; double uclS; double lclS;
         if (subgroupCapacity <= 25) {
             uclXBar = xDoubleBar + TableCoefficient.A3[subgroupCapacity] * sBar;
             lclXBar = xDoubleBar - TableCoefficient.A3[subgroupCapacity] * sBar;
-            uclR = TableCoefficient.B4[subgroupCapacity] * sBar;
-            lclR = TableCoefficient.B3[subgroupCapacity] * sBar;
+            uclS = TableCoefficient.B4[subgroupCapacity] * sBar;
+            lclS = TableCoefficient.B3[subgroupCapacity] * sBar;
         } else {
             double a = 3 / Math.sqrt(subgroupCapacity - 0.5);
             double d = 1 - 3 / Math.sqrt(2 * subgroupCapacity - 2.5);
             double e = 1 + 3 / Math.sqrt(2 * subgroupCapacity - 2.5);
             uclXBar = xDoubleBar + a * sBar;
             lclXBar = xDoubleBar - a * sBar;
-            uclR = e * sBar;
-            lclR = d * sBar;
+            uclS = e * sBar;
+            lclS = d * sBar;
         }
 
 
@@ -84,12 +85,12 @@ public class XSCompute {
 
         // 分析
         // 超出控制线的点
-        List<Integer> specialPointsXBar = new ArrayList<Integer>();
-        List<Integer> specialPointsS = new ArrayList<Integer>();
+        List<Integer> specialPointsXBar = new ArrayList<>();
+        List<Integer> specialPointsS = new ArrayList<>();
 
 
         for (int i = 0; i < subgroupTotal; i++) {
-            if (s[i] < lclR || s[i] > uclR)               specialPointsS.add(i+1);
+            if (s[i] < lclS || s[i] > uclS)               specialPointsS.add(i+1);
             if (xBar[i] < lclXBar || xBar[i] > uclXBar)   specialPointsXBar.add(i+1);
         }
 
@@ -121,8 +122,43 @@ public class XSCompute {
         // 明显非随机图形
         // ......
         double intervalXBar = (uclXBar - xDoubleBar) / 3;
-        double intervalR =    (uclR - sBar) / 3;
+        double intervalS =    (uclS - sBar) / 3;
         double[] intervalValuesXBar = new double[]{uclXBar, xDoubleBar+intervalXBar*2, xDoubleBar+intervalXBar, xDoubleBar, xDoubleBar-intervalXBar, xDoubleBar-intervalXBar*2, lclXBar};
-        double[] intervalValuesR    = new double[]{uclR,    sBar+intervalR*2 ,         sBar+intervalR ,         sBar,       sBar-intervalR,          sBar-intervalR*2,          lclR};
+        double[] intervalValuesS    = new double[]{uclS,    sBar+intervalS*2 ,         sBar+intervalS ,         sBar,       sBar-intervalS,          sBar-intervalS*2,          lclS};
+
+
+
+
+
+        // 调试代码
+        System.out.println("xBar = " + Arrays.toString(xBar));
+        System.out.println("s = " + Arrays.toString(s));
+        System.out.println("xDoubleBar = " + xDoubleBar);
+        System.out.println("sBar = " + sBar);
+        // System.out.println("xBarGraduation = " + xBarGraduation);
+        // System.out.println("RGraduation = " + RGraduation);
+        System.out.println("uclXBar = " + uclXBar);
+        System.out.println("lclXBar = " + lclXBar);
+        System.out.println("uclS = " + uclS);
+        System.out.println("lclS = " + lclS);
+        System.out.println("zUSL = " + zUSL);
+        System.out.println("zLSL = " + zLSL);
+        System.out.println("z = " + z);
+        System.out.println("cpu = " + cpu);
+        System.out.println("cpl = " + cpl);
+        System.out.println("cpk = " + cpk);
+        System.out.println("specialPointsXBar = " + specialPointsXBar);
+        System.out.println("specialPointsS = " + specialPointsS);
+        System.out.println("descendChainXBarList = " + descendChainXBarList);
+        System.out.println("descendChainSList = " + descendChainSList);
+        System.out.println("ascendChainXBarList = " + ascendChainXBarList);
+        System.out.println("ascendChainSList = " + ascendChainSList);
+        System.out.println("upperChainXBarList = " + upperChainXBarList);
+        System.out.println("upperChainSList = " + upperChainSList);
+        System.out.println("lowerChainXBarList = " + lowerChainXBarList);
+        System.out.println("lowerChainSList = " + lowerChainSList);
+        System.out.println("intervalValuesXBar = " + Arrays.toString(intervalValuesXBar));
+        System.out.println("intervalValuesS = " + Arrays.toString(intervalValuesS));
+        //
     }
 }

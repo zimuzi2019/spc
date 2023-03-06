@@ -3,6 +3,7 @@ package org.jeecg.modules.utils.compute;
 import org.jeecg.modules.business.entity.Draw;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.DoubleStream;
 
@@ -36,7 +37,7 @@ public class NPCompute {
 
         // 分析
         // 超出控制线的点
-        List<Integer> specialPointsNP = new ArrayList<Integer>();
+        List<Integer> specialPointsNP = new ArrayList<>();
 
         for (int i = 0; i < subgroupTotal; i++) {
             if (np[i] < lclNP || np[i] > uclNP)    specialPointsNP.add(i+1);
@@ -63,6 +64,27 @@ public class NPCompute {
         // 明显非随机图形
         // ......
         double intervalNP = (uclNP - clNP) / 3;
-        double[] intervalValuesPt = new double[]{uclNP, clNP+intervalNP*2, clNP+intervalNP, clNP, clNP-intervalNP, clNP-intervalNP*2, lclNP};
+        double[] intervalValuesNP = new double[]{uclNP, clNP+intervalNP*2, clNP+intervalNP, clNP, clNP-intervalNP, clNP-intervalNP*2, lclNP};
+
+
+
+
+        // 调试代码
+        System.out.println("np = " + Arrays.toString(np));
+        System.out.println("pBar = " + pBar);
+        System.out.println("npBar = " + npBar);
+        System.out.println("graduation = " + graduation);
+        System.out.println("uclC = " + uclNP);
+        System.out.println("lclNP = " + lclNP);
+
+        System.out.println("clNP = " + clNP);
+
+        System.out.println("specialPointsNP = " + specialPointsNP);
+        System.out.println("descendChainNPList = " + descendChainNPList);
+        System.out.println("ascendChainNPList = " + ascendChainNPList);
+        System.out.println("upperChainNPList = " + upperChainNPList);
+        System.out.println("lowerChainNPList = " + lowerChainNPList);
+        System.out.println("intervalValuesCNP= " + Arrays.toString(intervalValuesNP));
+        //
     }
 }

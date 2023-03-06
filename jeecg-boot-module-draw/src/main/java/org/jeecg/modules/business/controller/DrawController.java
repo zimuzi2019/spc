@@ -22,7 +22,7 @@ public class DrawController {
         result.setSuccess(true);
         result.setResult("success!");
 
-        System.out.println((drawData));
+        // System.out.println((drawData));
         drawService.handleData(drawData);
 
         return result;
@@ -38,7 +38,7 @@ public class DrawController {
         SheetRead sheetRead = new SheetRead();
         drawData = sheetRead.read(file);
 
-        System.out.println(drawData);
+        // System.out.println(drawData);
         drawService.handleData(drawData);
 
 

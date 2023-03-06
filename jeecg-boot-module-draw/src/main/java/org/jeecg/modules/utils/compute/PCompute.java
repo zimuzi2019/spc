@@ -3,6 +3,7 @@ package org.jeecg.modules.utils.compute;
 import org.jeecg.modules.business.entity.Draw;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
@@ -43,7 +44,7 @@ public class PCompute {
 
         // 分析
         // 超出控制线的点
-        List<Integer> specialPointsPt = new ArrayList<Integer>();
+        List<Integer> specialPointsPt = new ArrayList<>();
 
         for (int i = 0; i < subgroupTotal; i++) {
             if (pt[i] < lclPt || pt[i] > uclPt)    specialPointsPt.add(i+1);
@@ -70,5 +71,25 @@ public class PCompute {
         // 明显非随机图形
         // ......
         double[] intervalValuesPt = new double[]{3, 2, 1, 0, -1, -2, -3};
+
+
+
+
+        // 调试代码
+        System.out.println("p = " + Arrays.toString(p));
+        System.out.println("pBar = " + pBar);
+
+        System.out.println("pt = " + Arrays.toString(pt));
+
+        System.out.println("graduation = " + graduation);
+        System.out.println("uclPt = " + uclPt);
+        System.out.println("lclPt = " + lclPt);
+        System.out.println("specialPointsPt = " + specialPointsPt);
+        System.out.println("descendChainPtList = " + descendChainPtList);
+        System.out.println("ascendChainPtList = " + ascendChainPtList);
+        System.out.println("upperChainPtList = " + upperChainPtList);
+        System.out.println("lowerChainPtList = " + lowerChainPtList);
+        System.out.println("intervalValuesPt = " + Arrays.toString(intervalValuesPt));
+        //
     }
 }

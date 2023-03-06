@@ -3,6 +3,7 @@ package org.jeecg.modules.utils.compute;
 import org.jeecg.modules.business.entity.Draw;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
@@ -34,8 +35,8 @@ public class UCompute {
         double graduation = DoubleStream.of(ut).max().orElse(0) * 2;
 
         // 上下控制限
-        double uclPt = 3;
-        double lclPt = -3;
+        double uclUt = 3;
+        double lclUt = -3;
 
         // 似乎不用计算过程能力指数
         // ......
@@ -43,10 +44,10 @@ public class UCompute {
 
         // 分析
         // 超出控制线的点
-        List<Integer> specialPointsUt = new ArrayList<Integer>();
+        List<Integer> specialPointsUt = new ArrayList<>();
 
         for (int i = 0; i < subgroupTotal; i++) {
-            if (ut[i] < lclPt || ut[i] > uclPt) specialPointsUt.add(i + 1);
+            if (ut[i] < lclUt || ut[i] > uclUt) specialPointsUt.add(i + 1);
         }
 
         // 链
@@ -68,6 +69,25 @@ public class UCompute {
 
         // 明显非随机图形
         // ......
-        double[] intervalValuesPt = new double[]{3, 2, 1, 0, -1, -2, -3};
+        double[] intervalValuesUt = new double[]{3, 2, 1, 0, -1, -2, -3};
+
+
+
+        // 调试代码
+        System.out.println("u = " + Arrays.toString(u));
+        System.out.println("uBar = " + uBar);
+
+        System.out.println("ut = " + Arrays.toString(ut));
+
+        System.out.println("graduation = " + graduation);
+        System.out.println("uclUt = " + uclUt);
+        System.out.println("lclUt = " + lclUt);
+        System.out.println("specialPointsUt = " + specialPointsUt);
+        System.out.println("descendChainUtList = " + descendChainUtList);
+        System.out.println("ascendChainUtList = " + ascendChainUtList);
+        System.out.println("upperChainUtList = " + upperChainUtList);
+        System.out.println("lowerChainUtList = " + lowerChainUtList);
+        System.out.println("intervalValuesUt = " + Arrays.toString(intervalValuesUt));
+        //
     }
 }

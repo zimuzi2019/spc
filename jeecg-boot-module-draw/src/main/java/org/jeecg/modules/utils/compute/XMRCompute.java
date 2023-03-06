@@ -4,6 +4,7 @@ import org.jeecg.modules.business.entity.Draw;
 import org.jeecg.modules.utils.TableCoefficient;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.DoubleStream;
 
@@ -20,7 +21,7 @@ public class XMRCompute {
         double[] mr = new double[subgroupTotal-1]; // 对于样本容量为2的移动极差，其移动极差（MR）的个数比单值读数的个数少1
 
         for (int i = 0; i < subgroupTotal-1; i++) {
-            mr[i] = x[i+1] - x[i];
+            mr[i] = Math.abs(x[i+1] - x[i]);
         }
 
         // 过程均值
@@ -60,8 +61,8 @@ public class XMRCompute {
 
         // 分析
         // 超出控制线的点
-        List<Integer> specialPointsX = new ArrayList<Integer>();
-        List<Integer> specialPointsMR = new ArrayList<Integer>();
+        List<Integer> specialPointsX = new ArrayList<>();
+        List<Integer> specialPointsMR = new ArrayList<>();
 
 
         for (int i = 0; i < subgroupTotal-1; i++) {
@@ -102,5 +103,41 @@ public class XMRCompute {
         double intervalMR =    (uclMR - mrBar) / 3;
         double[] intervalValuesX =   new double[]{uclX,  xBar+intervalX*2,   xBar+intervalX,   xBar,  xBar-intervalX,   xBar-intervalX*2,   lclX};
         double[] intervalValuesMR  = new double[]{uclMR, mrBar+intervalMR*2, mrBar+intervalMR, mrBar, mrBar-intervalMR, mrBar-intervalMR*2, lclMR};
+
+
+
+
+
+        // 调试代码
+        System.out.println("x = " + Arrays.toString(x));
+        System.out.println("mr = " + Arrays.toString(mr));
+        System.out.println("xBar = " + xBar);
+        System.out.println("mrBar = " + mrBar);
+        // System.out.println("xBarGraduation = " +xBarGraduation);
+        // System.out.println("RGraduation = " + RGraduation);
+        System.out.println("b = " + b);
+        System.out.println("uclX = " + uclX);
+        System.out.println("lclX = " + lclX);
+        System.out.println("uclMR = " + uclMR);
+        System.out.println("lclMR = " + lclMR);
+        System.out.println("zUSL = " + zUSL);
+        System.out.println("zLSL = " + zLSL);
+        System.out.println("z = " + z);
+        System.out.println("cpu = " + cpu);
+        System.out.println("cpl = " + cpl);
+        System.out.println("cpk = " + cpk);
+        System.out.println("specialPointsX = " + specialPointsX);
+        System.out.println("specialPointsMR = " + specialPointsMR);
+        System.out.println("descendChainXList = " + descendChainXList);
+        System.out.println("descendChainMRList = " + descendChainMRList);
+        System.out.println("ascendChainXList = " + ascendChainXList);
+        System.out.println("ascendChainMRList = " + ascendChainMRList);
+        System.out.println("upperChainXList = " + upperChainXList);
+        System.out.println("upperChainMRList = " + upperChainMRList);
+        System.out.println("lowerChainXList = " + lowerChainXList);
+        System.out.println("lowerChainMRList = " + lowerChainMRList);
+        System.out.println("intervalValuesX = " + Arrays.toString(intervalValuesX));
+        System.out.println("intervalValuesMR = " + Arrays.toString(intervalValuesMR));
+        //
     }
 }

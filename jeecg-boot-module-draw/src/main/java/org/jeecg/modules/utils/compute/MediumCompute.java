@@ -30,8 +30,8 @@ public class MediumCompute {
                 xMedium[i] = dataArray[i][subgroupCapacity/2];
             }
 
-            double xMax = dataArray[i][0];
-            double xMin = dataArray[i][subgroupCapacity-1];
+            double xMin = dataArray[i][0];
+            double xMax = dataArray[i][subgroupCapacity-1];
 
             r[i] = xMax - xMin;
         }
@@ -70,8 +70,8 @@ public class MediumCompute {
 
         // 分析
         // 超出控制线的点
-        List<Integer> specialPointsXMedium = new ArrayList<Integer>();
-        List<Integer> specialPointsR = new ArrayList<Integer>();
+        List<Integer> specialPointsXMedium = new ArrayList<>();
+        List<Integer> specialPointsR = new ArrayList<>();
 
 
         for (int i = 0; i < subgroupTotal; i++) {
@@ -108,7 +108,41 @@ public class MediumCompute {
         // ......
         double intervalXMedium = (uclXMedium - xMediumBar) / 3;
         double intervalR =    (uclR - rBar) / 3;
-        double[] intervalValuesXBar = new double[]{uclXMedium, xMediumBar+intervalXMedium*2, xMediumBar+intervalXMedium, xMediumBar, xMediumBar-intervalXMedium, xMediumBar-intervalXMedium*2, lclXMedium};
+        double[] intervalValuesXMedium = new double[]{uclXMedium, xMediumBar+intervalXMedium*2, xMediumBar+intervalXMedium, xMediumBar, xMediumBar-intervalXMedium, xMediumBar-intervalXMedium*2, lclXMedium};
         double[] intervalValuesR    = new double[]{uclR,       rBar+intervalR*2 ,            rBar+intervalR ,            rBar,       rBar-intervalR,             rBar-intervalR*2,             lclR};
+
+
+
+
+        // 调试代码
+        System.out.println("xMedium = " + Arrays.toString(xMedium));
+        System.out.println("r = " + Arrays.toString(r));
+        System.out.println("xMediumBar = " + xMediumBar);
+        System.out.println("rBar = " + rBar);
+        // System.out.println("xBarGraduation = " + xBarGraduation);
+        // System.out.println("RGraduation = " + RGraduation);
+        System.out.println("uclXMedium = " + uclXMedium);
+        System.out.println("lclXMedium = " + lclXMedium);
+        System.out.println("uclR = " + uclR);
+        System.out.println("lclR = " + lclR);
+        System.out.println("zUSL = " + zUSL);
+        System.out.println("zLSL = " + zLSL);
+        System.out.println("z = " + z);
+        System.out.println("cpu = " + cpu);
+        System.out.println("cpl = " + cpl);
+        System.out.println("cpk = " + cpk);
+        System.out.println("specialPointsXMedium = " + specialPointsXMedium);
+        System.out.println("specialPointsR = " + specialPointsR);
+        System.out.println("descendChainXMediumList = " + descendChainXMediumList);
+        System.out.println("descendChainRList = " + descendChainRList);
+        System.out.println("ascendChainXMediumList = " + ascendChainXMediumList);
+        System.out.println("ascendChainRList = " + ascendChainRList);
+        System.out.println("upperChainXMediumList = " + upperChainXMediumList);
+        System.out.println("upperChainRList = " + upperChainRList);
+        System.out.println("lowerChainXMediumList = " + lowerChainXMediumList);
+        System.out.println("lowerChainRList = " + lowerChainRList);
+        System.out.println("intervalValuesXMedium = " + Arrays.toString(intervalValuesXMedium));
+        System.out.println("intervalValuesR = " + Arrays.toString(intervalValuesR));
+        //
     }
 }
