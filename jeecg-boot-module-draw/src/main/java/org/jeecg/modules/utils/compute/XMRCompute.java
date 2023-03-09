@@ -12,6 +12,7 @@ import java.util.stream.DoubleStream;
 
 public class XMRCompute {
     public static GraphDataXMR compute(Draw drawData) {
+        String graphType = drawData.getGraphType();
         int subgroupTotal = drawData.getSubgroupTotal();
         double usl = drawData.getUsl();
         double lsl = drawData.getLsl();
@@ -194,6 +195,7 @@ public class XMRCompute {
         // 设置返回体
         GraphDataXMR graphData = new GraphDataXMR();
 
+        graphData.setGraphType(graphType);
         graphData.setSubTotal(subgroupTotal);
         graphData.setAvgX(xBar);
         graphData.setMaxX(xMax);

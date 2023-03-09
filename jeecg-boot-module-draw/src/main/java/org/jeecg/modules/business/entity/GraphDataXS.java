@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GraphDataXS implements GraphData{
+    String graphType;
+
     int subgroupCapacity;
 
     int subTotal;
@@ -83,6 +85,10 @@ public class GraphDataXS implements GraphData{
 
     double[] intervalXBarValues;
     double[] intervalSValues;
+
+    public String getGraphType() { return graphType; }
+
+    public void setGraphType(String graphType) { this.graphType = graphType; }
 
     public int getSubgroupCapacity() {
         return subgroupCapacity;
@@ -447,7 +453,8 @@ public class GraphDataXS implements GraphData{
     @Override
     public String toString() {
         return "GraphDataXS{" +
-                "subgroupCapacity=" + subgroupCapacity +
+                "graphType='" + graphType + '\'' +
+                ", subgroupCapacity=" + subgroupCapacity +
                 ", subTotal=" + subTotal +
                 ", samplesNum=" + samplesNum +
                 ", avgX=" + avgX +

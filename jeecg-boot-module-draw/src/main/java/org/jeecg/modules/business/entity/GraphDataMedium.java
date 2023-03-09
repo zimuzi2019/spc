@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GraphDataMedium implements GraphData{
+    String graphType;
+
     int subgroupCapacity;
 
     int subTotal;
@@ -83,6 +85,14 @@ public class GraphDataMedium implements GraphData{
 
     double[] intervalXMediumValues;
     double[] intervalRValues;
+
+    public String getGraphType() {
+        return graphType;
+    }
+
+    public void setGraphType(String graphType) {
+        this.graphType = graphType;
+    }
 
     public int getSubgroupCapacity() {
         return subgroupCapacity;
@@ -447,7 +457,8 @@ public class GraphDataMedium implements GraphData{
     @Override
     public String toString() {
         return "GraphDataMedium{" +
-                "subgroupCapacity=" + subgroupCapacity +
+                "graphType='" + graphType + '\'' +
+                ", subgroupCapacity=" + subgroupCapacity +
                 ", subTotal=" + subTotal +
                 ", samplesNum=" + samplesNum +
                 ", avgX=" + avgX +
@@ -470,7 +481,7 @@ public class GraphDataMedium implements GraphData{
                 ", sigma=" + sigma +
                 ", pp=" + pp +
                 ", ppk=" + ppk +
-                ", ca=" + ca +
+                ", ca='" + ca + '\'' +
                 ", cp=" + cp +
                 ", cpu=" + cpu +
                 ", cpl=" + cpl +

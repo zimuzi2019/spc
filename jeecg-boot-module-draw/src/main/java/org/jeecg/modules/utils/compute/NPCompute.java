@@ -11,6 +11,7 @@ import java.util.stream.DoubleStream;
 public class NPCompute {
     public static GraphDataCnP compute(Draw drawData) {
         String graphType = drawData.getGraphType();
+
         int subgroupTotal = drawData.getSubgroupTotal();
         int subgroupCapacity = drawData.getSubgroupCapacity();
         int samplesNum = subgroupTotal * subgroupCapacity;

@@ -10,6 +10,8 @@ import java.util.stream.DoubleStream;
 
 public class MediumCompute {
     public static GraphData compute(Draw drawData) {
+        String graphType = drawData.getGraphType();
+
         double[][] dataArray = drawData.getDataArrayXRXSMedium();
 
         int subgroupCapacity = drawData.getSubgroupCapacity();
@@ -218,6 +220,7 @@ public class MediumCompute {
         // 设置返回体
         GraphDataMedium graphData = new GraphDataMedium();
 
+        graphData.setGraphType(graphType);
         graphData.setSubgroupCapacity(subgroupCapacity);
         graphData.setSubTotal(subgroupTotal);
         graphData.setSamplesNum(samplesNum);
@@ -247,6 +250,20 @@ public class MediumCompute {
         graphData.setCpl(cpl);
         graphData.setCpk(cpk);
         graphData.setCpkGrade(cpkGrade);
+        graphData.setDataArrayXMedium(xMedium);
+        graphData.setDataArrayR(r);
+        graphData.setSpecialPointsXMedium(specialPointsXMedium);
+        graphData.setSpecialPointsR(specialPointsR);
+        graphData.setDescendChainXMediumList(descendChainXMediumList);
+        graphData.setAscendChainXMediumList(ascendChainXMediumList);
+        graphData.setUpperChainXMediumList(upperChainXMediumList);
+        graphData.setLowerChainXMediumList(lowerChainXMediumList);
+        graphData.setDescendChainRList(descendChainRList);
+        graphData.setAscendChainRList(ascendChainRList);
+        graphData.setUpperChainRList(upperChainRList);
+        graphData.setLowerChainRList(lowerChainRList);
+        graphData.setIntervalXMediumValues(intervalValuesXMedium);
+        graphData.setIntervalRValues(intervalValuesR);
 
         return graphData;
     }

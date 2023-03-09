@@ -12,6 +12,8 @@ import java.util.stream.DoubleStream;
 
 public class XRCompute {
     public static GraphData compute(Draw drawData) {
+        String graphType = drawData.getGraphType();
+
         double[][] dataArray = drawData.getDataArrayXRXSMedium();
 
         int subgroupCapacity = drawData.getSubgroupCapacity();
@@ -221,6 +223,7 @@ public class XRCompute {
         // 设置返回体
         GraphDataXR graphData = new GraphDataXR();
 
+        graphData.setGraphType(graphType);
         graphData.setSubgroupCapacity(subgroupCapacity);
         graphData.setSubTotal(subgroupTotal);
         graphData.setSamplesNum(samplesNum);
@@ -250,6 +253,20 @@ public class XRCompute {
         graphData.setCpl(cpl);
         graphData.setCpk(cpk);
         graphData.setCpkGrade(cpkGrade);
+        graphData.setDataArrayXBar(xBar);
+        graphData.setDataArrayR(r);
+        graphData.setSpecialPointsXBar(specialPointsXBar);
+        graphData.setSpecialPointsR(specialPointsR);
+        graphData.setDescendChainXBarList(descendChainXBarList);
+        graphData.setAscendChainXBarList(ascendChainXBarList);
+        graphData.setUpperChainXBarList(upperChainXBarList);
+        graphData.setLowerChainXBarList(lowerChainXBarList);
+        graphData.setDescendChainRList(descendChainRList);
+        graphData.setAscendChainRList(ascendChainRList);
+        graphData.setUpperChainRList(upperChainRList);
+        graphData.setLowerChainRList(lowerChainRList);
+        graphData.setIntervalXBarValues(intervalValuesXBar);
+        graphData.setIntervalRValues(intervalValuesR);
 
         return graphData;
     }

@@ -12,6 +12,8 @@ import java.util.stream.DoubleStream;
 
 public class XSCompute {
     public static GraphData compute(Draw drawData) {
+        String graphType = drawData.getGraphType();
+
         double[][] dataArray = drawData.getDataArrayXRXSMedium();
 
         int subgroupCapacity = drawData.getSubgroupCapacity();
@@ -237,6 +239,7 @@ public class XSCompute {
         // 设置返回体
         GraphDataXS graphData = new GraphDataXS();
 
+        graphData.setGraphType(graphType);
         graphData.setSubgroupCapacity(subgroupCapacity);
         graphData.setSubTotal(subgroupTotal);
         graphData.setSamplesNum(samplesNum);
@@ -266,6 +269,20 @@ public class XSCompute {
         graphData.setCpl(cpl);
         graphData.setCpk(cpk);
         graphData.setCpkGrade(cpkGrade);
+        graphData.setDataArrayXBar(xBar);
+        graphData.setDataArrayS(s);
+        graphData.setSpecialPointsXBar(specialPointsXBar);
+        graphData.setSpecialPointsS(specialPointsS);
+        graphData.setDescendChainXBarList(descendChainXBarList);
+        graphData.setAscendChainXBarList(ascendChainXBarList);
+        graphData.setUpperChainXBarList(upperChainXBarList);
+        graphData.setLowerChainXBarList(lowerChainXBarList);
+        graphData.setDescendChainSList(descendChainSList);
+        graphData.setAscendChainSList(ascendChainSList);
+        graphData.setUpperChainSList(upperChainSList);
+        graphData.setLowerChainSList(lowerChainSList);
+        graphData.setIntervalXBarValues(intervalValuesXBar);
+        graphData.setIntervalSValues(intervalValuesS);
 
         return graphData;
     }

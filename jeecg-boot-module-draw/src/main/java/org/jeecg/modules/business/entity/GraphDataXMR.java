@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GraphDataXMR implements GraphData{
+    String graphType;
+
     int subTotal;
 
     double avgX;
@@ -79,6 +81,14 @@ public class GraphDataXMR implements GraphData{
 
     double[] intervalXValues;
     double[] intervalMRValues;
+
+    public String getGraphType() {
+        return graphType;
+    }
+
+    public void setGraphType(String graphType) {
+        this.graphType = graphType;
+    }
 
     public int getSubTotal() {
         return subTotal;
@@ -424,10 +434,12 @@ public class GraphDataXMR implements GraphData{
         this.intervalMRValues = intervalMRValues;
     }
 
+
     @Override
     public String toString() {
         return "GraphDataXMR{" +
-                "subTotal=" + subTotal +
+                "graphType='" + graphType + '\'' +
+                ", subTotal=" + subTotal +
                 ", avgX=" + avgX +
                 ", maxX=" + maxX +
                 ", minX=" + minX +
@@ -448,7 +460,7 @@ public class GraphDataXMR implements GraphData{
                 ", sigma=" + sigma +
                 ", pp=" + pp +
                 ", ppk=" + ppk +
-                ", ca=" + ca +
+                ", ca='" + ca + '\'' +
                 ", cp=" + cp +
                 ", cpu=" + cpu +
                 ", cpl=" + cpl +
