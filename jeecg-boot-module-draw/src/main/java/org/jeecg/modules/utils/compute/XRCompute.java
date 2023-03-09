@@ -1,6 +1,8 @@
 package org.jeecg.modules.utils.compute;
 
 import org.jeecg.modules.business.entity.Draw;
+import org.jeecg.modules.business.entity.GraphData;
+import org.jeecg.modules.business.entity.GraphDataXR;
 import org.jeecg.modules.utils.TableCoefficient;
 
 import java.util.ArrayList;
@@ -9,12 +11,41 @@ import java.util.List;
 import java.util.stream.DoubleStream;
 
 public class XRCompute {
-    public static void compute(Draw drawData) {
+    public static GraphData compute(Draw drawData) {
         double[][] dataArray = drawData.getDataArrayXRXSMedium();
+
         int subgroupCapacity = drawData.getSubgroupCapacity();
         int subgroupTotal = drawData.getSubgroupTotal();
+        int samplesNum = subgroupCapacity * subgroupTotal;
+
         double usl = drawData.getUsl();
         double lsl = drawData.getLsl();
+        double sl = drawData.getSl();
+
+        // 求样本最大值、最大值、中位数
+        double[] tmpArray = new double[samplesNum];
+        for (int i = 0; i < subgroupTotal; i++) {
+            for (int j = 0; j < subgroupCapacity; j++) tmpArray[i * subgroupCapacity + j] = dataArray[i][j];
+        }
+        double xMax = DoubleStream.of(tmpArray).max().orElse(0);
+        double xMin = DoubleStream.of(tmpArray).min().orElse(0);
+        double xAvg = DoubleStream.of(tmpArray).sum() / samplesNum;
+
+
+        // 样本标准差
+        double tmp = 0;
+        for (int i = 0; i < samplesNum; i++) tmp = tmp + Math.pow(tmpArray[i] - xAvg, 2);
+        double stdX = Math.sqrt(tmp / (samplesNum-1));
+
+        // 样本偏度
+        double tmp1 = 0;
+        for (int i = 0; i < samplesNum; i++) tmp1 = tmp1 + Math.pow( (tmpArray[i] - xAvg)/stdX, 3 );
+        double skewnessX = samplesNum * tmp1 / ((samplesNum -1) * (samplesNum-2)) ;
+
+        // 样本峰度
+        double tmp2 = 0;
+        for (int i = 0; i < samplesNum; i++) tmp2 = tmp2 + Math.pow( (tmpArray[i] - xAvg)/stdX, 4);
+        double kurtosisX = samplesNum * (samplesNum + 1) * tmp2 / ((samplesNum - 1) * (samplesNum - 2) * (samplesNum - 3)) - 3 * Math.pow( (samplesNum - 1), 2) / ((samplesNum - 2) * (samplesNum - 3));
 
 
         // 每个子组的均值
@@ -22,14 +53,24 @@ public class XRCompute {
         // 每个子组的极差
         double[] r = new double[subgroupTotal];
 
+        double tmpSum = 0;
         for(int i = 0; i < subgroupTotal; i++) {
             double subgroupSum = DoubleStream.of(dataArray[i]).sum();
-            double xMax = DoubleStream.of(dataArray[i]).max().orElse(0);
-            double xMin = DoubleStream.of(dataArray[i]).min().orElse(0);
+            double subgroupMax = DoubleStream.of(dataArray[i]).max().orElse(0);
+            double subgroupMin = DoubleStream.of(dataArray[i]).min().orElse(0);
 
             xBar[i] = subgroupSum / subgroupCapacity;
-            r[i] = xMax - xMin;
+            r[i] = subgroupMax - subgroupMin;
+
+            double[] subgroupCopy = dataArray[i].clone();
+            Arrays.sort(subgroupCopy);
+            int len = subgroupCapacity; double subgroupMid = 0;
+            if (len % 2 == 0)  subgroupMid = (subgroupCopy[len / 2] + subgroupCopy[len / 2 - 1]) / 2;
+            else subgroupMid = subgroupCopy[len / 2];
+            tmpSum = tmpSum + subgroupMid;
         }
+        // 平均中位数
+        double avgSubgroupMid = tmpSum / subgroupTotal;
 
         // 过程均值
         double xDoubleBar = DoubleStream.of(xBar).sum()  / subgroupTotal;
@@ -48,8 +89,10 @@ public class XRCompute {
         // 这里没有写 subgroupCapacity > 25 时该如何取值
         double uclXBar = xDoubleBar + TableCoefficient.A2[subgroupCapacity] * rBar;
         double lclXBar = xDoubleBar - TableCoefficient.A2[subgroupCapacity] * rBar;
+        double clXBar = xDoubleBar;
         double uclR = TableCoefficient.D4[subgroupCapacity] * rBar;
         double lclR = TableCoefficient.D3[subgroupCapacity] * rBar;
+        double clR = rBar;
 
         // 过程的标准偏差
         double sigma = rBar / TableCoefficient.d2[subgroupCapacity];
@@ -66,6 +109,20 @@ public class XRCompute {
         double cpl = zLSL / 3;
         //过程能力指数
         double cpk = z / 3;
+        double pp = (usl- lsl) / (6 * stdX);
+        double ppk = Math.min( (usl - xDoubleBar) / (3 * stdX), (xDoubleBar - lsl) / (3 * stdX));
+        String ca = Math.abs((xDoubleBar - (usl + lsl) / 2) / ((usl - lsl) / 2) * 100) + "%";
+        double cp = (usl - lsl) / (6 * sigma);
+
+        // 预估不良率
+        int defectsNum = 0;
+        for (int i = 0; i < samplesNum; i++) {
+            if (tmpArray[i] < lsl || tmpArray[i] > usl) defectsNum++;
+        }
+        double ppm = defectsNum * 1.0 / samplesNum * Math.pow(10, 6);
+
+        // Grade
+        String cpkGrade = CpkGradeDetermination.CpkGraderDetermination(cpk);
 
 
 
@@ -117,7 +174,11 @@ public class XRCompute {
 
 
 
-        // 调试代码
+        // 调试代码 ----------------------------------------------------------------------
+        System.out.println("xMax = " + xMax);
+        System.out.println("xMin = " + xMin);
+        System.out.println("xAvg = " + xAvg);
+        System.out.println("avgSubgroupMid = " + avgSubgroupMid);
         System.out.println("xBar = " + Arrays.toString(xBar));
         System.out.println("r = " + Arrays.toString(r));
         System.out.println("xDoubleBar = " + xDoubleBar);
@@ -128,12 +189,20 @@ public class XRCompute {
         System.out.println("lclXBar = " + lclXBar);
         System.out.println("uclR = " + uclR);
         System.out.println("lclR = " + lclR);
-        System.out.println("zUSL = " + zUSL);
-        System.out.println("zLSL = " + zLSL);
+        System.out.println("lclR = " + lclR);
+        System.out.println("stdXBar = " + stdX);
+        System.out.println("skewnessX = " + skewnessX);
+        System.out.println("kurtosisX = " + kurtosisX);
         System.out.println("z = " + z);
         System.out.println("cpu = " + cpu);
         System.out.println("cpl = " + cpl);
         System.out.println("cpk = " + cpk);
+        System.out.println("pp = " + pp);
+        System.out.println("ppk = " + ppk);
+        System.out.println("ca = " + ca);
+        System.out.println("cp = " + cp);
+        System.out.println("ppm = " + ppm);
+        System.out.println("cpkGrade = " + cpkGrade);
         System.out.println("specialPointsXBar = " + specialPointsXBar);
         System.out.println("specialPointsR = " + specialPointsR);
         System.out.println("descendChainXBarList = " + descendChainXBarList);
@@ -146,6 +215,42 @@ public class XRCompute {
         System.out.println("lowerChainRList = " + lowerChainRList);
         System.out.println("intervalValuesXBar = " + Arrays.toString(intervalValuesXBar));
         System.out.println("intervalValuesR = " + Arrays.toString(intervalValuesR));
-        //
+        // ----------------------------------------------------------------------------------
+
+
+        // 设置返回体
+        GraphDataXR graphData = new GraphDataXR();
+
+        graphData.setSubgroupCapacity(subgroupCapacity);
+        graphData.setSubTotal(subgroupTotal);
+        graphData.setSamplesNum(samplesNum);
+        graphData.setAvgX(xAvg);
+        graphData.setMaxX(xMax);
+        graphData.setMinX(xMin);
+        graphData.setAvgSubgroupMid(avgSubgroupMid);
+        graphData.setUsl(usl);
+        graphData.setSl(sl);
+        graphData.setLsl(lsl);
+        graphData.setUclXBar(uclXBar);
+        graphData.setClXBar(clXBar);
+        graphData.setLclXBar(lclXBar);
+        graphData.setUclR(uclR);
+        graphData.setClR(clR);
+        graphData.setLclR(lclR);
+        graphData.setSkewnessX(skewnessX);
+        graphData.setKurtosisX(kurtosisX);
+        graphData.setPpm(ppm);
+        graphData.setStdX(stdX);
+        graphData.setSigma(sigma);
+        graphData.setPp(pp);
+        graphData.setPpk(ppk);
+        graphData.setCa(ca);
+        graphData.setCp(cp);
+        graphData.setCpu(cpu);
+        graphData.setCpl(cpl);
+        graphData.setCpk(cpk);
+        graphData.setCpkGrade(cpkGrade);
+
+        return graphData;
     }
 }

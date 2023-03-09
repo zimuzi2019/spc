@@ -1,6 +1,7 @@
 package org.jeecg.modules.utils.compute;
 
 import org.jeecg.modules.business.entity.Draw;
+import org.jeecg.modules.business.entity.GraphDataCnP;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,27 +9,25 @@ import java.util.List;
 import java.util.stream.DoubleStream;
 
 public class CCompute {
-    public static void compute(Draw drawData) {
+    public static GraphDataCnP compute(Draw drawData) {
         String graphType = drawData.getGraphType();
         int subgroupTotal = drawData.getSubgroupTotal();
         int subgroupCapacity = drawData.getSubgroupCapacity();
+        int samplesNum = subgroupTotal * subgroupCapacity;
 
-        double[] dataArray = drawData.getDataArrayCnP();
-
-        double[] c = dataArray;
+        double[] c = drawData.getDataArrayCnP();
+        int defectsNum = (int) DoubleStream.of(c).sum();
 
         // 平均不合格品数
-        double cBar = DoubleStream.of(c).sum() / subgroupTotal;
+        double cBar = defectsNum / subgroupTotal;
 
         // 控制图刻度
-        double graduation = DoubleStream.of(c).max().orElse(0) * 2;
+        double graduationC = DoubleStream.of(c).max().orElse(0) * 2;
 
         // 控制界限
         double uclC = cBar + 3 * Math.sqrt(cBar);
         double lclC = cBar - 3 * Math.sqrt(cBar);
-
-        // 似乎不用计算过程能力指数
-        // ......
+        double clC = cBar;
 
 
 
@@ -66,11 +65,12 @@ public class CCompute {
 
 
 
-        // 调试代码
+        // 调试代码 ---------------------------------------------------------------------
         System.out.println("c = " + Arrays.toString(c));
         System.out.println("cBar = " + cBar);
-        System.out.println("graduation = " + graduation);
+        System.out.println("graduationC = " + graduationC);
         System.out.println("uclC = " + uclC);
+        System.out.println("clC = " + clC);
         System.out.println("lclC = " + lclC);
         System.out.println("specialPointsC = " + specialPointsC);
         System.out.println("descendChainCList = " + descendChainCList);
@@ -78,6 +78,30 @@ public class CCompute {
         System.out.println("upperChainCList = " + upperChainCList);
         System.out.println("lowerChainCList = " + lowerChainCList);
         System.out.println("intervalValuesC = " + Arrays.toString(intervalValuesC));
-        //
+        // ------------------------------------------------------------------------------
+
+
+        // 返回体设置
+        GraphDataCnP graphData = new GraphDataCnP();
+
+        graphData.setGraphType(graphType);
+        graphData.setSubgroupTotal(subgroupTotal);
+        graphData.setSubgroupCapacity(subgroupCapacity);
+        graphData.setSampleNum(samplesNum);
+        graphData.setDefectsNum(defectsNum);
+        graphData.setAvgDefectNum(cBar);
+        graphData.setUcl(uclC);
+        graphData.setCl(clC);
+        graphData.setLcl(lclC);
+        graphData.setDataArray(c);
+        graphData.setGraduation(graduationC);
+        graphData.setSpecialPoints(specialPointsC);
+        graphData.setDescendChainList(descendChainCList);
+        graphData.setAscendChainList(ascendChainCList);
+        graphData.setUpperChainList(upperChainCList);
+        graphData.setLowerChainList(lowerChainCList);
+        graphData.setIntervalValues(intervalValuesC);
+
+        return graphData;
     }
 }

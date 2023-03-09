@@ -1,12 +1,15 @@
 package org.jeecg.modules.business.service;
 
 import org.jeecg.modules.business.entity.Draw;
+import org.jeecg.modules.business.entity.GraphData;
+import org.jeecg.modules.business.entity.GraphDataCnP;
+import org.jeecg.modules.business.entity.GraphDataPU;
 import org.jeecg.modules.utils.compute.*;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DrawService {
-    public void handleData(Draw drawData) {
+    public GraphData handleData(Draw drawData) {
         System.out.println(drawData);
 
         String graphType = drawData.getGraphType();
@@ -22,29 +25,33 @@ public class DrawService {
         }
         //
 
+        GraphData graphData = null;
+
         if (graphType.equals("X-R") ) {
-            XRCompute.compute(drawData);
+            graphData = XRCompute.compute(drawData);
         }
         if (graphType.equals("X-S")) {
-            XSCompute.compute(drawData);
+            graphData = XSCompute.compute(drawData);
         }
         if (graphType.equals("中位数")) {
-            MediumCompute.compute(drawData);
+            graphData = MediumCompute.compute(drawData);
         }
         if (graphType.equals("X-MR") ) {
-            XMRCompute.compute(drawData);
+            graphData = XMRCompute.compute(drawData);
         }
         if (graphType.equals("C")) {
-            CCompute.compute(drawData);
+            graphData = CCompute.compute(drawData);
         }
         if (graphType.equals("nP")) {
-            NPCompute.compute(drawData);
+            graphData = NPCompute.compute(drawData);
         }
         if (graphType.equals("P") ) {
-            PCompute.compute(drawData);
+            graphData = PCompute.compute(drawData);
         }
         if (graphType.equals("U")) {
-            UCompute.compute(drawData);
+            graphData = UCompute.compute(drawData);
         }
+
+        return graphData;
     }
 }

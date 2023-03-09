@@ -1,6 +1,7 @@
 package org.jeecg.modules.utils.compute;
 
 import org.jeecg.modules.business.entity.Draw;
+import org.jeecg.modules.business.entity.GraphDataPU;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,12 +11,19 @@ import java.util.stream.IntStream;
 
 public class UCompute {
     // 这里画的是通用单位缺陷数控制图而不是单位缺陷控制图
-    public static void compute(Draw drawData) {
+    public static GraphDataPU compute(Draw drawData) {
         String graphType = drawData.getGraphType();
+
         int subgroupTotal = drawData.getSubgroupTotal();
 
         int[] dataArraySubgroupsCapacity = drawData.getDataArrayPUSubgroupsCapacity();
         int[] dataArrayDefectsNum = drawData.getDataArrayPUDefectsNum();
+
+        int samplesNum = IntStream.of(dataArraySubgroupsCapacity).sum();
+        int defectsNum = IntStream.of(dataArrayDefectsNum).sum();
+        double avgSubgroupCapacity = IntStream.of(dataArraySubgroupsCapacity).sum() / subgroupTotal;
+        int subgroupCapactityMax = IntStream.of(dataArraySubgroupsCapacity).max().orElse(0);
+        int subgroupCapactityMin = IntStream.of(dataArraySubgroupsCapacity).min().orElse(0);
 
         //每个子组的不合格点数
         double[] u = new double[subgroupTotal];
@@ -25,21 +33,19 @@ public class UCompute {
         }
 
         // 平均不合格品数
-        double uBar = IntStream.of(dataArrayDefectsNum).sum() * 1.0 / IntStream.of(dataArraySubgroupsCapacity).sum();
+        double uBar = defectsNum * 1.0 / samplesNum;
 
         // 标准化处理
         double[] ut = new double[subgroupTotal];
         for (int i = 0; i < subgroupTotal; i++) ut[i] = (u[i] - uBar) / Math.sqrt(uBar / dataArraySubgroupsCapacity[i]);
 
-        // 控制图坐标刻度 ...
+        // 控制图坐标刻度
         double graduation = DoubleStream.of(ut).max().orElse(0) * 2;
 
         // 上下控制限
         double uclUt = 3;
         double lclUt = -3;
-
-        // 似乎不用计算过程能力指数
-        // ......
+        double clUt = 0;
 
 
         // 分析
@@ -73,7 +79,7 @@ public class UCompute {
 
 
 
-        // 调试代码
+        // 调试代码 -----------------------------------------------------------------------
         System.out.println("u = " + Arrays.toString(u));
         System.out.println("uBar = " + uBar);
 
@@ -88,6 +94,31 @@ public class UCompute {
         System.out.println("upperChainUtList = " + upperChainUtList);
         System.out.println("lowerChainUtList = " + lowerChainUtList);
         System.out.println("intervalValuesUt = " + Arrays.toString(intervalValuesUt));
-        //
+        // -------------------------------------------------------------------------------
+
+        // 返回体设置
+        GraphDataPU graphData = new GraphDataPU();
+
+        graphData.setGraphType(graphType);
+        graphData.setSubgroupTotal(subgroupTotal);
+        graphData.setAvgSubgroupCapacity(avgSubgroupCapacity);
+        graphData.setSubgroupCapacityMax(subgroupCapactityMax);
+        graphData.setSubgroupCapacityMin(subgroupCapactityMin);
+        graphData.setSamplesNum(samplesNum);
+        graphData.setDefectsNum(defectsNum);
+        graphData.setAvgDefectsNum(uBar);
+        graphData.setUcl(uclUt);
+        graphData.setCl(clUt);
+        graphData.setLcl(lclUt);
+        graphData.setDataArray(ut);
+        graphData.setGraduation(graduation);
+        graphData.setSpecialPoints(specialPointsUt);
+        graphData.setAscendChainList(ascendChainUtList);
+        graphData.setDescendChainList(descendChainUtList);
+        graphData.setUpperChainList(upperChainUtList);
+        graphData.setLowerChainList(lowerChainUtList);
+        graphData.setIntervalValues(intervalValuesUt);
+
+        return graphData;
     }
 }

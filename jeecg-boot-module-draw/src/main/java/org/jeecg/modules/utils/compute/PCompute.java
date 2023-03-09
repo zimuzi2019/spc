@@ -1,6 +1,7 @@
 package org.jeecg.modules.utils.compute;
 
 import org.jeecg.modules.business.entity.Draw;
+import org.jeecg.modules.business.entity.GraphDataPU;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,12 +11,19 @@ import java.util.stream.IntStream;
 
 public class PCompute {
     // 这里画的是通用不合格品率控制图而不是不合格品率控制图
-    public static void compute(Draw drawData) {
+    public static GraphDataPU compute(Draw drawData) {
         String graphType = drawData.getGraphType();
+
         int subgroupTotal = drawData.getSubgroupTotal();
 
         int[] dataArraySubgroupsCapacity = drawData.getDataArrayPUSubgroupsCapacity();
         int[] dataArrayDefectsNum = drawData.getDataArrayPUDefectsNum();
+
+        int samplesNum = IntStream.of(dataArraySubgroupsCapacity).sum();
+        int defectsNum = IntStream.of(dataArrayDefectsNum).sum();
+        double avgSubgroupCapacity = IntStream.of(dataArraySubgroupsCapacity).sum() / subgroupTotal;
+        int subgroupCapactityMax = IntStream.of(dataArraySubgroupsCapacity).max().orElse(0);
+        int subgroupCapactityMin = IntStream.of(dataArraySubgroupsCapacity).min().orElse(0);
 
         //每个子组的不合格品率
         double[] p = new double[subgroupTotal];
@@ -37,9 +45,7 @@ public class PCompute {
         // 上下控制限
         double uclPt = 3;
         double lclPt = -3;
-
-        // 似乎不用计算过程能力指数
-        // ......
+        double clPt = 0;
 
 
         // 分析
@@ -91,5 +97,32 @@ public class PCompute {
         System.out.println("lowerChainPtList = " + lowerChainPtList);
         System.out.println("intervalValuesPt = " + Arrays.toString(intervalValuesPt));
         //
+
+
+
+        // 返回体设置
+        GraphDataPU graphData = new GraphDataPU();
+
+        graphData.setGraphType(graphType);
+        graphData.setSubgroupTotal(subgroupTotal);
+        graphData.setAvgSubgroupCapacity(avgSubgroupCapacity);
+        graphData.setSubgroupCapacityMax(subgroupCapactityMax);
+        graphData.setSubgroupCapacityMin(subgroupCapactityMin);
+        graphData.setSamplesNum(samplesNum);
+        graphData.setDefectsNum(defectsNum);
+        graphData.setAvgDefectsNum(pBar);
+        graphData.setUcl(uclPt);
+        graphData.setCl(clPt);
+        graphData.setLcl(lclPt);
+        graphData.setDataArray(pt);
+        graphData.setGraduation(graduation);
+        graphData.setSpecialPoints(specialPointsPt);
+        graphData.setAscendChainList(ascendChainPtList);
+        graphData.setDescendChainList(descendChainPtList);
+        graphData.setUpperChainList(upperChainPtList);
+        graphData.setLowerChainList(lowerChainPtList);
+        graphData.setIntervalValues(intervalValuesPt);
+
+        return graphData;
     }
 }

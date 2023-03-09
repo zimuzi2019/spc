@@ -1,6 +1,7 @@
 package org.jeecg.modules.utils.compute;
 
 import org.jeecg.modules.business.entity.Draw;
+import org.jeecg.modules.business.entity.GraphDataCnP;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,30 +9,28 @@ import java.util.List;
 import java.util.stream.DoubleStream;
 
 public class NPCompute {
-    public static void compute(Draw drawData) {
+    public static GraphDataCnP compute(Draw drawData) {
         String graphType = drawData.getGraphType();
         int subgroupTotal = drawData.getSubgroupTotal();
         int subgroupCapacity = drawData.getSubgroupCapacity();
+        int samplesNum = subgroupTotal * subgroupCapacity;
 
-        double[] dataArray = drawData.getDataArrayCnP();
-
-        double[] np = dataArray;
+        double[] np = drawData.getDataArrayCnP();
+        int defectsNum = (int) DoubleStream.of(np).sum();
 
         // 平均不合格品率
-        double pBar  = DoubleStream.of(np).sum() / (subgroupTotal * subgroupCapacity);
-        // 平均不良率
-        double npBar = DoubleStream.of(np).sum() / subgroupTotal;
+        double pBar  = defectsNum / samplesNum;  // 计算用
+
+        // 平均不合格品数
+        double npBar = defectsNum / subgroupTotal;
 
         // 控制图刻度
-        double graduation = DoubleStream.of(np).max().orElse(0) * 2;
+        double graduationNP = DoubleStream.of(np).max().orElse(0) * 2;
 
         // 控制界限
         double uclNP = subgroupCapacity * pBar + 3 * Math.sqrt(subgroupCapacity * pBar * (1 - pBar));
         double lclNP = subgroupCapacity * pBar - 3 * Math.sqrt(subgroupCapacity * pBar * (1 - pBar));
         double clNP = subgroupCapacity * pBar;
-
-        // 似乎不用计算过程能力指数
-        // ......
 
 
 
@@ -69,11 +68,11 @@ public class NPCompute {
 
 
 
-        // 调试代码
+        // 调试代码 ---------------------------------------------------------------------
         System.out.println("np = " + Arrays.toString(np));
         System.out.println("pBar = " + pBar);
         System.out.println("npBar = " + npBar);
-        System.out.println("graduation = " + graduation);
+        System.out.println("graduationNP = " + graduationNP);
         System.out.println("uclC = " + uclNP);
         System.out.println("lclNP = " + lclNP);
 
@@ -85,6 +84,30 @@ public class NPCompute {
         System.out.println("upperChainNPList = " + upperChainNPList);
         System.out.println("lowerChainNPList = " + lowerChainNPList);
         System.out.println("intervalValuesCNP= " + Arrays.toString(intervalValuesNP));
-        //
+        // -----------------------------------------------------------------------------
+
+
+        // 返回体设置
+        GraphDataCnP graphData = new GraphDataCnP();
+
+        graphData.setGraphType(graphType);
+        graphData.setSubgroupTotal(subgroupTotal);
+        graphData.setSubgroupCapacity(subgroupCapacity);
+        graphData.setSampleNum(samplesNum);
+        graphData.setDefectsNum(defectsNum);
+        graphData.setAvgDefectNum(npBar);
+        graphData.setUcl(uclNP);
+        graphData.setCl(clNP);
+        graphData.setLcl(lclNP);
+        graphData.setDataArray(np);
+        graphData.setGraduation(graduationNP);
+        graphData.setSpecialPoints(specialPointsNP);
+        graphData.setDescendChainList(descendChainNPList);
+        graphData.setAscendChainList(ascendChainNPList);
+        graphData.setUpperChainList(upperChainNPList);
+        graphData.setLowerChainList(lowerChainNPList);
+        graphData.setIntervalValues(intervalValuesNP);
+
+        return graphData;
     }
 }
