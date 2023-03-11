@@ -3,6 +3,7 @@ package org.jeecg.modules.utils.compute;
 import org.jeecg.modules.business.entity.Draw;
 import org.jeecg.modules.business.entity.GraphDataCnP;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +20,7 @@ public class CCompute {
         int defectsNum = (int) DoubleStream.of(c).sum();
 
         // 平均不合格品数
-        double cBar = defectsNum / subgroupTotal;
+        double cBar = defectsNum * 1.0 / subgroupTotal;
 
         // 控制图刻度
         double graduationC = DoubleStream.of(c).max().orElse(0) * 2;
@@ -27,17 +28,20 @@ public class CCompute {
         // 控制界限
         double uclC = cBar + 3 * Math.sqrt(cBar);
         double lclC = cBar - 3 * Math.sqrt(cBar);
+        if ( lclC < 0 ) lclC = 0;
         double clC = cBar;
 
 
 
         // 分析
+        DecimalFormat df = new DecimalFormat("#.###");
         // 超出控制线的点
         List<Integer> specialPointsC = new ArrayList<>();
 
         for (int i = 0; i < subgroupTotal; i++) {
             if (c[i] < lclC || c[i] > uclC)    specialPointsC.add(i+1);
         }
+        String pointsSpecialRadio = df.format(specialPointsC.size() * 100.0 / subgroupTotal) + "%";
 
         // 链
         int n = 6;   // 连续6点递增或者递减
@@ -50,19 +54,42 @@ public class CCompute {
 
         n = 9;     // 连续9点落在中心线的一侧
         // 下侧链集合
-        List<ArrayList<Integer> > lowerChainCList = ChainCount.lowerChainCount(n, subgroupTotal, c, 0);
+        List<ArrayList<Integer> > lowerChainCList = ChainCount.lowerChainCount(n, subgroupTotal, c, clC);
 
         // 下侧链集合
-        List<ArrayList<Integer> > upperChainCList = ChainCount.upperChainCount(n, subgroupTotal, c, 0);
-
+        List<ArrayList<Integer> > upperChainCList = ChainCount.upperChainCount(n, subgroupTotal, c, clC);
 
 
         // 明显非随机图形
         // ......
-        double intervalC = (uclC -cBar) / 3;
-        double[] intervalValuesC = new double[]{uclC, cBar+intervalC*2, cBar+intervalC, cBar, cBar-intervalC, cBar-intervalC*2, lclC};
 
+        double intervalC = (uclC -cBar) / 3 ;
+        double lowerC = 0;
+        double upperC = cBar + intervalC;
+        if (cBar - intervalC > 0) lowerC = cBar - intervalC;
 
+        int pointsCNum = 0;
+        for (int i = 0; i < subgroupTotal; i++) {
+            if (c[i] > lowerC && c[i] < upperC) pointsCNum++;
+        }
+        double tmp = pointsCNum * 1.0 * 100 / subgroupTotal;
+        tmp = Double.parseDouble(df.format(tmp));
+        String pointsCRadio = tmp + "%";
+
+        //List<Double> intervalsC = new ArrayList<>();
+        //intervalsC.add(uclC);
+        //intervalsC.add(Double.valueOf(df.format(cBar+intervalC*2)));
+        //intervalsC.add(Double.valueOf(df.format(cBar+intervalC)));
+        //intervalsC.add(Double.valueOf(df.format(cBar)));
+        //if (cBar-intervalC > 0) intervalsC.add(Double.valueOf(df.format(cBar-intervalC)));
+        //if (cBar-intervalC*2 > 0) intervalsC.add(Double.valueOf(df.format(cBar-intervalC*2)));
+        //if (lclC > 0) intervalsC.add(lclC);
+        //intervalsC.add(0.0);
+
+        cBar = Double.parseDouble(df.format(cBar));
+        uclC = Double.parseDouble(df.format(uclC));
+        lclC = Double.parseDouble(df.format(lclC));
+        clC =  Double.parseDouble(df.format(clC));
 
 
         // 调试代码 ---------------------------------------------------------------------
@@ -77,7 +104,7 @@ public class CCompute {
         System.out.println("ascendChainCList = " + ascendChainCList);
         System.out.println("upperChainCList = " + upperChainCList);
         System.out.println("lowerChainCList = " + lowerChainCList);
-        System.out.println("intervalValuesC = " + Arrays.toString(intervalValuesC));
+        // System.out.println("intervalsC = " + intervalsC);
         // ------------------------------------------------------------------------------
 
 
@@ -100,7 +127,9 @@ public class CCompute {
         graphData.setAscendChainList(ascendChainCList);
         graphData.setUpperChainList(upperChainCList);
         graphData.setLowerChainList(lowerChainCList);
-        graphData.setIntervalValues(intervalValuesC);
+        graphData.setPointsCRadio(pointsCRadio);
+        graphData.setPointsSpecialRadio(pointsSpecialRadio);
+        // graphData.setIntervalValues(intervalsC);
 
         return graphData;
     }

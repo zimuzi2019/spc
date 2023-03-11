@@ -27,6 +27,10 @@ public class GraphDataCnP implements GraphData{
 
     double graduation;
 
+    String pointsCRadio;
+
+    String pointsSpecialRadio;
+
     List<Integer> specialPoints;
 
     List<ArrayList<Integer> > descendChainList;
@@ -34,7 +38,7 @@ public class GraphDataCnP implements GraphData{
     List<ArrayList<Integer> > lowerChainList;
     List<ArrayList<Integer> > upperChainList;
 
-    double[] intervalValues;
+    // List<Double> intervalValues;
 
     public String getGraphType() {
         return graphType;
@@ -156,20 +160,28 @@ public class GraphDataCnP implements GraphData{
         this.upperChainList = upperChainList;
     }
 
-    public double[] getIntervalValues() {
-        return intervalValues;
-    }
-
-    public void setIntervalValues(double[] intervalValues) {
-        this.intervalValues = intervalValues;
-    }
-
     public double getGraduation() {
         return graduation;
     }
 
     public void setGraduation(double graduation) {
         this.graduation = graduation;
+    }
+
+    public String getPointsCRadio() {
+        return pointsCRadio;
+    }
+
+    public void setPointsCRadio(String pointsCRadio) {
+        this.pointsCRadio = pointsCRadio;
+    }
+
+    public String getPointsSpecialRadio() {
+        return pointsSpecialRadio;
+    }
+
+    public void setPointsSpecialRadio(String pointsSpecialRadio) {
+        this.pointsSpecialRadio = pointsSpecialRadio;
     }
 
     @Override
@@ -186,12 +198,13 @@ public class GraphDataCnP implements GraphData{
                 ", cl=" + cl +
                 ", dataArray=" + Arrays.toString(dataArray) +
                 ", graduation=" + graduation +
+                ", pointsCRadio='" + pointsCRadio + '\'' +
+                ", pointsSpecialRadio='" + pointsSpecialRadio + '\'' +
                 ", specialPoints=" + specialPoints +
                 ", descendChainList=" + descendChainList +
                 ", ascendChainList=" + ascendChainList +
                 ", lowerChainList=" + lowerChainList +
                 ", upperChainList=" + upperChainList +
-                ", intervalValues=" + Arrays.toString(intervalValues) +
                 '}';
     }
 }

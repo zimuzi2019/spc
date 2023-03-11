@@ -14,24 +14,29 @@ public class ChainCount {
         List<ArrayList<Integer> > ascendChainList = new ArrayList<>();
 
         int cntAscend = 0;
-        ArrayList<Integer> ascendChain = new ArrayList<>();
+        int ascendStart = -1;
 
 
         for (int i = 0; i < len-1; i++) {
             if (array[i] <= array[i+1]) {
-                ascendChain.add(i+1);
+                if (cntAscend == 0) ascendStart = i+1;
                 cntAscend++;
             } else {
-                ascendChain.clear();
+                if (cntAscend >= n-1) {
+                    ArrayList<Integer> ascendChain = new ArrayList<>();
+                    ascendChain.add(ascendStart);
+                    ascendChain.add(i+1);
+                    ascendChainList.add(ascendChain);
+                }
                 cntAscend = 0;
             }
+        }
 
-            if (cntAscend == n-1) {
-                ascendChain.add(i+2);
-                ascendChainList.add(ascendChain);
-                ascendChain = new ArrayList<>();
-                cntAscend = 0;
-            }
+        if (cntAscend >= n-1) {
+            ArrayList<Integer> ascendChain = new ArrayList<>();
+            ascendChain.add(ascendStart);
+            ascendChain.add(len);
+            ascendChainList.add(ascendChain);
         }
 
         return ascendChainList;
@@ -45,24 +50,29 @@ public class ChainCount {
         List<ArrayList<Integer> > descendChainList = new ArrayList<>();
 
         int cntDescend = 0;
-        ArrayList<Integer> descendChain = new ArrayList<>();
+        int descendStart = -1;
 
 
         for (int i = 0; i < len-1; i++) {
             if (array[i] >= array[i+1]) {
-                descendChain.add(i+1);
+                if (cntDescend == 0) descendStart = i+1;
                 cntDescend++;
             } else {
-                descendChain.clear();
+                if (cntDescend >= n-1) {
+                    ArrayList<Integer> descendChain = new ArrayList<>();
+                    descendChain.add(descendStart);
+                    descendChain.add(i+1);
+                    descendChainList.add(descendChain);
+                }
                 cntDescend = 0;
             }
+        }
 
-            if (cntDescend == n-1) {
-                descendChain.add(i+2);
-                descendChainList.add(descendChain);
-                descendChain = new ArrayList<>();
-                cntDescend = 0;
-            }
+        if (cntDescend >= n-1) {
+            ArrayList<Integer> descendChain = new ArrayList<>();
+            descendChain.add(descendStart);
+            descendChain.add(len);
+            descendChainList.add(descendChain);
         }
 
         return descendChainList;
@@ -76,24 +86,29 @@ public class ChainCount {
         List<ArrayList<Integer> > upperChainList = new ArrayList<>();
 
         int cntUpper = 0;
-        ArrayList<Integer> upperChain = new ArrayList<>();
+        int upperStart = -1;
 
 
         for (int i = 0; i < len-1; i++) {
             if (array[i] > mean && array[i+1] > mean) {
-                upperChain.add(i+1);
+                if (cntUpper == 0) upperStart = i+1;
                 cntUpper++;
             } else {
-                upperChain.clear();
+                if (cntUpper >= n-1) {
+                    ArrayList<Integer> upperChain = new ArrayList<>();
+                    upperChain.add(upperStart);
+                    upperChain.add(i+1);
+                    upperChainList.add(upperChain);
+                }
                 cntUpper = 0;
             }
+        }
 
-            if (cntUpper == n-1) {
-                upperChain.add(i+2);
-                upperChainList.add(upperChain);
-                upperChain = new ArrayList<>();
-                cntUpper = 0;
-            }
+        if (cntUpper >= n-1) {
+            ArrayList<Integer> upperChain = new ArrayList<>();
+            upperChain.add(upperStart);
+            upperChain.add(len);
+            upperChainList.add(upperChain);
         }
 
         return upperChainList;
@@ -106,24 +121,29 @@ public class ChainCount {
         List<ArrayList<Integer> > lowerChainList = new ArrayList<>();
 
         int cntLower = 0;
-        ArrayList<Integer> lowerChain = new ArrayList<>();
+        int lowerStart = -1;
 
 
         for (int i = 0; i < len-1; i++) {
             if (array[i] < mean && array[i+1] < mean) {
-                lowerChain.add(i+1);
+                if (cntLower == 0) lowerStart = i+1;
                 cntLower++;
             } else {
-                lowerChain.clear();
+                if (cntLower >= n-1) {
+                    ArrayList<Integer> lowerChain = new ArrayList<>();
+                    lowerChain.add(lowerStart);
+                    lowerChain.add(i+1);
+                    lowerChainList.add(lowerChain);
+                }
                 cntLower = 0;
             }
+        }
 
-            if (cntLower == n-1) {
-                lowerChain.add(i+2);
-                lowerChainList.add(lowerChain);
-                lowerChain = new ArrayList<>();
-                cntLower = 0;
-            }
+        if (cntLower >= n-1) {
+            ArrayList<Integer> lowerChain = new ArrayList<>();
+            lowerChain.add(lowerStart);
+            lowerChain.add(len);
+            lowerChainList.add(lowerChain);
         }
 
         return lowerChainList;
