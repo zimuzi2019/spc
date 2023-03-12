@@ -19,7 +19,7 @@ public class GraphDataPU implements GraphData{
 
     int defectsNum;
 
-    double avgDefectsNum;
+    String avgDefectsNum;
 
     double ucl;
 
@@ -31,6 +31,10 @@ public class GraphDataPU implements GraphData{
 
     double graduation;
 
+    String pointsCRadio;
+
+    String pointsSpecialRadio;
+
     List<Integer> specialPoints;
 
     List<ArrayList<Integer>> descendChainList;
@@ -38,7 +42,8 @@ public class GraphDataPU implements GraphData{
     List<ArrayList<Integer> > lowerChainList;
     List<ArrayList<Integer> > upperChainList;
 
-    double[] intervalValues;
+    // List<Double> intervalValues;
+
 
     public String getGraphType() {
         return graphType;
@@ -76,8 +81,8 @@ public class GraphDataPU implements GraphData{
         return subgroupCapacityMin;
     }
 
-    public void setSubgroupCapacityMin(int getSubgroupCapacityMin) {
-        this.subgroupCapacityMin = getSubgroupCapacityMin;
+    public void setSubgroupCapacityMin(int subgroupCapacityMin) {
+        this.subgroupCapacityMin = subgroupCapacityMin;
     }
 
     public int getSamplesNum() {
@@ -96,11 +101,11 @@ public class GraphDataPU implements GraphData{
         this.defectsNum = defectsNum;
     }
 
-    public double getAvgDefectsNum() {
+    public String getAvgDefectsNum() {
         return avgDefectsNum;
     }
 
-    public void setAvgDefectsNum(double avgDefectsNum) {
+    public void setAvgDefectsNum(String avgDefectsNum) {
         this.avgDefectsNum = avgDefectsNum;
     }
 
@@ -144,6 +149,22 @@ public class GraphDataPU implements GraphData{
         this.graduation = graduation;
     }
 
+    public String getPointsCRadio() {
+        return pointsCRadio;
+    }
+
+    public void setPointsCRadio(String pointsCRadio) {
+        this.pointsCRadio = pointsCRadio;
+    }
+
+    public String getPointsSpecialRadio() {
+        return pointsSpecialRadio;
+    }
+
+    public void setPointsSpecialRadio(String pointsSpecialRadio) {
+        this.pointsSpecialRadio = pointsSpecialRadio;
+    }
+
     public List<Integer> getSpecialPoints() {
         return specialPoints;
     }
@@ -184,14 +205,6 @@ public class GraphDataPU implements GraphData{
         this.upperChainList = upperChainList;
     }
 
-    public double[] getIntervalValues() {
-        return intervalValues;
-    }
-
-    public void setIntervalValues(double[] intervalValues) {
-        this.intervalValues = intervalValues;
-    }
-
     @Override
     public String toString() {
         return "GraphDataPU{" +
@@ -208,12 +221,13 @@ public class GraphDataPU implements GraphData{
                 ", cl=" + cl +
                 ", dataArray=" + Arrays.toString(dataArray) +
                 ", graduation=" + graduation +
+                ", pointsCRadio='" + pointsCRadio + '\'' +
+                ", pointsSpecialRadio='" + pointsSpecialRadio + '\'' +
                 ", specialPoints=" + specialPoints +
                 ", descendChainList=" + descendChainList +
                 ", ascendChainList=" + ascendChainList +
                 ", lowerChainList=" + lowerChainList +
                 ", upperChainList=" + upperChainList +
-                ", intervalValues=" + Arrays.toString(intervalValues) +
                 '}';
     }
 }
