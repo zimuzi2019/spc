@@ -5,6 +5,7 @@ import org.jeecg.modules.business.entity.GraphDataPU;
 import org.jeecg.modules.business.entity.GraphDataXMR;
 import org.jeecg.modules.utils.TableCoefficient;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +13,8 @@ import java.util.stream.DoubleStream;
 
 public class XMRCompute {
     public static GraphDataXMR compute(Draw drawData) {
+        DecimalFormat df = new DecimalFormat("#.####");
+
         String graphType = drawData.getGraphType();
         int subgroupTotal = drawData.getSubgroupTotal();
         double usl = drawData.getUsl();
@@ -26,6 +29,7 @@ public class XMRCompute {
 
         for (int i = 0; i < subgroupTotal-1; i++) {
             mr[i] = Math.abs(x[i+1] - x[i]);
+            mr[i] = Double.parseDouble(df.format(mr[i]));
         }
 
         // 过程均值
@@ -60,7 +64,9 @@ public class XMRCompute {
         // 控制图刻度
         // 这里“产品的规范容差加上超过规范的读数的允许值”没搞懂
         double graduationX = (DoubleStream.of(x).max().orElse(0) - DoubleStream.of(x).min().orElse(0))  * 2;
+        graduationX = (int) graduationX + 1;
         double graduationMR = DoubleStream.of(mr).max().orElse(0) * 2;
+        graduationMR = (int) graduationMR + 1;
 
         // 控制界限
         double uclX = xBar + TableCoefficient.E2[2] * mrBar;
@@ -87,7 +93,7 @@ public class XMRCompute {
         double cpk = z / 3;
         double pp = (usl- lsl) / (6 * stdX);
         double ppk = Math.min( (usl - xBar) / (3 * stdX), (xBar - lsl) / (3 * stdX));
-        String ca = Math.abs((xBar - (usl + lsl) / 2) / ((usl - lsl) / 2) * 100) + "%";
+        String ca = df.format(Math.abs((xBar - (usl + lsl) / 2) / ((usl - lsl) / 2) * 100)) + "%";
         double cp = (usl - lsl) / (6 * sigma);
 
         // 预估不良率
@@ -111,10 +117,12 @@ public class XMRCompute {
         for (int i = 0; i < subgroupTotal-1; i++) {
             if (mr[i] < lclMR || mr[i] > uclMR)   specialPointsMR.add(i+1);
         }
+        String pointsSpecialRadioMR = df.format(specialPointsMR.size() * 100.0 / subgroupTotal) + "%";
 
         for (int i = 0; i < subgroupTotal; i++) {
             if (x[i] < lclX || x[i] > uclX)       specialPointsX.add(i+1);
         }
+        String pointsSpecialRadioX = df.format(specialPointsX.size() * 100.0 / subgroupTotal) + "%";
 
         //链
         // 产生链需要的点数
@@ -142,12 +150,60 @@ public class XMRCompute {
 
         // 明显非随机图形
         // ......
-        double intervalX = (uclX - xBar) / 3;
-        double intervalMR =    (uclMR - mrBar) / 3;
-        double[] intervalValuesX =   new double[]{uclX,  xBar+intervalX*2,   xBar+intervalX,   xBar,  xBar-intervalX,   xBar-intervalX*2,   lclX};
-        double[] intervalValuesMR  = new double[]{uclMR, mrBar+intervalMR*2, mrBar+intervalMR, mrBar, mrBar-intervalMR, mrBar-intervalMR*2, lclMR};
+        //double intervalX = (uclX - xBar) / 3;
+        //double intervalMR =    (uclMR - mrBar) / 3;
+        //double[] intervalValuesX =   new double[]{uclX,  xBar+intervalX*2,   xBar+intervalX,   xBar,  xBar-intervalX,   xBar-intervalX*2,   lclX};
+        //double[] intervalValuesMR  = new double[]{uclMR, mrBar+intervalMR*2, mrBar+intervalMR, mrBar, mrBar-intervalMR, mrBar-intervalMR*2, lclMR};
+        double intervalCX = (uclX - xBar) / 3 ;
+        double lowerCX = xBar - intervalCX;
+        double upperCX = xBar + intervalCX;
+
+        int pointsCNumX = 0;
+        for (int i = 0; i < subgroupTotal; i++) {
+            if (x[i] > lowerCX && x[i] < upperCX) pointsCNumX++;
+        }
+        double tmpX = pointsCNumX * 1.0 * 100 / subgroupTotal;
+        tmpX = Double.parseDouble(df.format(tmpX));
+        String pointsCRadioX = tmpX + "%";
+
+        double intervalCMR = (uclMR - mrBar) / 3 ;
+        double lowerCMR = mrBar - intervalCMR;
+        double upperCMR = mrBar + intervalCMR;
+
+        int pointsCNumMR = 0;
+        for (int i = 0; i < subgroupTotal-1; i++) {
+            if (mr[i] > lowerCMR && mr[i] < upperCMR) pointsCNumMR++;
+        }
+        double tmpMR = pointsCNumMR * 1.0 * 100 / (subgroupTotal-1);
+        tmpMR = Double.parseDouble(df.format(tmpMR));
+        String pointsCRadioMR = tmpMR + "%";
 
 
+        for  (int i = 0; i < subgroupTotal; i++) x[i] = Double.parseDouble(df.format(x[i]));
+        xBar = Double.parseDouble(df.format(xBar));
+        xMax = Double.parseDouble(df.format(xMax));
+        xMin = Double.parseDouble(df.format(xMin));
+        xMid = Double.parseDouble(df.format(xMid));
+        usl  = Double.parseDouble(df.format(usl));
+        sl   = Double.parseDouble(df.format(sl));
+        lsl  = Double.parseDouble(df.format(lsl));
+        uclX = Double.parseDouble(df.format(uclX));
+        clX  = Double.parseDouble(df.format(clX));
+        lclX = Double.parseDouble(df.format(lclX));
+        uclMR = Double.parseDouble(df.format(uclMR));
+        clMR  = Double.parseDouble(df.format(clMR));
+        lclMR = Double.parseDouble(df.format(lclMR));
+        skewnessX = Double.parseDouble(df.format(skewnessX));
+        kurtosisX = Double.parseDouble(df.format(kurtosisX));
+        ppm   = Double.parseDouble(df.format(ppm));
+        pp    = Double.parseDouble(df.format(pp));
+        ppk   = Double.parseDouble(df.format(ppk));
+        stdX  = Double.parseDouble(df.format(stdX));
+        sigma = Double.parseDouble(df.format(sigma));
+        cp    = Double.parseDouble(df.format(cp));
+        cpu   = Double.parseDouble(df.format(cpu));
+        cpl   = Double.parseDouble(df.format(cpl));
+        cpk   = Double.parseDouble(df.format(cpk));
 
 
         // 调试代码 -----------------------------------------------------------------
@@ -188,15 +244,15 @@ public class XMRCompute {
         System.out.println("upperChainMRList = " + upperChainMRList);
         System.out.println("lowerChainXList = " + lowerChainXList);
         System.out.println("lowerChainMRList = " + lowerChainMRList);
-        System.out.println("intervalValuesX = " + Arrays.toString(intervalValuesX));
-        System.out.println("intervalValuesMR = " + Arrays.toString(intervalValuesMR));
+        // System.out.println("intervalValuesX = " + Arrays.toString(intervalValuesX));
+        // System.out.println("intervalValuesMR = " + Arrays.toString(intervalValuesMR));
         // -----------------------------------------------------------------------------
 
         // 设置返回体
         GraphDataXMR graphData = new GraphDataXMR();
 
         graphData.setGraphType(graphType);
-        graphData.setSubTotal(subgroupTotal);
+        graphData.setSubgroupTotal(subgroupTotal);
         graphData.setAvgX(xBar);
         graphData.setMaxX(xMax);
         graphData.setMinX(xMin);
@@ -223,6 +279,8 @@ public class XMRCompute {
         graphData.setCpl(cpl);
         graphData.setCpk(cpk);
         graphData.setCpkGrade(cpkGrade);
+        graphData.setDataArrayX(x);
+        graphData.setDataArrayMR(mr);
         graphData.setGraduationX(graduationX);
         graphData.setGraduationMR(graduationMR);
         graphData.setSpecialPointsX(specialPointsX);
@@ -235,8 +293,12 @@ public class XMRCompute {
         graphData.setAscendChainMRList(ascendChainMRList);
         graphData.setLowerChainMRList(lowerChainMRList);
         graphData.setUpperChainMRList(upperChainMRList);
-        graphData.setIntervalXValues(intervalValuesX);
-        graphData.setIntervalMRValues(intervalValuesMR);
+        // graphData.setIntervalXValues(intervalValuesX);
+        // graphData.setIntervalMRValues(intervalValuesMR);
+        graphData.setPointsSpecialRadioX(pointsSpecialRadioX);
+        graphData.setPointsSpecialRadioMR(pointsSpecialRadioMR);
+        graphData.setPointsCRadioX(pointsCRadioX);
+        graphData.setPointsCRadioMR(pointsCRadioMR);
 
         return graphData;
     }

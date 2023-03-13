@@ -7,7 +7,7 @@ import java.util.List;
 public class GraphDataXMR implements GraphData{
     String graphType;
 
-    int subTotal;
+    int subgroupTotal;
 
     double avgX;
 
@@ -79,8 +79,11 @@ public class GraphDataXMR implements GraphData{
     List<ArrayList<Integer> > lowerChainMRList;
     List<ArrayList<Integer> > upperChainMRList;
 
-    double[] intervalXValues;
-    double[] intervalMRValues;
+    String pointsSpecialRadioX;
+    String pointsSpecialRadioMR;
+
+    String pointsCRadioX;
+    String pointsCRadioMR;
 
     public String getGraphType() {
         return graphType;
@@ -90,12 +93,12 @@ public class GraphDataXMR implements GraphData{
         this.graphType = graphType;
     }
 
-    public int getSubTotal() {
-        return subTotal;
+    public int getSubgroupTotal() {
+        return subgroupTotal;
     }
 
-    public void setSubTotal(int subTotal) {
-        this.subTotal = subTotal;
+    public void setSubgroupTotal(int subgroupTotal) {
+        this.subgroupTotal = subgroupTotal;
     }
 
     public double getAvgX() {
@@ -418,28 +421,43 @@ public class GraphDataXMR implements GraphData{
         this.upperChainMRList = upperChainMRList;
     }
 
-    public double[] getIntervalXValues() {
-        return intervalXValues;
+    public String getPointsSpecialRadioX() {
+        return pointsSpecialRadioX;
     }
 
-    public void setIntervalXValues(double[] intervalXValues) {
-        this.intervalXValues = intervalXValues;
+    public void setPointsSpecialRadioX(String pointsSpecialRadioX) {
+        this.pointsSpecialRadioX = pointsSpecialRadioX;
     }
 
-    public double[] getIntervalMRValues() {
-        return intervalMRValues;
+    public String getPointsSpecialRadioMR() {
+        return pointsSpecialRadioMR;
     }
 
-    public void setIntervalMRValues(double[] intervalMRValues) {
-        this.intervalMRValues = intervalMRValues;
+    public void setPointsSpecialRadioMR(String pointsSpecialRadioMR) {
+        this.pointsSpecialRadioMR = pointsSpecialRadioMR;
     }
 
+    public String getPointsCRadioX() {
+        return pointsCRadioX;
+    }
+
+    public void setPointsCRadioX(String pointsCRadioX) {
+        this.pointsCRadioX = pointsCRadioX;
+    }
+
+    public String getPointsCRadioMR() {
+        return pointsCRadioMR;
+    }
+
+    public void setPointsCRadioMR(String pointsCRadioMR) {
+        this.pointsCRadioMR = pointsCRadioMR;
+    }
 
     @Override
     public String toString() {
         return "GraphDataXMR{" +
                 "graphType='" + graphType + '\'' +
-                ", subTotal=" + subTotal +
+                ", subgroupTotal=" + subgroupTotal +
                 ", avgX=" + avgX +
                 ", maxX=" + maxX +
                 ", minX=" + minX +
@@ -480,8 +498,10 @@ public class GraphDataXMR implements GraphData{
                 ", ascendChainMRList=" + ascendChainMRList +
                 ", lowerChainMRList=" + lowerChainMRList +
                 ", upperChainMRList=" + upperChainMRList +
-                ", intervalXValues=" + Arrays.toString(intervalXValues) +
-                ", intervalMRValues=" + Arrays.toString(intervalMRValues) +
+                ", pointsSpecialRadioX='" + pointsSpecialRadioX + '\'' +
+                ", pointsSpecialRadioMR='" + pointsSpecialRadioMR + '\'' +
+                ", pointsCRadioX='" + pointsCRadioX + '\'' +
+                ", pointsCRadioMR='" + pointsCRadioMR + '\'' +
                 '}';
     }
 }
