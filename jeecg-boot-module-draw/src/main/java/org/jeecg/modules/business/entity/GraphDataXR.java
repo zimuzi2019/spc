@@ -7,9 +7,11 @@ import java.util.List;
 public class GraphDataXR implements GraphData{
     String graphType;
 
+    double[][] dataArray;
+
     int subgroupCapacity;
 
-    int subTotal;
+    int subgroupTotal;
 
     int samplesNum;
 
@@ -71,6 +73,12 @@ public class GraphDataXR implements GraphData{
     double graduationXBar;
     double graduationR;
 
+    String pointsCRadioXBar;
+    String pointsCRadioR;
+
+    String pointsSpecialRadioXBar;
+    String pointsSpecialRadioR;
+
     List<Integer> specialPointsXBar;
     List<Integer> specialPointsR;
 
@@ -83,8 +91,9 @@ public class GraphDataXR implements GraphData{
     List<ArrayList<Integer> > lowerChainRList;
     List<ArrayList<Integer> > upperChainRList;
 
-    double[] intervalXBarValues;
-    double[] intervalRValues;
+    // double[] intervalXBarValues;
+    // double[] intervalRValues;
+
 
     public String getGraphType() {
         return graphType;
@@ -92,6 +101,14 @@ public class GraphDataXR implements GraphData{
 
     public void setGraphType(String graphType) {
         this.graphType = graphType;
+    }
+
+    public double[][] getDataArray() {
+        return dataArray;
+    }
+
+    public void setDataArray(double[][] dataArray) {
+        this.dataArray = dataArray;
     }
 
     public int getSubgroupCapacity() {
@@ -102,12 +119,12 @@ public class GraphDataXR implements GraphData{
         this.subgroupCapacity = subgroupCapacity;
     }
 
-    public int getSubTotal() {
-        return subTotal;
+    public int getSubgroupTotal() {
+        return subgroupTotal;
     }
 
-    public void setSubTotal(int subTotal) {
-        this.subTotal = subTotal;
+    public void setSubgroupTotal(int subgroupTotal) {
+        this.subgroupTotal = subgroupTotal;
     }
 
     public int getSamplesNum() {
@@ -358,6 +375,38 @@ public class GraphDataXR implements GraphData{
         this.graduationR = graduationR;
     }
 
+    public String getPointsCRadioXBar() {
+        return pointsCRadioXBar;
+    }
+
+    public void setPointsCRadioXBar(String pointsCRadioXBar) {
+        this.pointsCRadioXBar = pointsCRadioXBar;
+    }
+
+    public String getPointsCRadioR() {
+        return pointsCRadioR;
+    }
+
+    public void setPointsCRadioR(String pointsCRadioR) {
+        this.pointsCRadioR = pointsCRadioR;
+    }
+
+    public String getPointsSpecialRadioXBar() {
+        return pointsSpecialRadioXBar;
+    }
+
+    public void setPointsSpecialRadioXBar(String pointsSpecialRadioXBar) {
+        this.pointsSpecialRadioXBar = pointsSpecialRadioXBar;
+    }
+
+    public String getPointsSpecialRadioR() {
+        return pointsSpecialRadioR;
+    }
+
+    public void setPointsSpecialRadioR(String pointsSpecialRadioR) {
+        this.pointsSpecialRadioR = pointsSpecialRadioR;
+    }
+
     public List<Integer> getSpecialPointsXBar() {
         return specialPointsXBar;
     }
@@ -438,28 +487,13 @@ public class GraphDataXR implements GraphData{
         this.upperChainRList = upperChainRList;
     }
 
-    public double[] getIntervalXBarValues() {
-        return intervalXBarValues;
-    }
-
-    public void setIntervalXBarValues(double[] intervalXBarValues) {
-        this.intervalXBarValues = intervalXBarValues;
-    }
-
-    public double[] getIntervalRValues() {
-        return intervalRValues;
-    }
-
-    public void setIntervalRValues(double[] intervalRValues) {
-        this.intervalRValues = intervalRValues;
-    }
-
     @Override
     public String toString() {
         return "GraphDataXR{" +
                 "graphType='" + graphType + '\'' +
+                ", dataArray=" + Arrays.toString(dataArray) +
                 ", subgroupCapacity=" + subgroupCapacity +
-                ", subTotal=" + subTotal +
+                ", subgroupTotal=" + subgroupTotal +
                 ", samplesNum=" + samplesNum +
                 ", avgX=" + avgX +
                 ", maxX=" + maxX +
@@ -491,6 +525,10 @@ public class GraphDataXR implements GraphData{
                 ", dataArrayR=" + Arrays.toString(dataArrayR) +
                 ", graduationXBar=" + graduationXBar +
                 ", graduationR=" + graduationR +
+                ", pointsCRadioXBar='" + pointsCRadioXBar + '\'' +
+                ", pointsCRadioR='" + pointsCRadioR + '\'' +
+                ", pointsSpecialRadioXBar='" + pointsSpecialRadioXBar + '\'' +
+                ", pointsSpecialRadioR='" + pointsSpecialRadioR + '\'' +
                 ", specialPointsXBar=" + specialPointsXBar +
                 ", specialPointsR=" + specialPointsR +
                 ", descendChainXBarList=" + descendChainXBarList +
@@ -501,8 +539,6 @@ public class GraphDataXR implements GraphData{
                 ", ascendChainRList=" + ascendChainRList +
                 ", lowerChainRList=" + lowerChainRList +
                 ", upperChainRList=" + upperChainRList +
-                ", intervalXBarValues=" + Arrays.toString(intervalXBarValues) +
-                ", intervalRValues=" + Arrays.toString(intervalRValues) +
                 '}';
     }
 }

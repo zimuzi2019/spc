@@ -5,6 +5,7 @@ import org.jeecg.modules.business.entity.GraphData;
 import org.jeecg.modules.business.entity.GraphDataXS;
 import org.jeecg.modules.utils.TableCoefficient;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +13,8 @@ import java.util.stream.DoubleStream;
 
 public class XSCompute {
     public static GraphData compute(Draw drawData) {
+        DecimalFormat df = new DecimalFormat("#.####");
+
         String graphType = drawData.getGraphType();
 
         double[][] dataArray = drawData.getDataArrayXRXSMedium();
@@ -84,7 +87,7 @@ public class XSCompute {
 
         // 控制图刻度
         // 均值图
-        double xBarGraduation = 2 * (DoubleStream.of(xBar).max().orElse(0) - DoubleStream.of(xBar).min().orElse(0));
+        double xBarGraduation = 2 * DoubleStream.of(xBar).max().orElse(0) ;
         // 极差图
         double sGraduation = 2 * DoubleStream.of(s).max().orElse(0);
 
@@ -132,7 +135,7 @@ public class XSCompute {
         double cpk = z / 3;
         double pp = (usl- lsl) / (6 * stdX);
         double ppk = Math.min( (usl - xDoubleBar) / (3 * stdX), (xDoubleBar - lsl) / (3 * stdX));
-        String ca = Math.abs((xDoubleBar - (usl + lsl) / 2) / ((usl - lsl) / 2) * 100) + "%";
+        String ca = df.format(Math.abs((xDoubleBar - (usl + lsl) / 2) / ((usl - lsl) / 2) * 100)) + "%";
         double cp = (usl - lsl) / (6 * sigma);
 
         // 预估不良率
@@ -157,6 +160,8 @@ public class XSCompute {
             if (s[i] < lclS || s[i] > uclS)               specialPointsS.add(i+1);
             if (xBar[i] < lclXBar || xBar[i] > uclXBar)   specialPointsXBar.add(i+1);
         }
+        String pointsSpecialRadioXBar = df.format(specialPointsXBar.size() * 100.0 / subgroupTotal) + "%";
+        String pointsSpecialRadioS    = df.format(specialPointsS.size() * 100.0 / subgroupTotal) + "%";
 
 
         //链
@@ -185,11 +190,61 @@ public class XSCompute {
 
         // 明显非随机图形
         // ......
-        double intervalXBar = (uclXBar - xDoubleBar) / 3;
-        double intervalS =    (uclS - sBar) / 3;
-        double[] intervalValuesXBar = new double[]{uclXBar, xDoubleBar+intervalXBar*2, xDoubleBar+intervalXBar, xDoubleBar, xDoubleBar-intervalXBar, xDoubleBar-intervalXBar*2, lclXBar};
-        double[] intervalValuesS    = new double[]{uclS,    sBar+intervalS*2 ,         sBar+intervalS ,         sBar,       sBar-intervalS,          sBar-intervalS*2,          lclS};
+        // double intervalXBar = (uclXBar - xDoubleBar) / 3;
+        // double intervalS =    (uclS - sBar) / 3;
+        // double[] intervalValuesXBar = new double[]{uclXBar, xDoubleBar+intervalXBar*2, xDoubleBar+intervalXBar, xDoubleBar, xDoubleBar-intervalXBar, xDoubleBar-intervalXBar*2, lclXBar};
+        // double[] intervalValuesS    = new double[]{uclS,    sBar+intervalS*2 ,         sBar+intervalS ,         sBar,       sBar-intervalS,          sBar-intervalS*2,          lclS};
+        double intervalCXBar = (uclXBar - xDoubleBar) / 3 ;
+        double lowerCXBar = xDoubleBar - intervalCXBar;
+        double upperCXBar = xDoubleBar + intervalCXBar;
 
+        int pointsCNumXBar = 0;
+        for (int i = 0; i < subgroupTotal; i++) {
+            if (xBar[i] > lowerCXBar && xBar[i] < upperCXBar) pointsCNumXBar++;
+        }
+        double tmpXBar = pointsCNumXBar * 1.0 * 100 / subgroupTotal;
+        tmpXBar = Double.parseDouble(df.format(tmpXBar));
+        String pointsCRadioXBar = tmpXBar + "%";
+
+        double intervalCS = (uclS - sBar) / 3 ;
+        double lowerCS = sBar - intervalCS;
+        double upperCS = sBar + intervalCS;
+
+        int pointsCNumS = 0;
+        for (int i = 0; i < subgroupTotal; i++) {
+            if (s[i] > lowerCS && s[i] < upperCS) pointsCNumS++;
+        }
+        double tmpS = pointsCNumS * 1.0 * 100 / subgroupTotal;
+        tmpS = Double.parseDouble(df.format(tmpS));
+        String pointsCRadioS = tmpS + "%";
+
+        for  (int i = 0; i < subgroupTotal; i++) xBar[i] = Double.parseDouble(df.format(xBar[i]));
+        for  (int i = 0; i < subgroupTotal; i++) s[i] = Double.parseDouble(df.format(s[i]));
+        xDoubleBar = Double.parseDouble(df.format(xDoubleBar));
+        xMax = Double.parseDouble(df.format(xMax));
+        xMin = Double.parseDouble(df.format(xMin));
+        xAvg = Double.parseDouble(df.format(xAvg));
+        avgSubgroupMid = Double.parseDouble(df.format(avgSubgroupMid));
+        usl  = Double.parseDouble(df.format(usl));
+        sl   = Double.parseDouble(df.format(sl));
+        lsl  = Double.parseDouble(df.format(lsl));
+        uclXBar = Double.parseDouble(df.format(uclXBar));
+        clXBar  = Double.parseDouble(df.format(clXBar));
+        lclXBar = Double.parseDouble(df.format(lclXBar));
+        uclS = Double.parseDouble(df.format(uclS));
+        clS  = Double.parseDouble(df.format(clS));
+        lclS = Double.parseDouble(df.format(lclS));
+        skewnessX = Double.parseDouble(df.format(skewnessX));
+        kurtosisX = Double.parseDouble(df.format(kurtosisX));
+        ppm   = Double.parseDouble(df.format(ppm));
+        pp    = Double.parseDouble(df.format(pp));
+        ppk   = Double.parseDouble(df.format(ppk));
+        stdX  = Double.parseDouble(df.format(stdX));
+        sigma = Double.parseDouble(df.format(sigma));
+        cp    = Double.parseDouble(df.format(cp));
+        cpu   = Double.parseDouble(df.format(cpu));
+        cpl   = Double.parseDouble(df.format(cpl));
+        cpk   = Double.parseDouble(df.format(cpk));
 
 
 
@@ -232,16 +287,17 @@ public class XSCompute {
         System.out.println("upperChainSList = " + upperChainSList);
         System.out.println("lowerChainXBarList = " + lowerChainXBarList);
         System.out.println("lowerChainSList = " + lowerChainSList);
-        System.out.println("intervalValuesXBar = " + Arrays.toString(intervalValuesXBar));
-        System.out.println("intervalValuesS = " + Arrays.toString(intervalValuesS));
+        // System.out.println("intervalValuesXBar = " + Arrays.toString(intervalValuesXBar));
+        // System.out.println("intervalValuesS = " + Arrays.toString(intervalValuesS));
         // --------------------------------------------------------------------------------
 
         // 设置返回体
         GraphDataXS graphData = new GraphDataXS();
 
         graphData.setGraphType(graphType);
+        graphData.setDataArray(dataArray);
         graphData.setSubgroupCapacity(subgroupCapacity);
-        graphData.setSubTotal(subgroupTotal);
+        graphData.setSubgroupTotal(subgroupTotal);
         graphData.setSamplesNum(samplesNum);
         graphData.setAvgX(xAvg);
         graphData.setMaxX(xMax);
@@ -269,6 +325,8 @@ public class XSCompute {
         graphData.setCpl(cpl);
         graphData.setCpk(cpk);
         graphData.setCpkGrade(cpkGrade);
+        graphData.setGraduationXBar(xBarGraduation);
+        graphData.setGraduationS(sGraduation);
         graphData.setDataArrayXBar(xBar);
         graphData.setDataArrayS(s);
         graphData.setSpecialPointsXBar(specialPointsXBar);
@@ -281,8 +339,13 @@ public class XSCompute {
         graphData.setAscendChainSList(ascendChainSList);
         graphData.setUpperChainSList(upperChainSList);
         graphData.setLowerChainSList(lowerChainSList);
-        graphData.setIntervalXBarValues(intervalValuesXBar);
-        graphData.setIntervalSValues(intervalValuesS);
+        // graphData.setIntervalXBarValues(intervalValuesXBar);
+        // graphData.setIntervalSValues(intervalValuesS);
+        graphData.setPointsCRadioXBar(pointsCRadioXBar);
+        graphData.setPointsCRadioS(pointsCRadioS);
+        graphData.setPointsSpecialRadioXBar(pointsSpecialRadioXBar);
+        graphData.setPointsSpecialRadioS(pointsSpecialRadioS);
+
 
         return graphData;
     }

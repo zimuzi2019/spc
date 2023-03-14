@@ -7,9 +7,11 @@ import java.util.List;
 public class GraphDataMedium implements GraphData{
     String graphType;
 
+    double[][] dataArray;
+
     int subgroupCapacity;
 
-    int subTotal;
+    int subgroupTotal;
 
     int samplesNum;
 
@@ -71,6 +73,12 @@ public class GraphDataMedium implements GraphData{
     double graduationXMedium;
     double graduationR;
 
+    String pointsCRadioXMedium;
+    String pointsCRadioR;
+
+    String pointsSpecialRadioXMedium;
+    String pointsSpecialRadioR;
+
     List<Integer> specialPointsXMedium;
     List<Integer> specialPointsR;
 
@@ -83,8 +91,9 @@ public class GraphDataMedium implements GraphData{
     List<ArrayList<Integer> > lowerChainRList;
     List<ArrayList<Integer> > upperChainRList;
 
-    double[] intervalXMediumValues;
-    double[] intervalRValues;
+    // double[] intervalXMediumValues;
+    // double[] intervalRValues;
+
 
     public String getGraphType() {
         return graphType;
@@ -92,6 +101,14 @@ public class GraphDataMedium implements GraphData{
 
     public void setGraphType(String graphType) {
         this.graphType = graphType;
+    }
+
+    public double[][] getDataArray() {
+        return dataArray;
+    }
+
+    public void setDataArray(double[][] dataArray) {
+        this.dataArray = dataArray;
     }
 
     public int getSubgroupCapacity() {
@@ -102,12 +119,12 @@ public class GraphDataMedium implements GraphData{
         this.subgroupCapacity = subgroupCapacity;
     }
 
-    public int getSubTotal() {
-        return subTotal;
+    public int getSubgroupTotal() {
+        return subgroupTotal;
     }
 
-    public void setSubTotal(int subTotal) {
-        this.subTotal = subTotal;
+    public void setSubgroupTotal(int subgroupTotal) {
+        this.subgroupTotal = subgroupTotal;
     }
 
     public int getSamplesNum() {
@@ -358,6 +375,38 @@ public class GraphDataMedium implements GraphData{
         this.graduationR = graduationR;
     }
 
+    public String getPointsCRadioXMedium() {
+        return pointsCRadioXMedium;
+    }
+
+    public void setPointsCRadioXMedium(String pointsCRadioXMedium) {
+        this.pointsCRadioXMedium = pointsCRadioXMedium;
+    }
+
+    public String getPointsCRadioR() {
+        return pointsCRadioR;
+    }
+
+    public void setPointsCRadioR(String pointsCRadioR) {
+        this.pointsCRadioR = pointsCRadioR;
+    }
+
+    public String getPointsSpecialRadioXMedium() {
+        return pointsSpecialRadioXMedium;
+    }
+
+    public void setPointsSpecialRadioXMedium(String pointsSpecialRadioXMedium) {
+        this.pointsSpecialRadioXMedium = pointsSpecialRadioXMedium;
+    }
+
+    public String getPointsSpecialRadioR() {
+        return pointsSpecialRadioR;
+    }
+
+    public void setPointsSpecialRadioR(String pointsSpecialRadioR) {
+        this.pointsSpecialRadioR = pointsSpecialRadioR;
+    }
+
     public List<Integer> getSpecialPointsXMedium() {
         return specialPointsXMedium;
     }
@@ -438,28 +487,13 @@ public class GraphDataMedium implements GraphData{
         this.upperChainRList = upperChainRList;
     }
 
-    public double[] getIntervalXMediumValues() {
-        return intervalXMediumValues;
-    }
-
-    public void setIntervalXMediumValues(double[] intervalXMediumValues) {
-        this.intervalXMediumValues = intervalXMediumValues;
-    }
-
-    public double[] getIntervalRValues() {
-        return intervalRValues;
-    }
-
-    public void setIntervalRValues(double[] intervalRValues) {
-        this.intervalRValues = intervalRValues;
-    }
-
     @Override
     public String toString() {
         return "GraphDataMedium{" +
                 "graphType='" + graphType + '\'' +
+                ", dataArray=" + Arrays.toString(dataArray) +
                 ", subgroupCapacity=" + subgroupCapacity +
-                ", subTotal=" + subTotal +
+                ", subgroupTotal=" + subgroupTotal +
                 ", samplesNum=" + samplesNum +
                 ", avgX=" + avgX +
                 ", maxX=" + maxX +
@@ -491,6 +525,10 @@ public class GraphDataMedium implements GraphData{
                 ", dataArrayR=" + Arrays.toString(dataArrayR) +
                 ", graduationXMedium=" + graduationXMedium +
                 ", graduationR=" + graduationR +
+                ", pointsCRadioXMedium='" + pointsCRadioXMedium + '\'' +
+                ", pointsCRadioR='" + pointsCRadioR + '\'' +
+                ", pointsSpecialRadioXMedium='" + pointsSpecialRadioXMedium + '\'' +
+                ", pointsSpecialRadioR='" + pointsSpecialRadioR + '\'' +
                 ", specialPointsXMedium=" + specialPointsXMedium +
                 ", specialPointsR=" + specialPointsR +
                 ", descendChainXMediumList=" + descendChainXMediumList +
@@ -501,8 +539,6 @@ public class GraphDataMedium implements GraphData{
                 ", ascendChainRList=" + ascendChainRList +
                 ", lowerChainRList=" + lowerChainRList +
                 ", upperChainRList=" + upperChainRList +
-                ", intervalXMediumValues=" + Arrays.toString(intervalXMediumValues) +
-                ", intervalRValues=" + Arrays.toString(intervalRValues) +
                 '}';
     }
 }

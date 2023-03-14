@@ -3,6 +3,7 @@ package org.jeecg.modules.utils.compute;
 import org.jeecg.modules.business.entity.*;
 import org.jeecg.modules.utils.TableCoefficient;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,6 +11,8 @@ import java.util.stream.DoubleStream;
 
 public class MediumCompute {
     public static GraphData compute(Draw drawData) {
+        DecimalFormat df = new DecimalFormat("#.####");
+
         String graphType = drawData.getGraphType();
 
         double[][] dataArray = drawData.getDataArrayXRXSMedium();
@@ -85,14 +88,14 @@ public class MediumCompute {
 
         // 控制图刻度
         // 均值图
-        double xMediumGraduation = 2 * (DoubleStream.of(xMedium).max().orElse(0) - DoubleStream.of(xMedium).min().orElse(0));
+        double xMediumGraduation = 2 * DoubleStream.of(xMedium).max().orElse(0);
         // 极差图
         double rGraduation = 2 * DoubleStream.of(r).max().orElse(0);
 
         // 控制界限
         // 这里没有写 subgroupCapacity > 25 时该如何取值
-        double uclXMedium = xMediumBar + TableCoefficient.A2[subgroupCapacity] * rBar;
-        double lclXMedium = xMediumBar - TableCoefficient.A2[subgroupCapacity] * rBar;
+        double uclXMedium = xMediumBar + TableCoefficient.m3A2[subgroupCapacity] * rBar;
+        double lclXMedium = xMediumBar - TableCoefficient.m3A2[subgroupCapacity] * rBar;
         double clXMedium = xMediumBar;
         double uclR = TableCoefficient.D4[subgroupCapacity] * rBar;
         double lclR = TableCoefficient.D3[subgroupCapacity] * rBar;
@@ -115,7 +118,7 @@ public class MediumCompute {
         double cpk = z / 3;
         double pp = (usl- lsl) / (6 * stdX);
         double ppk = Math.min( (usl - xMediumBar) / (3 * stdX), (xMax - lsl) / (3 * stdX));
-        String ca = Math.abs((xMediumBar - (usl + lsl) / 2) / ((usl - lsl) / 2) * 100) + "%";
+        String ca = df.format(Math.abs((xMediumBar - (usl + lsl) / 2) / ((usl - lsl) / 2) * 100))+ "%";
         double cp = (usl - lsl) / (6 * sigma);
 
         // 预估不良率
@@ -140,7 +143,8 @@ public class MediumCompute {
             if (r[i] < lclR || r[i] > uclR)                           specialPointsR.add(i+1);
             if (xMedium[i] < lclXMedium || xMedium[i] > uclXMedium)   specialPointsXMedium.add(i+1);
         }
-
+        String pointsSpecialRadioXMedium = df.format(specialPointsXMedium.size() * 100.0 / subgroupTotal) + "%";
+        String pointsSpecialRadioR =    df.format(specialPointsR.size() * 100.0 / subgroupTotal) + "%";
 
         //链
         // 产生链需要的点数
@@ -168,11 +172,61 @@ public class MediumCompute {
 
         // 明显非随机图形
         // ......
-        double intervalXMedium = (uclXMedium - xMediumBar) / 3;
-        double intervalR =    (uclR - rBar) / 3;
-        double[] intervalValuesXMedium = new double[]{uclXMedium, xMediumBar+intervalXMedium*2, xMediumBar+intervalXMedium, xMediumBar, xMediumBar-intervalXMedium, xMediumBar-intervalXMedium*2, lclXMedium};
-        double[] intervalValuesR    = new double[]{uclR,       rBar+intervalR*2 ,            rBar+intervalR ,            rBar,       rBar-intervalR,             rBar-intervalR*2,             lclR};
+        // double intervalXMedium = (uclXMedium - xMediumBar) / 3;
+        // double intervalR =    (uclR - rBar) / 3;
+        // double[] intervalValuesXMedium = new double[]{uclXMedium, xMediumBar+intervalXMedium*2, xMediumBar+intervalXMedium, xMediumBar, xMediumBar-intervalXMedium, xMediumBar-intervalXMedium*2, lclXMedium};
+        // double[] intervalValuesR    = new double[]{uclR,       rBar+intervalR*2 ,            rBar+intervalR ,            rBar,       rBar-intervalR,             rBar-intervalR*2,             lclR};
+        double intervalCXMedium = (uclXMedium - xMediumBar) / 3 ;
+        double lowerCXMedium = xMediumBar - intervalCXMedium;
+        double upperCXMedium = xMediumBar + intervalCXMedium;
 
+        int pointsCNumXMedium = 0;
+        for (int i = 0; i < subgroupTotal; i++) {
+            if (xMedium[i] > lowerCXMedium && xMedium[i] < upperCXMedium) pointsCNumXMedium++;
+        }
+        double tmpXMedium = pointsCNumXMedium * 1.0 * 100 / subgroupTotal;
+        tmpXMedium = Double.parseDouble(df.format(tmpXMedium));
+        String pointsCRadioXMedium = tmpXMedium + "%";
+
+        double intervalCR = (uclR - rBar) / 3 ;
+        double lowerCR = rBar - intervalCR;
+        double upperCR = rBar + intervalCR;
+
+        int pointsCNumR = 0;
+        for (int i = 0; i < subgroupTotal; i++) {
+            if (r[i] > lowerCR && r[i] < upperCR) pointsCNumR++;
+        }
+        double tmpR = pointsCNumR * 1.0 * 100 / subgroupTotal;
+        tmpR = Double.parseDouble(df.format(tmpR));
+        String pointsCRadioR = tmpR + "%";
+
+        for  (int i = 0; i < subgroupTotal; i++) xMedium[i] = Double.parseDouble(df.format(xMedium[i]));
+        for  (int i = 0; i < subgroupTotal; i++) r[i] = Double.parseDouble(df.format(r[i]));
+        xMediumBar = Double.parseDouble(df.format(xMediumBar));
+        xMax = Double.parseDouble(df.format(xMax));
+        xMin = Double.parseDouble(df.format(xMin));
+        xAvg = Double.parseDouble(df.format(xAvg));
+        avgSubgroupMid = Double.parseDouble(df.format(avgSubgroupMid));
+        usl  = Double.parseDouble(df.format(usl));
+        sl   = Double.parseDouble(df.format(sl));
+        lsl  = Double.parseDouble(df.format(lsl));
+        uclXMedium = Double.parseDouble(df.format(uclXMedium));
+        clXMedium  = Double.parseDouble(df.format(clXMedium));
+        lclXMedium = Double.parseDouble(df.format(lclXMedium));
+        uclR = Double.parseDouble(df.format(uclR));
+        clR  = Double.parseDouble(df.format(clR));
+        lclR = Double.parseDouble(df.format(lclR));
+        skewnessX = Double.parseDouble(df.format(skewnessX));
+        kurtosisX = Double.parseDouble(df.format(kurtosisX));
+        ppm   = Double.parseDouble(df.format(ppm));
+        pp    = Double.parseDouble(df.format(pp));
+        ppk   = Double.parseDouble(df.format(ppk));
+        stdX  = Double.parseDouble(df.format(stdX));
+        sigma = Double.parseDouble(df.format(sigma));
+        cp    = Double.parseDouble(df.format(cp));
+        cpu   = Double.parseDouble(df.format(cpu));
+        cpl   = Double.parseDouble(df.format(cpl));
+        cpk   = Double.parseDouble(df.format(cpk));
 
 
 
@@ -214,15 +268,16 @@ public class MediumCompute {
         System.out.println("upperChainRList = " + upperChainRList);
         System.out.println("lowerChainXMediumList = " + lowerChainXMediumList);
         System.out.println("lowerChainRList = " + lowerChainRList);
-        System.out.println("intervalValuesXMedium = " + Arrays.toString(intervalValuesXMedium));
-        System.out.println("intervalValuesR = " + Arrays.toString(intervalValuesR)); // --------------------------------------------------------------------------------
+        // System.out.println("intervalValuesXMedium = " + Arrays.toString(intervalValuesXMedium));
+        // System.out.println("intervalValuesR = " + Arrays.toString(intervalValuesR)); // --------------------------------------------------------------------------------
 
         // 设置返回体
         GraphDataMedium graphData = new GraphDataMedium();
 
         graphData.setGraphType(graphType);
+        graphData.setDataArray(dataArray);
         graphData.setSubgroupCapacity(subgroupCapacity);
-        graphData.setSubTotal(subgroupTotal);
+        graphData.setSubgroupTotal(subgroupTotal);
         graphData.setSamplesNum(samplesNum);
         graphData.setAvgX(xAvg);
         graphData.setMaxX(xMax);
@@ -250,6 +305,8 @@ public class MediumCompute {
         graphData.setCpl(cpl);
         graphData.setCpk(cpk);
         graphData.setCpkGrade(cpkGrade);
+        graphData.setGraduationXMedium(xMediumGraduation);
+        graphData.setGraduationR(rGraduation);
         graphData.setDataArrayXMedium(xMedium);
         graphData.setDataArrayR(r);
         graphData.setSpecialPointsXMedium(specialPointsXMedium);
@@ -262,8 +319,12 @@ public class MediumCompute {
         graphData.setAscendChainRList(ascendChainRList);
         graphData.setUpperChainRList(upperChainRList);
         graphData.setLowerChainRList(lowerChainRList);
-        graphData.setIntervalXMediumValues(intervalValuesXMedium);
-        graphData.setIntervalRValues(intervalValuesR);
+        // graphData.setIntervalXMediumValues(intervalValuesXMedium);
+        // graphData.setIntervalRValues(intervalValuesR);
+        graphData.setPointsCRadioXMedium(pointsCRadioXMedium);
+        graphData.setPointsCRadioR(pointsCRadioR);
+        graphData.setPointsSpecialRadioXMedium(pointsSpecialRadioXMedium);
+        graphData.setPointsSpecialRadioR(pointsSpecialRadioR);
 
         return graphData;
     }

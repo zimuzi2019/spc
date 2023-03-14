@@ -1,7 +1,6 @@
 package org.jeecg.modules.utils.compute;
 
 import org.jeecg.modules.business.entity.Draw;
-import org.jeecg.modules.business.entity.GraphDataPU;
 import org.jeecg.modules.business.entity.GraphDataXMR;
 import org.jeecg.modules.utils.TableCoefficient;
 
@@ -63,7 +62,7 @@ public class XMRCompute {
 
         // 控制图刻度
         // 这里“产品的规范容差加上超过规范的读数的允许值”没搞懂
-        double graduationX = (DoubleStream.of(x).max().orElse(0) - DoubleStream.of(x).min().orElse(0))  * 2;
+        double graduationX = DoubleStream.of(x).max().orElse(0) * 2;
         graduationX = (int) graduationX + 1;
         double graduationMR = DoubleStream.of(mr).max().orElse(0) * 2;
         graduationMR = (int) graduationMR + 1;
@@ -117,7 +116,7 @@ public class XMRCompute {
         for (int i = 0; i < subgroupTotal-1; i++) {
             if (mr[i] < lclMR || mr[i] > uclMR)   specialPointsMR.add(i+1);
         }
-        String pointsSpecialRadioMR = df.format(specialPointsMR.size() * 100.0 / subgroupTotal) + "%";
+        String pointsSpecialRadioMR = df.format(specialPointsMR.size() * 100.0 / (subgroupTotal-1)) + "%";
 
         for (int i = 0; i < subgroupTotal; i++) {
             if (x[i] < lclX || x[i] > uclX)       specialPointsX.add(i+1);
