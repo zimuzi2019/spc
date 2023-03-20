@@ -23,7 +23,8 @@ public class SheetCnPGenerator {
         // ---------------------------------------------------------------------------------
         XSSFCellStyle cellTitleStyle = wb.createCellStyle();
         XSSFFont titleFont = wb.createFont();
-        SetStyle.SetStyle(cellTitleStyle, titleFont, HSSFColor.LIGHT_YELLOW.index, HSSFColor.BLACK.index, (short) 30);
+
+        SetStyle.SetStyle(cellTitleStyle, titleFont, HSSFColor.HSSFColorPredefined.LIGHT_YELLOW.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 30);
 
         sheet.addMergedRegion(new CellRangeAddress(0, 5, 0, 25));
         XSSFRow row = sheet.createRow(rowNum);
@@ -37,16 +38,16 @@ public class SheetCnPGenerator {
         XSSFFont cellFont = wb.createFont();
         XSSFCellStyle cellStyle1 = wb.createCellStyle();
 
-        SetStyle.SetStyle(cellStyle1, cellFont, HSSFColor.LIGHT_BLUE.index, HSSFColor.BLACK.index, (short) 8);
+        SetStyle.SetStyle(cellStyle1, cellFont, HSSFColor.HSSFColorPredefined.LIGHT_BLUE.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 8);
 
         XSSFCellStyle cellStyle2 = wb.createCellStyle();
-        SetStyle.SetStyle(cellStyle2, cellFont, HSSFColor.LIGHT_ORANGE.index, HSSFColor.BLACK.index, (short) 8);
+        SetStyle.SetStyle(cellStyle2, cellFont, HSSFColor.HSSFColorPredefined.LIGHT_ORANGE.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 8);
 
         XSSFCellStyle cellStyle3 = wb.createCellStyle();
-        SetStyle.SetStyle(cellStyle3, cellFont, HSSFColor.LIGHT_GREEN.index, HSSFColor.BLACK.index, (short) 8);
+        SetStyle.SetStyle(cellStyle3, cellFont, HSSFColor.HSSFColorPredefined.LIGHT_GREEN.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 8);
 
         XSSFCellStyle cellStyle4 = wb.createCellStyle();
-        SetStyle.SetStyle(cellStyle4, cellFont, HSSFColor.WHITE.index, HSSFColor.BLACK.index, (short) 8);
+        SetStyle.SetStyle(cellStyle4, cellFont, HSSFColor.HSSFColorPredefined.WHITE.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 8);
 
         // ---------------------------------------------------------------------------------------
         rowNum = 7; colNum = 0;

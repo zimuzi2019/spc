@@ -22,7 +22,7 @@ public class SheetPUGenerator {
         // -----------------------------------------------------------------------
         XSSFCellStyle cellTitleStyle = wb.createCellStyle();
         XSSFFont titlefont = wb.createFont();
-        SetStyle.SetStyle(cellTitleStyle, titlefont, HSSFColor.LIGHT_YELLOW.index, HSSFColor.BLACK.index, (short) 30);
+        SetStyle.SetStyle(cellTitleStyle, titlefont, HSSFColor.HSSFColorPredefined.LIGHT_YELLOW.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 30);
 
         sheet.addMergedRegion(new CellRangeAddress(0, 5, 0, 25));
         XSSFRow row = sheet.createRow(rowNum);
@@ -33,7 +33,7 @@ public class SheetPUGenerator {
         rowNum = 7; colNum = 0;
         XSSFFont cellFont = wb.createFont();
         XSSFCellStyle cellPropertyStyle = wb.createCellStyle();
-        SetStyle.SetStyle(cellPropertyStyle, cellFont, HSSFColor.BLUE.index, HSSFColor.BLACK.index, (short) 10);
+        SetStyle.SetStyle(cellPropertyStyle, cellFont, HSSFColor.HSSFColorPredefined.BLUE.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 10);
         sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum, colNum+2));
         sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum+3, 25));
         row = sheet.createRow(rowNum);
@@ -42,7 +42,7 @@ public class SheetPUGenerator {
         cell.setCellStyle(cellPropertyStyle);
 
         XSSFCellStyle cellValueStyle = wb.createCellStyle();
-        SetStyle.SetStyle(cellValueStyle, cellFont, HSSFColor.WHITE.index, HSSFColor.BLACK.index, (short) 10);
+        SetStyle.SetStyle(cellValueStyle, cellFont, HSSFColor.HSSFColorPredefined.WHITE.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 10);
         colNum = colNum + 3;
         cell = row.createCell(colNum);
         cell.setCellValue(graphType+"图");
@@ -67,13 +67,13 @@ public class SheetPUGenerator {
         // ------------------------------------------------------------------------------------------
         XSSFCellStyle cellStyle1 = wb.createCellStyle();
 
-        SetStyle.SetStyle(cellStyle1, cellFont, HSSFColor.LIGHT_BLUE.index, HSSFColor.BLACK.index, (short) 8);
+        SetStyle.SetStyle(cellStyle1, cellFont, HSSFColor.HSSFColorPredefined.LIGHT_BLUE.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 8);
 
         XSSFCellStyle cellStyle2 = wb.createCellStyle();
-        SetStyle.SetStyle(cellStyle2, cellFont, HSSFColor.LIGHT_ORANGE.index, HSSFColor.BLACK.index, (short) 8);
+        SetStyle.SetStyle(cellStyle2, cellFont, HSSFColor.HSSFColorPredefined.LIGHT_ORANGE.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 8);
 
         XSSFCellStyle cellStyle3 = wb.createCellStyle();
-        SetStyle.SetStyle(cellStyle3, cellFont, HSSFColor.LIGHT_GREEN.index, HSSFColor.BLACK.index, (short) 8);
+        SetStyle.SetStyle(cellStyle3, cellFont, HSSFColor.HSSFColorPredefined.LIGHT_GREEN.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 8);
 
 
 

@@ -1,6 +1,7 @@
 package org.jeecg.modules.sheetgenerator;
 
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 
@@ -22,7 +23,7 @@ public class SheetXMRGenerator {
         // ---------------------------------------画出标题----------------------------
         XSSFFont titleFont = wb.createFont();
         XSSFCellStyle titleStyle = wb.createCellStyle();
-        SetStyle.SetStyle(titleStyle, titleFont, HSSFColor.LIGHT_YELLOW.index, HSSFColor.BLACK.index, (short) 30);
+        SetStyle.SetStyle(titleStyle, titleFont, HSSFColor.HSSFColorPredefined.LIGHT_YELLOW.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 30);
 
         sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum+5, colNum, 25));
         XSSFRow row = sheet.createRow(rowNum);
@@ -34,7 +35,7 @@ public class SheetXMRGenerator {
         rowNum = 7; colNum=0;
         XSSFFont cellFont = wb.createFont();
         XSSFCellStyle cellPropertyStyle = wb.createCellStyle();
-        SetStyle.SetStyle(cellPropertyStyle, cellFont, HSSFColor.BLUE.index, HSSFColor.BLACK.index, (short) 10);
+        SetStyle.SetStyle(cellPropertyStyle, cellFont, HSSFColor.HSSFColorPredefined.BLUE.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 10);
         sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum, colNum+2));
         sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum+3, 25));
         row = sheet.createRow(rowNum);
@@ -43,7 +44,7 @@ public class SheetXMRGenerator {
         cell.setCellStyle(cellPropertyStyle);
 
         XSSFCellStyle cellValueStyle = wb.createCellStyle();
-        SetStyle.SetStyle(cellValueStyle, cellFont, HSSFColor.WHITE.index, HSSFColor.BLACK.index, (short) 10);
+        SetStyle.SetStyle(cellValueStyle, cellFont, HSSFColor.HSSFColorPredefined.WHITE.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 10);
         colNum = colNum + 3;
         cell = row.createCell(colNum);
         cell.setCellValue(graphType+"图");
@@ -110,10 +111,10 @@ public class SheetXMRGenerator {
 
         // --------------------------数据部分----------------------------------------
         XSSFCellStyle cellStyle1 = wb.createCellStyle();
-        SetStyle.SetStyle(cellStyle1, cellFont, HSSFColor.LIGHT_GREEN.index, HSSFColor.BLACK.index, (short) 8);
+        SetStyle.SetStyle(cellStyle1, cellFont, HSSFColor.HSSFColorPredefined.LIGHT_GREEN.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 8);
 
         XSSFCellStyle cellStyle2 = wb.createCellStyle();
-        SetStyle.SetStyle(cellStyle2, cellFont, HSSFColor.LIGHT_ORANGE.index, HSSFColor.BLACK.index, (short) 8);
+        SetStyle.SetStyle(cellStyle2, cellFont, HSSFColor.HSSFColorPredefined.LIGHT_ORANGE.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 8);
 
 
         rowNum = 13; colNum = 0;
@@ -147,7 +148,7 @@ public class SheetXMRGenerator {
         // -------------------备注部分------------------------
         //XSSFCellStyle cellLastStyle = wb.createCellStyle();
         //XSSFFont cellLastFont = wb.createFont();
-        //SheetGenerator.SetStyle.SheetGenerator.SetStyle(cellLastStyle, cellLastFont, HSSFColor.LIGHT_YELLOW.index, HSSFColor.BLACK.index, (short) 15);
+        //SheetGenerator.SetStyle.SheetGenerator.SetStyle(cellLastStyle, cellLastFont, HSSFColor.HSSFColorPredefined.LIGHT_YELLOW.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 15);
         //cellLastStyle.setVerticalAlignment(CellStyle.ALIGN_GENERAL);
         //cellLastStyle.setAlignment(CellStyle.ALIGN_GENERAL);
         //

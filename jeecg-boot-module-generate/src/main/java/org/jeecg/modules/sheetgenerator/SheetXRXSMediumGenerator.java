@@ -1,6 +1,7 @@
 package org.jeecg.modules.sheetgenerator;
 
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 
@@ -28,7 +29,7 @@ public class SheetXRXSMediumGenerator {
 
         XSSFCellStyle cellTitleStyle = wb.createCellStyle();
         XSSFFont titleFont = wb.createFont();
-        SetStyle.SetStyle(cellTitleStyle, titleFont, HSSFColor.LIGHT_YELLOW.index, HSSFColor.BLACK.index, (short) 30);
+        SetStyle.SetStyle(cellTitleStyle, titleFont, HSSFColor.HSSFColorPredefined.LIGHT_YELLOW.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 30);
 
         sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum+5, colNum, colNum+n+1));
         XSSFRow row = sheet.createRow(rowNum);
@@ -42,7 +43,7 @@ public class SheetXRXSMediumGenerator {
         rowNum = 7; colNum=0;
         XSSFFont cellFont = wb.createFont();
         XSSFCellStyle cellPropertyStyle = wb.createCellStyle();
-        SetStyle.SetStyle(cellPropertyStyle, cellFont, HSSFColor.BLUE.index, HSSFColor.BLACK.index, (short) 10);
+        SetStyle.SetStyle(cellPropertyStyle, cellFont, HSSFColor.HSSFColorPredefined.BLUE.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 10);
         sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum, colNum+2));
         sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum+3, colNum+n+1));
         row = sheet.createRow(rowNum);
@@ -51,7 +52,7 @@ public class SheetXRXSMediumGenerator {
         cell.setCellStyle(cellPropertyStyle);
 
         XSSFCellStyle cellValueStyle = wb.createCellStyle();
-        SetStyle.SetStyle(cellValueStyle, cellFont, HSSFColor.WHITE.index, HSSFColor.BLACK.index, (short) 10);
+        SetStyle.SetStyle(cellValueStyle, cellFont, HSSFColor.HSSFColorPredefined.WHITE.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 10);
         colNum = colNum + 3;
         cell = row.createCell(colNum);
         cell.setCellValue(graphType+"图");
@@ -131,16 +132,16 @@ public class SheetXRXSMediumGenerator {
 
         // ------------------------------------------------------------------------------------------------
         XSSFCellStyle cellStyle1 = wb.createCellStyle();
-        SetStyle.SetStyle(cellStyle1, cellFont, HSSFColor.LIGHT_BLUE.index, HSSFColor.BLACK.index, (short) 8);
+        SetStyle.SetStyle(cellStyle1, cellFont, HSSFColor.HSSFColorPredefined.LIGHT_BLUE.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 8);
 
         XSSFCellStyle cellStyle2 = wb.createCellStyle();
-        SetStyle.SetStyle(cellStyle2, cellFont, HSSFColor.DARK_YELLOW.index, HSSFColor.BLACK.index, (short) 8);
+        SetStyle.SetStyle(cellStyle2, cellFont, HSSFColor.HSSFColorPredefined.DARK_YELLOW.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 8);
 
         XSSFCellStyle cellStyle3 = wb.createCellStyle();
-        SetStyle.SetStyle(cellStyle3, cellFont, HSSFColor.LIGHT_GREEN.index, HSSFColor.BLACK.index, (short) 8);
+        SetStyle.SetStyle(cellStyle3, cellFont, HSSFColor.HSSFColorPredefined.LIGHT_GREEN.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 8);
 
         XSSFCellStyle cellStyle4 = wb.createCellStyle();
-        SetStyle.SetStyle(cellStyle4, cellFont, HSSFColor.BROWN.index, HSSFColor.BLACK.index, (short) 8);
+        SetStyle.SetStyle(cellStyle4, cellFont, HSSFColor.HSSFColorPredefined.BROWN.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 8);
 
 
         rowNum = 14; colNum = 0;
@@ -190,7 +191,7 @@ public class SheetXRXSMediumGenerator {
         //
         //XSSFCellStyle cellLastStyle = wb.createCellStyle();
         //XSSFFont cellLastFont = wb.createFont();
-        //SheetGenerator.SetStyle.SheetGenerator.SetStyle(cellLastStyle, cellLastFont, HSSFColor.LIGHT_YELLOW.index, HSSFColor.BLACK.index, (short) 15);
+        //SheetGenerator.SetStyle.SheetGenerator.SetStyle(cellLastStyle, cellLastFont, HSSFColor.HSSFColorPredefined.LIGHT_YELLOW.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 15);
         //cellLastStyle.setVerticalAlignment(CellStyle.ALIGN_GENERAL);
         //cellLastStyle.setAlignment(CellStyle.ALIGN_GENERAL);
         //cell.setCellStyle(cellLastStyle);
