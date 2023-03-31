@@ -64,6 +64,7 @@
 	<modules>
         <module>jeecg-boot-base-core</module>
         <module>jeecg-module-system</module>
+		<module>jeecg-module-demo</module>
 		<module>jeecg-boot-module-generate</module>
         <module>jeecg-boot-module-draw</module>
     </modules>
