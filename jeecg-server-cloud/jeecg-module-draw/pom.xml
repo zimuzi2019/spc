@@ -3,39 +3,36 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>jeecg-module-system</artifactId>
+        <artifactId>jeecg-server-cloud</artifactId>
         <groupId>org.jeecgframework.boot</groupId>
         <version>3.4.4</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jeecg-system-start</artifactId>
-    
+    <artifactId>jeecg-module-draw</artifactId>
+    <description>Draw微服务启动</description>
+
     <dependencies>
-        <!-- SYSTEM 系统管理模块 -->
+        <!--引入微服务启动依赖 starter-->
         <dependency>
             <groupId>org.jeecgframework.boot</groupId>
-            <artifactId>jeecg-system-biz</artifactId>
-            <version>${jeecgboot.version}</version>
+            <artifactId>jeecg-boot-starter-cloud</artifactId>
         </dependency>
-        <!-- DEMO 示例模块 -->
+        <!--system cloud api-->
         <dependency>
             <groupId>org.jeecgframework.boot</groupId>
-            <artifactId>jeecg-module-demo</artifactId>
-            <version>${jeecgboot.version}</version>
+            <artifactId>jeecg-system-cloud-api</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jeecgframework.boot</groupId>
+            <artifactId>jeecg-boot-starter-job</artifactId>
         </dependency>
 
-        <!-- Draw 示例模块 -->
+        <!-- 引入draw模块 -->
         <dependency>
             <groupId>org.jeecgframework.boot</groupId>
             <artifactId>jeecg-boot-module-draw</artifactId>
-            <version>${jeecgboot.version}</version>
-        </dependency>
-
-        <!-- Generate 模块 -->
-        <dependency>
-            <groupId>org.jeecgframework.boot</groupId>
-            <artifactId>jeecg-boot-module-generate</artifactId>
             <version>${jeecgboot.version}</version>
         </dependency>
     </dependencies>
@@ -48,5 +45,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
