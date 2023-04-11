@@ -37,9 +37,9 @@ public class SheetRead {
         } else if ( graphTypeText.equals("C图") || graphTypeText.equals("nP图")) {
             SheetCnPRead sheetCnPRead = new SheetCnPRead();
             drawData = sheetCnPRead.read(workbook);
-        } else if ( graphTypeText.equals("P图") || graphTypeText.equals("U图")) {
-            SheetPURead sheetPURead = new SheetPURead();
-            drawData = sheetPURead.read(workbook);
+        } else if ( graphTypeText.equals("P图") || graphTypeText.equals("U图") || graphTypeText.equals("P_T图") || graphTypeText.equals("U_T图")) {
+            SheetPUPTUTRead sheetPUPTUTRead = new SheetPUPTUTRead();
+            drawData = sheetPUPTUTRead.read(workbook);
         }
 
         return drawData;

@@ -4,7 +4,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.jeecg.modules.business.entity.Draw;
 
-public class SheetPURead {
+public class SheetPUPTUTRead {
 
     public Draw read(Workbook workbook) {
         Draw drawData = new Draw();
@@ -20,12 +20,12 @@ public class SheetPURead {
         drawData.setSubgroupTotal(subgroupTotal);
 
         // 读取P、U表数据
-        int[] dataArrayPUSubgroupsCapacity = new int[subgroupTotal];
-        int[] dataArrayPUDefectsNum = new int[subgroupTotal];
+        int[] dataArrayPUPTUTSubgroupsCapacity = new int[subgroupTotal];
+        int[] dataArrayPUPTUTDefectsNum = new int[subgroupTotal];
         int rowNum = 11; int colNum = 1;
         for (int i = 0; i < subgroupTotal; i++) {
-            dataArrayPUSubgroupsCapacity[i] = (int)(sheet.getRow(rowNum).getCell(colNum).getNumericCellValue() );
-            dataArrayPUDefectsNum[i] = (int)(sheet.getRow(rowNum+1).getCell(colNum).getNumericCellValue() );
+            dataArrayPUPTUTSubgroupsCapacity[i] = (int)(sheet.getRow(rowNum).getCell(colNum).getNumericCellValue() );
+            dataArrayPUPTUTDefectsNum[i] = (int)(sheet.getRow(rowNum+1).getCell(colNum).getNumericCellValue() );
 
             colNum++;
             if ( colNum == 26) {
@@ -33,8 +33,8 @@ public class SheetPURead {
                 rowNum = rowNum+3;
             }
         }
-        drawData.setDataArrayPUSubgroupsCapacity(dataArrayPUSubgroupsCapacity);
-        drawData.setDataArrayPUDefectsNum(dataArrayPUDefectsNum);
+        drawData.setDataArrayPUPTUTSubgroupsCapacity(dataArrayPUPTUTSubgroupsCapacity);
+        drawData.setDataArrayPUPTUTDefectsNum(dataArrayPUPTUTDefectsNum);
 
         return drawData;
     }

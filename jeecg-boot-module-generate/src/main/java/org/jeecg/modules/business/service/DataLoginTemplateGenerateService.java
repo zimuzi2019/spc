@@ -1,7 +1,7 @@
 package org.jeecg.modules.business.service;
 
 import org.jeecg.modules.sheetgenerator.SheetCnPGenerator;
-import org.jeecg.modules.sheetgenerator.SheetPUGenerator;
+import org.jeecg.modules.sheetgenerator.SheetPUPTUTGenerator;
 import org.jeecg.modules.sheetgenerator.SheetXMRGenerator;
 import org.jeecg.modules.sheetgenerator.SheetXRXSMediumGenerator;
 import org.jeecg.modules.business.entity.DataLoginTemplate;
@@ -29,9 +29,9 @@ public class DataLoginTemplateGenerateService {
         } else if (graphType.equals("nP") || graphType.equals("C")) {
             SheetCnPGenerator sheetCnPGenerator = new SheetCnPGenerator();
             content = sheetCnPGenerator.generateCnP(graphType, subgroupTotal, subgroupCapacity);
-        } else if (graphType.equals("P") || graphType.equals("U")) {
-            SheetPUGenerator sheetPUGenerator = new SheetPUGenerator();
-            content = sheetPUGenerator.generatePU(graphType, subgroupTotal);
+        } else if (graphType.equals("P") || graphType.equals("U") || graphType.equals("P_T") || graphType.equals("U_T")) {
+            SheetPUPTUTGenerator sheetPUPTUTGenerator = new SheetPUPTUTGenerator();
+            content = sheetPUPTUTGenerator.generatePUPTUT(graphType, subgroupTotal);
         }
 
         return content;

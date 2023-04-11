@@ -5,19 +5,17 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
-public class SheetPUGenerator {
-    public byte[] generatePU(String graphType, Integer subgroupTotal) {
+public class SheetPUPTUTGenerator {
+    public byte[] generatePUPTUT(String graphType, Integer subgroupTotal) {
         // 子组总数
         int n = subgroupTotal;
         int rowNum = 0;
         int colNum = 0;
 
         XSSFWorkbook wb = new XSSFWorkbook();
-        XSSFSheet sheet = wb.createSheet("P图、U图数据登入表");
+        XSSFSheet sheet = wb.createSheet("P图、U图、P_T图、U_T图数据登入表");
 
         // -----------------------------------------------------------------------
         XSSFCellStyle cellTitleStyle = wb.createCellStyle();
@@ -27,7 +25,7 @@ public class SheetPUGenerator {
         sheet.addMergedRegion(new CellRangeAddress(0, 5, 0, 25));
         XSSFRow row = sheet.createRow(rowNum);
         XSSFCell cell = row.createCell(colNum);
-        cell.setCellValue("P图、U图数据登入表");
+        cell.setCellValue("P图、U图、P_T图、U_T图数据登入表");
         cell.setCellStyle(cellTitleStyle);
 
         rowNum = 7; colNum = 0;

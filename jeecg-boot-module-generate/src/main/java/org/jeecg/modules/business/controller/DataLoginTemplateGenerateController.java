@@ -41,7 +41,7 @@ public class DataLoginTemplateGenerateController {
             if (subgroupTotal == null || LSL == null || USL == null) flag = false;
         } else if (graphType.equals("nP") || graphType.equals("C")) {
             if (subgroupTotal == null || subgroupCapacity == null) flag = false;
-        } else if (graphType.equals("P") || graphType.equals("U")) {
+        } else if (graphType.equals("P") || graphType.equals("U") || graphType.equals("P_T") || graphType.equals("U_T")) {
             if (subgroupTotal == null) flag = false;
         }
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GraphDataPU implements GraphData{
+public class GraphDataPTUT implements GraphData{
     String graphType;
 
     int subgroupTotal;
@@ -21,9 +21,9 @@ public class GraphDataPU implements GraphData{
 
     String avgDefectsNum;
 
-    double[] ucl;
+    double ucl;
 
-    double[] lcl;
+    double lcl;
 
     double cl;
 
@@ -109,19 +109,19 @@ public class GraphDataPU implements GraphData{
         this.avgDefectsNum = avgDefectsNum;
     }
 
-    public double[] getUcl() {
+    public double getUcl() {
         return ucl;
     }
 
-    public void setUcl(double[] ucl) {
+    public void setUcl(double ucl) {
         this.ucl = ucl;
     }
 
-    public double[] getLcl() {
+    public double getLcl() {
         return lcl;
     }
 
-    public void setLcl(double[] lcl) {
+    public void setLcl(double lcl) {
         this.lcl = lcl;
     }
 
@@ -215,9 +215,9 @@ public class GraphDataPU implements GraphData{
                 ", subgroupCapacityMin=" + subgroupCapacityMin +
                 ", samplesNum=" + samplesNum +
                 ", defectsNum=" + defectsNum +
-                ", avgDefectsNum='" + avgDefectsNum + '\'' +
-                ", ucl=" + Arrays.toString(ucl) +
-                ", lcl=" + Arrays.toString(lcl) +
+                ", avgDefectsNum=" + avgDefectsNum +
+                ", ucl=" + ucl +
+                ", lcl=" + lcl +
                 ", cl=" + cl +
                 ", dataArray=" + Arrays.toString(dataArray) +
                 ", graduation=" + graduation +

@@ -21,8 +21,8 @@ public class Draw {
 
     double[] dataArrayCnP;
 
-    int[] dataArrayPUSubgroupsCapacity;
-    int[] dataArrayPUDefectsNum;
+    int[] dataArrayPUPTUTSubgroupsCapacity;
+    int[] dataArrayPUPTUTDefectsNum;
 
     public String getGraphType() {
         return graphType;
@@ -96,20 +96,20 @@ public class Draw {
         this.dataArrayCnP = dataArrayCnP;
     }
 
-    public int[] getDataArrayPUSubgroupsCapacity() {
-        return dataArrayPUSubgroupsCapacity;
+    public int[] getDataArrayPUPTUTSubgroupsCapacity() {
+        return dataArrayPUPTUTSubgroupsCapacity;
     }
 
-    public void setDataArrayPUSubgroupsCapacity(int[] dataArrayPUSubgroupsCapacity) {
-        this.dataArrayPUSubgroupsCapacity = dataArrayPUSubgroupsCapacity;
+    public void setDataArrayPUPTUTSubgroupsCapacity(int[] dataArrayPUPTUTSubgroupsCapacity) {
+        this.dataArrayPUPTUTSubgroupsCapacity = dataArrayPUPTUTSubgroupsCapacity;
     }
 
-    public int[] getDataArrayPUDefectsNum() {
-        return dataArrayPUDefectsNum;
+    public int[] getDataArrayPUPTUTDefectsNum() {
+        return dataArrayPUPTUTDefectsNum;
     }
 
-    public void setDataArrayPUDefectsNum(int[] dataArrayPUDefectsNum) {
-        this.dataArrayPUDefectsNum = dataArrayPUDefectsNum;
+    public void setDataArrayPUPTUTDefectsNum(int[] dataArrayPUPTUTDefectsNum) {
+        this.dataArrayPUPTUTDefectsNum = dataArrayPUPTUTDefectsNum;
     }
 
     @Override
@@ -124,8 +124,8 @@ public class Draw {
                 ", dataArrayXRXSMedium=" + Arrays.toString(dataArrayXRXSMedium) +
                 ", dataArrayXMR=" + Arrays.toString(dataArrayXMR) +
                 ", dataArrayCnP=" + Arrays.toString(dataArrayCnP) +
-                ", dataArrayPUSubgroupsCapacity=" + Arrays.toString(dataArrayPUSubgroupsCapacity) +
-                ", dataArrayPUDefectsNum=" + Arrays.toString(dataArrayPUDefectsNum) +
+                ", dataArrayPUPTUTSubgroupsCapacity=" + Arrays.toString(dataArrayPUPTUTSubgroupsCapacity) +
+                ", dataArrayPUPTUTDefectsNum=" + Arrays.toString(dataArrayPUPTUTDefectsNum) +
                 '}';
     }
 }

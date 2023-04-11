@@ -2,8 +2,6 @@ package org.jeecg.modules.business.service;
 
 import org.jeecg.modules.business.entity.Draw;
 import org.jeecg.modules.business.entity.GraphData;
-import org.jeecg.modules.business.entity.GraphDataCnP;
-import org.jeecg.modules.business.entity.GraphDataPU;
 import org.jeecg.modules.utils.compute.*;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +48,12 @@ public class DrawService {
         }
         if (graphType.equals("U")) {
             graphData = UCompute.compute(drawData);
+        }
+        if (graphType.equals("P_T") ) {
+            graphData = PTCompute.compute(drawData);
+        }
+        if (graphType.equals("U_T")) {
+            graphData = UTCompute.compute(drawData);
         }
 
         return graphData;
