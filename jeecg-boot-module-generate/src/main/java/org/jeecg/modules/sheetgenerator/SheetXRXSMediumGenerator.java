@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class SheetXRXSMediumGenerator {
-    public byte[] generateXRXSMedium(String graphType, Integer subgroupTotal, Integer subgroupCapacity, Double USL, Double LSL) {
+    public static byte[] generateXRXSMedium(String graphType, Integer subgroupTotal, Integer subgroupCapacity, Double USL, Double LSL, String quantile) {
         // 子组总数
         int n = subgroupTotal;
         // 子组容量
@@ -21,10 +21,6 @@ public class SheetXRXSMediumGenerator {
 
         XSSFWorkbook wb = new XSSFWorkbook();
 
-        // medium ---> 中位数
-        if (graphType.equals("medium")) {
-            graphType = "中位数";
-        }
         XSSFSheet sheet = wb.createSheet("X-R、X-S、中位数图数据登入表");
 
         XSSFCellStyle cellTitleStyle = wb.createCellStyle();
@@ -55,7 +51,8 @@ public class SheetXRXSMediumGenerator {
         SetStyle.SetStyle(cellValueStyle, cellFont, HSSFColor.HSSFColorPredefined.WHITE.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 10);
         colNum = colNum + 3;
         cell = row.createCell(colNum);
-        cell.setCellValue(graphType+"图");
+        if (quantile.equals("使用")) cell.setCellValue(graphType+"图（使用分位数计算控制限）");
+        else cell.setCellValue(graphType+"图");
         cell.setCellStyle(cellValueStyle);
 
 

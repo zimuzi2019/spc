@@ -8,7 +8,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class SheetPUPTUTGenerator {
-    public byte[] generatePUPTUT(String graphType, Integer subgroupTotal) {
+    public static byte[] generatePUPTUT(String graphType, Integer subgroupTotal, String quantile) {
         // 子组总数
         int n = subgroupTotal;
         int rowNum = 0;
@@ -43,7 +43,8 @@ public class SheetPUPTUTGenerator {
         SetStyle.SetStyle(cellValueStyle, cellFont, HSSFColor.HSSFColorPredefined.WHITE.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 10);
         colNum = colNum + 3;
         cell = row.createCell(colNum);
-        cell.setCellValue(graphType+"图");
+        if (quantile.equals("使用")) cell.setCellValue(graphType+"图（使用分位数计算控制限）");
+        else cell.setCellValue(graphType+"图");
         cell.setCellStyle(cellValueStyle);
 
 

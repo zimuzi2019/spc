@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class SheetXMRGenerator {
-    public byte[] generateXMR(String graphType, Integer subgroupTotal, Double USL, Double LSL) {
+    public static byte[] generateXMR(String graphType, Integer subgroupTotal, Double USL, Double LSL, String quantile) {
         // 子组批数
         int n = subgroupTotal;
         int rowNum = 0;
@@ -47,7 +47,8 @@ public class SheetXMRGenerator {
         SetStyle.SetStyle(cellValueStyle, cellFont, HSSFColor.HSSFColorPredefined.WHITE.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 10);
         colNum = colNum + 3;
         cell = row.createCell(colNum);
-        cell.setCellValue(graphType+"图");
+        if (quantile.equals("使用")) cell.setCellValue(graphType+"图（使用分位数计算控制限）");
+        else cell.setCellValue(graphType+"图");
         cell.setCellStyle(cellValueStyle);
 
         

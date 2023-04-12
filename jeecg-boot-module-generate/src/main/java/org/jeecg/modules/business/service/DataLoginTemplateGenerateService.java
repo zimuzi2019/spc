@@ -17,21 +17,18 @@ public class DataLoginTemplateGenerateService {
         Integer subgroupCapacity = dataLoginTemplate.getSubgroupCapacity();
         Double LSL = dataLoginTemplate.getLSL();
         Double USL = dataLoginTemplate.getUSL();
+        String quantile = dataLoginTemplate.getQuantile();
 
         byte[] content = null;
 
-        if (graphType.equals("X-R") || graphType.equals("X-S") || graphType.equals("medium")) {
-            SheetXRXSMediumGenerator sheetXRXSMediumGenerator = new SheetXRXSMediumGenerator();
-            content = sheetXRXSMediumGenerator.generateXRXSMedium(graphType, subgroupTotal, subgroupCapacity, USL, LSL);
+        if (graphType.equals("X-R") || graphType.equals("X-S") || graphType.equals("中位数")) {
+            content = SheetXRXSMediumGenerator.generateXRXSMedium(graphType, subgroupTotal, subgroupCapacity, USL, LSL, quantile);
         } else if (graphType.equals("X-MR")) {
-            SheetXMRGenerator sheetXMRGenerator = new SheetXMRGenerator();
-            content = sheetXMRGenerator.generateXMR(graphType, subgroupTotal, USL, LSL);
+            content = SheetXMRGenerator.generateXMR(graphType, subgroupTotal, USL, LSL, quantile);
         } else if (graphType.equals("nP") || graphType.equals("C")) {
-            SheetCnPGenerator sheetCnPGenerator = new SheetCnPGenerator();
-            content = sheetCnPGenerator.generateCnP(graphType, subgroupTotal, subgroupCapacity);
+            content = SheetCnPGenerator.generateCnP(graphType, subgroupTotal, subgroupCapacity, quantile);
         } else if (graphType.equals("P") || graphType.equals("U") || graphType.equals("P_T") || graphType.equals("U_T")) {
-            SheetPUPTUTGenerator sheetPUPTUTGenerator = new SheetPUPTUTGenerator();
-            content = sheetPUPTUTGenerator.generatePUPTUT(graphType, subgroupTotal);
+            content = SheetPUPTUTGenerator.generatePUPTUT(graphType, subgroupTotal, quantile);
         }
 
         return content;

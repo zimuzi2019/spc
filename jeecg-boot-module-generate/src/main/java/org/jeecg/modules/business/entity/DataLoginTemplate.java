@@ -11,6 +11,8 @@ public class DataLoginTemplate {
 
     Double USL;
 
+    String quantile;
+
     public String getGraphType() {
         return graphType;
     }
@@ -51,6 +53,14 @@ public class DataLoginTemplate {
         this.USL = USL;
     }
 
+    public String getQuantile() {
+        return quantile;
+    }
+
+    public void setQuantile(String quantile) {
+        this.quantile = quantile;
+    }
+
     @Override
     public String toString() {
         return "DataLoginTemplate{" +
@@ -59,6 +69,7 @@ public class DataLoginTemplate {
                 ", subgroupCapacity=" + subgroupCapacity +
                 ", LSL=" + LSL +
                 ", USL=" + USL +
+                ", quantile='" + quantile + '\'' +
                 '}';
     }
 }

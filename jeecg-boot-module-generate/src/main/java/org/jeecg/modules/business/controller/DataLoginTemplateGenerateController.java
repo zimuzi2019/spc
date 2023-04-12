@@ -35,7 +35,7 @@ public class DataLoginTemplateGenerateController {
 
         boolean flag = true;
 
-        if (graphType.equals("X-R") || graphType.equals("X-S") || graphType.equals("medium")) {
+        if (graphType.equals("X-R") || graphType.equals("X-S") || graphType.equals("中位数")) {
             if (subgroupTotal == null || subgroupCapacity == null || LSL == null || USL == null) flag = false;
         } else if (graphType.equals("X-MR")) {
             if (subgroupTotal == null || LSL == null || USL == null) flag = false;

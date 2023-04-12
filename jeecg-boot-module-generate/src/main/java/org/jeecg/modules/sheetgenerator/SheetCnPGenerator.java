@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class SheetCnPGenerator {
-    public byte[] generateCnP (String graphType, Integer subgroupTotal, Integer subgroupCapacity){
+    public static byte[] generateCnP (String graphType, Integer subgroupTotal, Integer subgroupCapacity, String quantile){
         // 子组总数
         int n = subgroupTotal;
         int rowNum = 0;
@@ -60,7 +60,8 @@ public class SheetCnPGenerator {
         sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 3, 25));
         colNum = colNum+3;
         cell = row.createCell(colNum);
-        cell.setCellValue(graphType+"图");
+        if (quantile.equals("使用")) cell.setCellValue(graphType+"图（使用分位数计算控制限）");
+        else cell.setCellValue(graphType+"图");
         cell.setCellStyle(cellStyle4);
 
 

@@ -25,36 +25,25 @@ public class DrawService {
 
         GraphData graphData = null;
 
-        if (graphType.equals("X-R") ) {
-            graphData = XRCompute.compute(drawData);
-        }
-        if (graphType.equals("X-S")) {
-            graphData = XSCompute.compute(drawData);
-        }
-        if (graphType.equals("中位数")) {
-            graphData = MediumCompute.compute(drawData);
-        }
-        if (graphType.equals("X-MR") ) {
-            graphData = XMRCompute.compute(drawData);
-        }
-        if (graphType.equals("C")) {
-            graphData = CCompute.compute(drawData);
-        }
-        if (graphType.equals("nP")) {
-            graphData = NPCompute.compute(drawData);
-        }
-        if (graphType.equals("P") ) {
-            graphData = PCompute.compute(drawData);
-        }
-        if (graphType.equals("U")) {
-            graphData = UCompute.compute(drawData);
-        }
-        if (graphType.equals("P_T") ) {
-            graphData = PTCompute.compute(drawData);
-        }
-        if (graphType.equals("U_T")) {
-            graphData = UTCompute.compute(drawData);
-        }
+        if (graphType.startsWith("X-R") )  graphData = XRCompute.compute(drawData);
+
+        if (graphType.startsWith("X-S"))   graphData = XSCompute.compute(drawData);
+
+        if (graphType.startsWith("中位数")) graphData = MediumCompute.compute(drawData);
+
+        if (graphType.startsWith("X-MR") ) graphData = XMRCompute.compute(drawData);
+
+        if (graphType.startsWith("C"))     graphData = CCompute.compute(drawData);
+
+        if (graphType.startsWith("nP"))    graphData = NPCompute.compute(drawData);
+
+        if (graphType.startsWith("P") && !graphType.startsWith("P_T"))    graphData = PCompute.compute(drawData);
+
+        if (graphType.startsWith("P_T"))    graphData = PTCompute.compute(drawData);
+
+        if (graphType.startsWith("U") && !graphType.startsWith("U_T"))    graphData = UCompute.compute(drawData);
+
+        if (graphType.startsWith("U_T"))    graphData = UTCompute.compute(drawData);
 
         return graphData;
     }
