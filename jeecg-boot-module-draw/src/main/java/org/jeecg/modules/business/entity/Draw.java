@@ -5,6 +5,8 @@ import java.util.Arrays;
 public class Draw {
     String graphType;
 
+    String quantile;
+
     int subgroupTotal;
 
     int subgroupCapacity;
@@ -30,6 +32,14 @@ public class Draw {
 
     public void setGraphType(String graphType) {
         this.graphType = graphType;
+    }
+
+    public String getQuantile() {
+        return quantile;
+    }
+
+    public void setQuantile(String quantile) {
+        this.quantile = quantile;
     }
 
     public int getSubgroupTotal() {
@@ -116,6 +126,7 @@ public class Draw {
     public String toString() {
         return "Draw{" +
                 "graphType='" + graphType + '\'' +
+                ", quantile='" + quantile + '\'' +
                 ", subgroupTotal=" + subgroupTotal +
                 ", subgroupCapacity=" + subgroupCapacity +
                 ", usl=" + usl +

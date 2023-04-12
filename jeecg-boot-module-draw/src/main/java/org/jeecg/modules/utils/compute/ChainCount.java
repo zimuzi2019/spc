@@ -148,4 +148,71 @@ public class ChainCount {
 
         return lowerChainList;
     }
+
+    public static List<ArrayList<Integer>> upperChainCountPU(int n, int len, double[] array, double[] mean) {
+        List<ArrayList<Integer> > upperChainList = new ArrayList<>();
+
+        int cntUpper = 0;
+        int upperStart = -1;
+
+
+        for (int i = 0; i < len-1; i++) {
+            if (array[i] > mean[i] && array[i+1] > mean[i]) {
+                if (cntUpper == 0) upperStart = i+1;
+                cntUpper++;
+            } else {
+                if (cntUpper >= n-1) {
+                    ArrayList<Integer> upperChain = new ArrayList<>();
+                    upperChain.add(upperStart);
+                    upperChain.add(i+1);
+                    upperChainList.add(upperChain);
+                }
+                cntUpper = 0;
+            }
+        }
+
+        if (cntUpper >= n-1) {
+            ArrayList<Integer> upperChain = new ArrayList<>();
+            upperChain.add(upperStart);
+            upperChain.add(len);
+            upperChainList.add(upperChain);
+        }
+
+        return upperChainList;
+    }
+
+    /*
+    数组下侧链统计
+     */
+    public static List<ArrayList<Integer>> lowerChainCountPU(int n, int len, double[] array, double[] mean) {
+        List<ArrayList<Integer> > lowerChainList = new ArrayList<>();
+
+        int cntLower = 0;
+        int lowerStart = -1;
+
+
+        for (int i = 0; i < len-1; i++) {
+            if (array[i] < mean[i] && array[i+1] < mean[i]) {
+                if (cntLower == 0) lowerStart = i+1;
+                cntLower++;
+            } else {
+                if (cntLower >= n-1) {
+                    ArrayList<Integer> lowerChain = new ArrayList<>();
+                    lowerChain.add(lowerStart);
+                    lowerChain.add(i+1);
+                    lowerChainList.add(lowerChain);
+                }
+                cntLower = 0;
+            }
+        }
+
+        if (cntLower >= n-1) {
+            ArrayList<Integer> lowerChain = new ArrayList<>();
+            lowerChain.add(lowerStart);
+            lowerChain.add(len);
+            lowerChainList.add(lowerChain);
+        }
+
+        return lowerChainList;
+    }
 }

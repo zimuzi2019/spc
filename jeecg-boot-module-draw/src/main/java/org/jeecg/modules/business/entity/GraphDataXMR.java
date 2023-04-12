@@ -7,6 +7,8 @@ import java.util.List;
 public class GraphDataXMR implements GraphData{
     String graphType;
 
+    String quantile;
+
     int subgroupTotal;
 
     double avgX;
@@ -91,6 +93,14 @@ public class GraphDataXMR implements GraphData{
 
     public void setGraphType(String graphType) {
         this.graphType = graphType;
+    }
+
+    public String getQuantile() {
+        return quantile;
+    }
+
+    public void setQuantile(String quantile) {
+        this.quantile = quantile;
     }
 
     public int getSubgroupTotal() {
@@ -457,6 +467,7 @@ public class GraphDataXMR implements GraphData{
     public String toString() {
         return "GraphDataXMR{" +
                 "graphType='" + graphType + '\'' +
+                ", quantile='" + quantile + '\'' +
                 ", subgroupTotal=" + subgroupTotal +
                 ", avgX=" + avgX +
                 ", maxX=" + maxX +

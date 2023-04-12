@@ -7,6 +7,8 @@ import java.util.List;
 public class GraphDataXS implements GraphData{
     String graphType;
 
+    String quantile;
+
     double[][] dataArray;
 
     int subgroupCapacity;
@@ -101,6 +103,14 @@ public class GraphDataXS implements GraphData{
 
     public void setGraphType(String graphType) {
         this.graphType = graphType;
+    }
+
+    public String getQuantile() {
+        return quantile;
+    }
+
+    public void setQuantile(String quantile) {
+        this.quantile = quantile;
     }
 
     public double[][] getDataArray() {
@@ -491,9 +501,10 @@ public class GraphDataXS implements GraphData{
     public String toString() {
         return "GraphDataXS{" +
                 "graphType='" + graphType + '\'' +
+                ", quantile='" + quantile + '\'' +
                 ", dataArray=" + Arrays.toString(dataArray) +
                 ", subgroupCapacity=" + subgroupCapacity +
-                ", subTotal=" + subgroupTotal +
+                ", subgroupTotal=" + subgroupTotal +
                 ", samplesNum=" + samplesNum +
                 ", avgX=" + avgX +
                 ", maxX=" + maxX +

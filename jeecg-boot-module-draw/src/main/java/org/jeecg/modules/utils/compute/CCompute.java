@@ -26,10 +26,18 @@ public class CCompute {
         double graduationC = DoubleStream.of(c).max().orElse(0) * 2;
 
         // 控制界限
-        double uclC = cBar + 3 * Math.sqrt(cBar);
-        double lclC = cBar - 3 * Math.sqrt(cBar);
+        String quantile = drawData.getQuantile();
+        double uclC; double lclC; double clC;
+        if (quantile.equals("不使用")) {
+            uclC = cBar + 3 * Math.sqrt(cBar);
+            lclC = cBar - 3 * Math.sqrt(cBar);
+            clC = cBar;
+        } else {
+            uclC = cBar + 3 * Math.sqrt(cBar) + 4.0/3;
+            lclC = cBar - 3 * Math.sqrt(cBar) + 4.0/3;
+            clC =  cBar - 1.0/6;
+        }
         if ( lclC < 0 ) lclC = 0;
-        double clC = cBar;
 
 
 
@@ -120,6 +128,7 @@ public class CCompute {
         graphData.setUcl(uclC);
         graphData.setCl(clC);
         graphData.setLcl(lclC);
+        graphData.setQuantile(quantile);
         graphData.setDataArray(c);
         graphData.setGraduation(graduationC);
         graphData.setSpecialPoints(specialPointsC);

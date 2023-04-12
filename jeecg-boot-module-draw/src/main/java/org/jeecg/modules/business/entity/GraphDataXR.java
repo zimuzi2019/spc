@@ -7,6 +7,8 @@ import java.util.List;
 public class GraphDataXR implements GraphData{
     String graphType;
 
+    String quantile;
+
     double[][] dataArray;
 
     int subgroupCapacity;
@@ -101,6 +103,14 @@ public class GraphDataXR implements GraphData{
 
     public void setGraphType(String graphType) {
         this.graphType = graphType;
+    }
+
+    public String getQuantile() {
+        return quantile;
+    }
+
+    public void setQuantile(String quantile) {
+        this.quantile = quantile;
     }
 
     public double[][] getDataArray() {
@@ -491,6 +501,7 @@ public class GraphDataXR implements GraphData{
     public String toString() {
         return "GraphDataXR{" +
                 "graphType='" + graphType + '\'' +
+                ", quantile='" + quantile + '\'' +
                 ", dataArray=" + Arrays.toString(dataArray) +
                 ", subgroupCapacity=" + subgroupCapacity +
                 ", subgroupTotal=" + subgroupTotal +

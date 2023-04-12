@@ -7,6 +7,8 @@ import java.util.List;
 public class GraphDataCnP implements GraphData{
     String graphType;
 
+    String quantile;
+
     int subgroupTotal;
 
     int subgroupCapacity;
@@ -46,6 +48,14 @@ public class GraphDataCnP implements GraphData{
 
     public void setGraphType(String graphType) {
         this.graphType = graphType;
+    }
+
+    public String getQuantile() {
+        return quantile;
+    }
+
+    public void setQuantile(String quantile) {
+        this.quantile = quantile;
     }
 
     public int getSubgroupTotal() {
@@ -188,6 +198,7 @@ public class GraphDataCnP implements GraphData{
     public String toString() {
         return "GraphDataCnP{" +
                 "graphType='" + graphType + '\'' +
+                ", quantile='" + quantile + '\'' +
                 ", subgroupTotal=" + subgroupTotal +
                 ", subgroupCapacity=" + subgroupCapacity +
                 ", sampleNum=" + sampleNum +

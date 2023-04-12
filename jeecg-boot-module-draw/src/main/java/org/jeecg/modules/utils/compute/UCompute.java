@@ -1,7 +1,6 @@
 package org.jeecg.modules.utils.compute;
 
 import org.jeecg.modules.business.entity.Draw;
-import org.jeecg.modules.business.entity.GraphDataPTUT;
 import org.jeecg.modules.business.entity.GraphDataPU;
 
 import java.text.DecimalFormat;
@@ -44,13 +43,21 @@ public class UCompute {
         graduation = (int)graduation;
 
         // 上下控制限
-        double clU = uBar;
-        double[] uclU = new double[subgroupTotal]; double[] lclU = new double[subgroupTotal];
+        String quantile = drawData.getQuantile();
+        double[] uclU = new double[subgroupTotal]; double[] lclU = new double[subgroupTotal]; double[] clU = new double[subgroupTotal];
         for (int i = 0; i < subgroupTotal; i++) {
-            uclU[i] = uBar + 3 * Math.sqrt(uBar / dataArraySubgroupsCapacity[i]);
-            lclU[i] = uBar - 3 * Math.sqrt(uBar / dataArraySubgroupsCapacity[i]);
+            if (quantile.equals("不使用")) {
+                uclU[i] = uBar + 3 * Math.sqrt(uBar / dataArraySubgroupsCapacity[i]);
+                lclU[i] = uBar - 3 * Math.sqrt(uBar / dataArraySubgroupsCapacity[i]);
+                 clU[i] = uBar;
+            } else {
+                uclU[i] = uBar + 3 * Math.sqrt(uBar / dataArraySubgroupsCapacity[i]) + 4.0 / (3*dataArraySubgroupsCapacity[i]);
+                lclU[i] = uBar - 3 * Math.sqrt(uBar / dataArraySubgroupsCapacity[i]) + 4.0 / (3*dataArraySubgroupsCapacity[i]);
+                 clU[i] = uBar - 1.0/(6*dataArraySubgroupsCapacity[i]);
+            }
             uclU[i] = Double.parseDouble(df.format(uclU[i]));
             lclU[i] = Double.parseDouble(df.format(lclU[i]));
+            clU[i] = Double.parseDouble(df.format(clU[i]));
 
             if(lclU[i] < 0) lclU[i] = 0;
         }
@@ -76,10 +83,10 @@ public class UCompute {
 
         n = 9;     // 连续9点落在中心线的一侧
         // 下侧链集合
-        List<ArrayList<Integer>> lowerChainUList = ChainCount.lowerChainCount(n, subgroupTotal, u, clU);
+        List<ArrayList<Integer>> lowerChainUList = ChainCount.lowerChainCountPU(n, subgroupTotal, u, clU);
 
         // 下侧链集合
-        List<ArrayList<Integer>> upperChainUList = ChainCount.upperChainCount(n, subgroupTotal, u, clU);
+        List<ArrayList<Integer>> upperChainUList = ChainCount.upperChainCountPU(n, subgroupTotal, u, clU);
 
 
         // 明显非随机图形
@@ -87,8 +94,8 @@ public class UCompute {
         // double[] intervalValuesU = new double[]{3, 2, 1, 0, -1, -2, -3};
         int pointsCNum = 0;
         for (int i = 0; i < subgroupTotal; i++) {
-            double upperC = (uclU[i] - clU)/3 + clU;
-            double lowerC = -(uclU[i] - clU)/3 + clU;
+            double upperC = (uclU[i] - clU[i])/3 + clU[i];
+            double lowerC = -(uclU[i] - clU[i])/3 + clU[i];
             if (u[i] > lowerC && u[i] < upperC) pointsCNum++;
         }
         double tmp = pointsCNum * 100.0 / subgroupTotal;
@@ -134,6 +141,7 @@ public class UCompute {
         graphData.setUcl(uclU);
         graphData.setCl(clU);
         graphData.setLcl(lclU);
+        graphData.setQuantile(quantile);
         graphData.setDataArray(u);
         graphData.setGraduation(graduation);
         graphData.setSpecialPoints(specialPointsU);

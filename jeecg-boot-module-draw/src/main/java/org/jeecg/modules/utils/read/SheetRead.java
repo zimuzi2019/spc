@@ -28,18 +28,14 @@ public class SheetRead {
 
         Draw drawData = new Draw();
 
-        if ( graphTypeText.equals("X-R图") || graphTypeText.equals("X-S图") || graphTypeText.equals("中位数图")) {
-            SheetXRXSMediumRead sheetXRXSMediumRead = new SheetXRXSMediumRead();
-            drawData = sheetXRXSMediumRead.read(workbook);
-        } else if ( graphTypeText.equals("X-MR图")) {
-            SheetXMRRead sheetXMRRead = new SheetXMRRead();
-            drawData = sheetXMRRead.read(workbook);
-        } else if ( graphTypeText.equals("C图") || graphTypeText.equals("nP图")) {
-            SheetCnPRead sheetCnPRead = new SheetCnPRead();
-            drawData = sheetCnPRead.read(workbook);
-        } else if ( graphTypeText.equals("P图") || graphTypeText.equals("U图") || graphTypeText.equals("P_T图") || graphTypeText.equals("U_T图")) {
-            SheetPUPTUTRead sheetPUPTUTRead = new SheetPUPTUTRead();
-            drawData = sheetPUPTUTRead.read(workbook);
+        if ( graphTypeText.startsWith("X-R图") || graphTypeText.startsWith("X-S图") || graphTypeText.startsWith("中位数图")) {
+            drawData = SheetXRXSMediumRead.read(workbook);
+        } else if ( graphTypeText.startsWith("X-MR图")) {
+            drawData = SheetXMRRead.read(workbook);
+        } else if ( graphTypeText.startsWith("C图") || graphTypeText.startsWith("nP图")) {
+            drawData = SheetCnPRead.read(workbook);
+        } else if ( graphTypeText.startsWith("P图") || graphTypeText.startsWith("U图") || graphTypeText.startsWith("P_T图") || graphTypeText.startsWith("U_T图")) {
+            drawData = SheetPUPTUTRead.read(workbook);
         }
 
         return drawData;

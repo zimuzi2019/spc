@@ -43,13 +43,21 @@ public class PCompute {
         graduation = (int) graduation + 1;
 
         // 上下控制限
-        double clP = pBar;
-        double[] uclP = new double[subgroupTotal]; double[] lclP = new double[subgroupTotal];
+        String quantile = drawData.getQuantile();
+        double[] uclP = new double[subgroupTotal]; double[] lclP = new double[subgroupTotal]; double[] clP =  new  double[subgroupTotal];
         for (int i = 0; i < subgroupTotal; i++) {
-            uclP[i] = pBar + 3 * Math.sqrt(pBar / dataArraySubgroupsCapacity[i]);
-            lclP[i] = pBar - 3 * Math.sqrt(pBar / dataArraySubgroupsCapacity[i]);
+            if (quantile.equals("不使用")) {
+                uclP[i] = pBar + 3 * Math.sqrt(pBar * (1-pBar) / dataArraySubgroupsCapacity[i]);
+                lclP[i] = pBar - 3 * Math.sqrt(pBar * (1-pBar )/ dataArraySubgroupsCapacity[i]);
+                 clP[i] = pBar;
+            } else {
+                uclP[i] = pBar + 3 * Math.sqrt(pBar * (1-pBar) / dataArraySubgroupsCapacity[i]) + 4.0 * (1-2*pBar)/(3 * dataArraySubgroupsCapacity[i]);
+                lclP[i] = pBar - 3 * Math.sqrt(pBar * (1-pBar) / dataArraySubgroupsCapacity[i]) + 4.0 * (1-2*pBar)/(3 * dataArraySubgroupsCapacity[i]);
+                 clP[i] = pBar - (1-2*pBar)/ (6*dataArraySubgroupsCapacity[i]);
+            }
             uclP[i] = Double.parseDouble(df.format(uclP[i]));
             lclP[i] = Double.parseDouble(df.format(lclP[i]));
+             clP[i] = Double.parseDouble(df.format(clP[i]));
 
             if(lclP[i] < 0) lclP[i] = 0;
         }
@@ -75,10 +83,10 @@ public class PCompute {
 
         n = 9;     // 连续9点落在中心线的一侧
         // 下侧链集合
-        List<ArrayList<Integer> > lowerChainPList = ChainCount.lowerChainCount(n, subgroupTotal, p, clP);
+        List<ArrayList<Integer> > lowerChainPList = ChainCount.lowerChainCountPU(n, subgroupTotal, p, clP);
 
         // 下侧链集合
-        List<ArrayList<Integer> > upperChainPList = ChainCount.upperChainCount(n, subgroupTotal, p, clP);
+        List<ArrayList<Integer> > upperChainPList = ChainCount.upperChainCountPU(n, subgroupTotal, p, clP);
 
 
 
@@ -86,8 +94,8 @@ public class PCompute {
         // ......
         int pointsCNum = 0;
         for (int i = 0; i < subgroupTotal; i++) {
-            double upperC = (uclP[i] - clP)/3 + clP;
-            double lowerC = -(uclP[i] - clP)/3 + clP;
+            double upperC = (uclP[i] - clP[i])/3 + clP[i];
+            double lowerC = -(uclP[i] - clP[i])/3 + clP[i];
             if (p[i] > lowerC && p[i] < upperC) pointsCNum++;
         }
         double tmp = pointsCNum * 100.0 / subgroupTotal;
@@ -136,6 +144,7 @@ public class PCompute {
         graphData.setUcl(uclP);
         graphData.setCl(clP);
         graphData.setLcl(lclP);
+        graphData.setQuantile(quantile);
         graphData.setDataArray(p);
         graphData.setGraduation(graduation);
         graphData.setSpecialPoints(specialPointsP);

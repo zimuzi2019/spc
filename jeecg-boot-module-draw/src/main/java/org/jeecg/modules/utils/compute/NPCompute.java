@@ -30,10 +30,18 @@ public class NPCompute {
         double graduationNP = DoubleStream.of(np).max().orElse(0) * 2;
 
         // 控制界限
-        double uclNP = subgroupCapacity * pBar + 3 * Math.sqrt(subgroupCapacity * pBar * (1 - pBar));
-        double lclNP = subgroupCapacity * pBar - 3 * Math.sqrt(subgroupCapacity * pBar * (1 - pBar));
+        String quantile = drawData.getQuantile();
+        double uclNP; double lclNP; double clNP;
+        if (quantile.equals("不使用")) {
+            uclNP = subgroupCapacity * pBar + 3 * Math.sqrt(subgroupCapacity * pBar * (1 - pBar));
+            lclNP = subgroupCapacity * pBar - 3 * Math.sqrt(subgroupCapacity * pBar * (1 - pBar));
+            clNP = subgroupCapacity * pBar;
+        } else {
+            uclNP = subgroupCapacity * pBar + 3 * Math.sqrt(subgroupCapacity * pBar * (1 - pBar)) + 4.0 * (1 - 2*pBar) / 3;
+            lclNP = subgroupCapacity * pBar - 3 * Math.sqrt(subgroupCapacity * pBar * (1 - pBar)) + 4.0 * (1 - 2*pBar) / 3;
+            clNP = subgroupCapacity * pBar - 1.0 * (1- 2*pBar)/6;
+        }
         if (lclNP < 0) lclNP = 0;
-        double clNP = subgroupCapacity * pBar;
 
 
 
@@ -129,6 +137,7 @@ public class NPCompute {
         graphData.setCl(clNP);
         graphData.setLcl(lclNP);
         graphData.setDataArray(np);
+        graphData.setQuantile(quantile);
         graphData.setGraduation(graduationNP);
         graphData.setSpecialPoints(specialPointsNP);
         graphData.setDescendChainList(descendChainNPList);

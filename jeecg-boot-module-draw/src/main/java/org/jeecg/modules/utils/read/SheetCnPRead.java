@@ -6,14 +6,19 @@ import org.jeecg.modules.business.entity.Draw;
 
 public class SheetCnPRead {
 
-    public Draw read(Workbook workbook) {
+    public static Draw read(Workbook workbook) {
         Draw drawData = new Draw();
         Sheet sheet = workbook.getSheetAt(0);
 
         // 读取控制图类型
-        String graphTypeText = sheet.getRow(7).getCell(3).getStringCellValue();
-        String graphType = graphTypeText.substring(0, graphTypeText.length()-1);
+        String graphTypeText = sheet.getRow(7).getCell(3).getStringCellValue(); String graphType = null;
+        if (graphTypeText.contains("C图"))   graphType = "C";
+        if (graphTypeText.contains("nP图"))  graphType = "nP";
         drawData.setGraphType(graphType);
+
+        // 判断是否需要用分位数计算控制限
+        if (graphTypeText.contains("（使用分位数计算控制限）")) drawData.setQuantile("使用");
+        else drawData.setQuantile("不使用");
 
         // 读取子组总数
         int subgroupTotal = (int) ( sheet.getRow(8).getCell(3).getNumericCellValue() );

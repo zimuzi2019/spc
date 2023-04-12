@@ -7,6 +7,8 @@ import java.util.List;
 public class GraphDataPU implements GraphData{
     String graphType;
 
+    String quantile;
+
     int subgroupTotal;
 
     double avgSubgroupCapacity;
@@ -25,7 +27,7 @@ public class GraphDataPU implements GraphData{
 
     double[] lcl;
 
-    double cl;
+    double[] cl;
 
     double[] dataArray;
 
@@ -51,6 +53,14 @@ public class GraphDataPU implements GraphData{
 
     public void setGraphType(String graphType) {
         this.graphType = graphType;
+    }
+
+    public String getQuantile() {
+        return quantile;
+    }
+
+    public void setQuantile(String quantile) {
+        this.quantile = quantile;
     }
 
     public int getSubgroupTotal() {
@@ -125,11 +135,11 @@ public class GraphDataPU implements GraphData{
         this.lcl = lcl;
     }
 
-    public double getCl() {
+    public double[] getCl() {
         return cl;
     }
 
-    public void setCl(double cl) {
+    public void setCl(double[] cl) {
         this.cl = cl;
     }
 
@@ -209,6 +219,7 @@ public class GraphDataPU implements GraphData{
     public String toString() {
         return "GraphDataPU{" +
                 "graphType='" + graphType + '\'' +
+                ", quantile='" + quantile + '\'' +
                 ", subgroupTotal=" + subgroupTotal +
                 ", avgSubgroupCapacity=" + avgSubgroupCapacity +
                 ", subgroupCapacityMax=" + subgroupCapacityMax +
@@ -218,7 +229,7 @@ public class GraphDataPU implements GraphData{
                 ", avgDefectsNum='" + avgDefectsNum + '\'' +
                 ", ucl=" + Arrays.toString(ucl) +
                 ", lcl=" + Arrays.toString(lcl) +
-                ", cl=" + cl +
+                ", cl=" + Arrays.toString(cl) +
                 ", dataArray=" + Arrays.toString(dataArray) +
                 ", graduation=" + graduation +
                 ", pointsCRadio='" + pointsCRadio + '\'' +

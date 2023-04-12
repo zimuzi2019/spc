@@ -92,12 +92,39 @@ public class XRCompute {
 
         // 控制界限
         // 这里没有写 subgroupCapacity > 25 时该如何取值
-        double uclXBar = xDoubleBar + TableCoefficient.A2[subgroupCapacity] * rBar;
-        double lclXBar = xDoubleBar - TableCoefficient.A2[subgroupCapacity] * rBar;
-        double clXBar = xDoubleBar;
-        double uclR = TableCoefficient.D4[subgroupCapacity] * rBar;
-        double lclR = TableCoefficient.D3[subgroupCapacity] * rBar;
-        double clR = rBar;
+        String quantile = drawData.getQuantile();
+        double uclXBar; double lclXBar; double clXBar;
+        double uclR; double lclR; double clR;
+        if (quantile.equals("不使用")) {
+            uclXBar = xDoubleBar + TableCoefficient.A2[subgroupCapacity] * rBar;
+            lclXBar = xDoubleBar - TableCoefficient.A2[subgroupCapacity] * rBar;
+            clXBar = xDoubleBar;
+            uclR = TableCoefficient.D4[subgroupCapacity] * rBar;
+            lclR = TableCoefficient.D3[subgroupCapacity] * rBar;
+            clR = rBar;
+        } else {
+            double theataXBarEstimate = xDoubleBar;
+            double theataREstimate = rBar;
+
+            double tmp3 = 0; double tmp4 = 0; double tmp5 = 0; double tmp6 = 0;
+            for (int i = 0; i < subgroupTotal; i++) {
+                tmp3 = tmp3 + Math.pow(xBar[i] - xDoubleBar,2);
+                tmp4 = tmp4 + Math.pow(xBar[i] - xDoubleBar,3);
+                tmp5 = tmp5 + Math.pow(r[i] - rBar,2);
+                tmp6 = tmp6 + Math.pow(r[i] - rBar,3);
+            }
+            double sigmaXBarEstimate = Math.sqrt(1.0 * tmp3 / (subgroupTotal-1));
+            double sigmaREstimate = Math.sqrt(1.0 * tmp5 / (subgroupTotal-1));
+            double mu3XBarEstimate = tmp4 / subgroupTotal;
+            double mu3REstimate = tmp6 / subgroupTotal;
+
+            uclXBar = theataXBarEstimate + 3 * sigmaXBarEstimate + mu3XBarEstimate * (3*3-1)/(6*Math.pow(sigmaXBarEstimate, 2));
+            lclXBar = theataXBarEstimate - 3 * sigmaXBarEstimate + mu3XBarEstimate * (3*3-1)/(6*Math.pow(sigmaXBarEstimate, 2));
+             clXBar = theataXBarEstimate + mu3XBarEstimate * (-1)/(6* Math.pow(sigmaXBarEstimate, 2));
+            uclR    = theataREstimate + 3 * sigmaREstimate + mu3REstimate * (3*3-1)/(6* Math.pow(sigmaREstimate, 2));
+            lclR    = theataREstimate - 3 * sigmaREstimate + mu3REstimate * (3*3-1)/(6* Math.pow(sigmaREstimate, 2));
+            clR     = theataREstimate + mu3REstimate * (-1)/(6* Math.pow(sigmaREstimate, 2));
+        }
 
         // 过程的标准偏差
         double sigma = rBar / TableCoefficient.d2[subgroupCapacity];
@@ -311,6 +338,7 @@ public class XRCompute {
         graphData.setGraduationR(rGraduation);
         graphData.setDataArrayXBar(xBar);
         graphData.setDataArrayR(r);
+        graphData.setQuantile(quantile);
         graphData.setSpecialPointsXBar(specialPointsXBar);
         graphData.setSpecialPointsR(specialPointsR);
         graphData.setDescendChainXBarList(descendChainXBarList);

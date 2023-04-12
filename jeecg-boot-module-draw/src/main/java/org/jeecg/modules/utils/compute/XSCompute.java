@@ -92,23 +92,52 @@ public class XSCompute {
         double sGraduation = 2 * DoubleStream.of(s).max().orElse(0);
 
         // 控制界限
-        double uclXBar; double lclXBar; double uclS; double lclS;
-        if (subgroupCapacity <= 25) {
-            uclXBar = xDoubleBar + TableCoefficient.A3[subgroupCapacity] * sBar;
-            lclXBar = xDoubleBar - TableCoefficient.A3[subgroupCapacity] * sBar;
-            uclS = TableCoefficient.B4[subgroupCapacity] * sBar;
-            lclS = TableCoefficient.B3[subgroupCapacity] * sBar;
+        String quantile = drawData.getQuantile();
+        double uclXBar; double lclXBar; double clXBar;
+        double uclS; double lclS; double clS;
+        if (quantile.equals("不使用")) {
+            if (subgroupCapacity <= 25) {
+                uclXBar = xDoubleBar + TableCoefficient.A3[subgroupCapacity] * sBar;
+                lclXBar = xDoubleBar - TableCoefficient.A3[subgroupCapacity] * sBar;
+                uclS = TableCoefficient.B4[subgroupCapacity] * sBar;
+                lclS = TableCoefficient.B3[subgroupCapacity] * sBar;
+            } else {
+                double a = 3 / Math.sqrt(subgroupCapacity - 0.5);
+                double d = 1 - 3 / Math.sqrt(2 * subgroupCapacity - 2.5);
+                double e = 1 + 3 / Math.sqrt(2 * subgroupCapacity - 2.5);
+                uclXBar = xDoubleBar + a * sBar;
+                lclXBar = xDoubleBar - a * sBar;
+                uclS = e * sBar;
+                lclS = d * sBar;
+            }
+            clXBar = xDoubleBar;
+            clS = sBar;
         } else {
-            double a = 3 / Math.sqrt(subgroupCapacity - 0.5);
-            double d = 1 - 3 / Math.sqrt(2 * subgroupCapacity - 2.5);
-            double e = 1 + 3 / Math.sqrt(2 * subgroupCapacity - 2.5);
-            uclXBar = xDoubleBar + a * sBar;
-            lclXBar = xDoubleBar - a * sBar;
-            uclS = e * sBar;
-            lclS = d * sBar;
+            double theataXBarEstimate = xDoubleBar;
+            double theataSEstimate = sBar;
+
+            double tmp3 = 0;
+            double tmp4 = 0;
+            double tmp5 = 0;
+            double tmp6 = 0;
+            for (int i = 0; i < subgroupTotal; i++) {
+                tmp3 = tmp3 + Math.pow(xBar[i] - xDoubleBar, 2);
+                tmp4 = tmp4 + Math.pow(xBar[i] - xDoubleBar, 3);
+                tmp5 = tmp5 + Math.pow(s[i] - sBar, 2);
+                tmp6 = tmp6 + Math.pow(s[i] - sBar, 3);
+            }
+            double sigmaXBarEstimate = Math.sqrt(1.0 * tmp3 / (subgroupTotal - 1));
+            double sigmaSEstimate = Math.sqrt(1.0 * tmp5 / (subgroupTotal - 1));
+            double mu3XBarEstimate = tmp4 / subgroupTotal;
+            double mu3SEstimate = tmp6 / subgroupTotal;
+
+            uclXBar = theataXBarEstimate + 3 * sigmaXBarEstimate + mu3XBarEstimate * (3 * 3 - 1) / (6 * Math.pow(sigmaXBarEstimate, 2));
+            lclXBar = theataXBarEstimate - 3 * sigmaXBarEstimate + mu3XBarEstimate * (3 * 3 - 1) / (6 * Math.pow(sigmaXBarEstimate, 2));
+            clXBar = theataXBarEstimate + mu3XBarEstimate * (-1) / (6 * Math.pow(sigmaXBarEstimate, 2));
+            uclS = theataSEstimate + 3 * sigmaSEstimate + mu3SEstimate * (3 * 3 - 1) / (6 * Math.pow(sigmaSEstimate, 2));
+            lclS = theataSEstimate - 3 * sigmaSEstimate + mu3SEstimate * (3 * 3 - 1) / (6 * Math.pow(sigmaSEstimate, 2));
+            clS = theataSEstimate + mu3SEstimate * (-1) / (6 * Math.pow(sigmaSEstimate, 2));
         }
-        double clXBar = xDoubleBar;
-        double clS = sBar;
 
 
         // 过程标准差估计值
@@ -312,6 +341,7 @@ public class XSCompute {
         graphData.setUclS(uclS);
         graphData.setClS(clS);
         graphData.setLclS(lclS);
+        graphData.setQuantile(quantile);
         graphData.setSkewnessX(skewnessX);
         graphData.setKurtosisX(kurtosisX);
         graphData.setPpm(ppm);

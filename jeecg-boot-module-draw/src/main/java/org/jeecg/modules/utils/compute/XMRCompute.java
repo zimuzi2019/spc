@@ -68,12 +68,41 @@ public class XMRCompute {
         graduationMR = (int) graduationMR + 1;
 
         // 控制界限
-        double uclX = xBar + TableCoefficient.E2[2] * mrBar;
-        double lclX = xBar - TableCoefficient.E2[2] * mrBar;
-        double clX = xBar;
-        double uclMR = TableCoefficient.D4[2] * mrBar;
-        double lclMR = TableCoefficient.D3[2] * mrBar;
-        double clMR = mrBar;
+        String quantile = drawData.getQuantile();
+        double uclX; double lclX; double clX;
+        double uclMR; double lclMR; double clMR;
+        if (quantile.equals("不使用")) {
+            uclX = xBar + TableCoefficient.E2[2] * mrBar;
+            lclX = xBar - TableCoefficient.E2[2] * mrBar;
+            clX = xBar;
+            uclMR = TableCoefficient.D4[2] * mrBar;
+            lclMR = TableCoefficient.D3[2] * mrBar;
+            clMR = mrBar;
+        } else {
+            double theataXEstimate = xBar;
+            double theataMREstimate = mrBar;
+
+            double tmp3 = 0; double tmp4 = 0; double tmp5 = 0; double tmp6 = 0;
+            for (int i = 0; i < subgroupTotal; i++) {
+                tmp3 = tmp3 + Math.pow(x[i] - xBar,2);
+                tmp4 = tmp4 + Math.pow(x[i] - xBar,3);
+            }
+            for (int i = 0; i < subgroupTotal-1; i++) {
+                tmp5 = tmp5 + Math.pow(mr[i] - mrBar,2);
+                tmp6 = tmp6 + Math.pow(mr[i] - mrBar,3);
+            }
+            double sigmaXEstimate =  Math.sqrt(1.0 * tmp3 / (subgroupTotal-1));
+            double sigmaMREstimate = Math.sqrt(1.0 * tmp5 / (subgroupTotal-2));
+            double mu3XEstimate = tmp4 / subgroupTotal;
+            double mu3MREstimate = tmp6 / (subgroupTotal-1);
+
+            uclX = theataXEstimate + 3 * sigmaXEstimate + mu3XEstimate * (3*3-1)/(6*Math.pow(sigmaXEstimate, 2));
+            lclX = theataXEstimate - 3 * sigmaXEstimate + mu3XEstimate * (3*3-1)/(6*Math.pow(sigmaXEstimate, 2));
+            clX = theataXEstimate + mu3XEstimate * (-1)/(6* Math.pow(sigmaXEstimate, 2));
+            uclMR    = theataMREstimate + 3 * sigmaMREstimate + mu3MREstimate * (3*3-1)/(6* Math.pow(sigmaMREstimate, 2));
+            lclMR   = theataMREstimate - 3 * sigmaMREstimate + mu3MREstimate * (3*3-1)/(6* Math.pow(sigmaMREstimate, 2));
+            clMR     = theataMREstimate + mu3MREstimate * (-1)/(6* Math.pow(sigmaMREstimate, 2));
+        }
 
         // 过程的标准偏差
         double sigma = mrBar / TableCoefficient.d2[2];
@@ -265,6 +294,7 @@ public class XMRCompute {
         graphData.setUclMR(uclMR);
         graphData.setClMR(clMR);
         graphData.setLclMR(lclMR);
+        graphData.setQuantile(quantile);
         graphData.setSkewnessX(skewnessX);
         graphData.setKurtosisX(kurtosisX);
         graphData.setPpm(ppm);
