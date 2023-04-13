@@ -43,6 +43,8 @@ public class DataLoginTemplateGenerateController {
             if (subgroupTotal == null || subgroupCapacity == null) flag = false;
         } else if (graphType.equals("P") || graphType.equals("U") || graphType.equals("P_T") || graphType.equals("U_T")) {
             if (subgroupTotal == null) flag = false;
+        } else if (graphType.equals("回归")) {
+            if (subgroupTotal == null || subgroupCapacity == null) flag = false;
         }
 
 

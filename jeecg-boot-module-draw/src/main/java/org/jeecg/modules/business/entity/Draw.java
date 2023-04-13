@@ -26,6 +26,12 @@ public class Draw {
     int[] dataArrayPUPTUTSubgroupsCapacity;
     int[] dataArrayPUPTUTDefectsNum;
 
+    // 回归控制图数据
+    double[][] dataArrayRegression;
+    double[] dataArrayRegressionStandard;
+    String[] dataArrayRegressionPrecision;
+    int[] dataArrayRegressionSort;
+
     public String getGraphType() {
         return graphType;
     }
@@ -122,6 +128,38 @@ public class Draw {
         this.dataArrayPUPTUTDefectsNum = dataArrayPUPTUTDefectsNum;
     }
 
+    public double[][] getDataArrayRegression() {
+        return dataArrayRegression;
+    }
+
+    public void setDataArrayRegression(double[][] dataArrayRegression) {
+        this.dataArrayRegression = dataArrayRegression;
+    }
+
+    public double[] getDataArrayRegressionStandard() {
+        return dataArrayRegressionStandard;
+    }
+
+    public void setDataArrayRegressionStandard(double[] dataArrayRegressionStandard) {
+        this.dataArrayRegressionStandard = dataArrayRegressionStandard;
+    }
+
+    public String[] getDataArrayRegressionPrecision() {
+        return dataArrayRegressionPrecision;
+    }
+
+    public void setDataArrayRegressionPrecision(String[] dataArrayRegressionPrecision) {
+        this.dataArrayRegressionPrecision = dataArrayRegressionPrecision;
+    }
+
+    public int[] getDataArrayRegressionSort() {
+        return dataArrayRegressionSort;
+    }
+
+    public void setDataArrayRegressionSort(int[] dataArrayRegressionSort) {
+        this.dataArrayRegressionSort = dataArrayRegressionSort;
+    }
+
     @Override
     public String toString() {
         return "Draw{" +
@@ -137,6 +175,10 @@ public class Draw {
                 ", dataArrayCnP=" + Arrays.toString(dataArrayCnP) +
                 ", dataArrayPUPTUTSubgroupsCapacity=" + Arrays.toString(dataArrayPUPTUTSubgroupsCapacity) +
                 ", dataArrayPUPTUTDefectsNum=" + Arrays.toString(dataArrayPUPTUTDefectsNum) +
+                ", dataArrayRegression=" + Arrays.toString(dataArrayRegression) +
+                ", dataArrayRegressionStandard=" + Arrays.toString(dataArrayRegressionStandard) +
+                ", dataArrayRegressionPrecision=" + Arrays.toString(dataArrayRegressionPrecision) +
+                ", dataArrayRegressionSort=" + Arrays.toString(dataArrayRegressionSort) +
                 '}';
     }
 }
