@@ -7,8 +7,8 @@ import org.apache.poi.xssf.usermodel.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class SheetRegressionGenerator {
-    public static byte[] generateRegression(String graphType, Integer subgroupTotal, Integer subgroupCapacity) {
+public class SheetRegressionTKGenerator {
+    public static byte[] generateRegressionTK(String graphType, Integer subgroupTotal, Integer subgroupCapacity) {
         // 子组总数
         int n = subgroupTotal;
         // 子组容量
@@ -18,7 +18,7 @@ public class SheetRegressionGenerator {
 
         XSSFWorkbook wb = new XSSFWorkbook();
 
-        XSSFSheet sheet = wb.createSheet("回归控制图数据登入表");
+        XSSFSheet sheet = wb.createSheet("回归、T-K控制图数据登入表");
 
         XSSFCellStyle cellTitleStyle = wb.createCellStyle();
         XSSFFont titleFont = wb.createFont();
@@ -28,7 +28,7 @@ public class SheetRegressionGenerator {
         XSSFRow row = sheet.createRow(rowNum);
         XSSFCell cell = row.createCell(colNum);
 
-        cell.setCellValue("回归控制图数据登入表");
+        cell.setCellValue("回归、T-K控制图数据登入表");
         cell.setCellStyle(cellTitleStyle);
 
 
@@ -145,19 +145,7 @@ public class SheetRegressionGenerator {
             row = sheet.createRow(++rowNum);
         }
 
-        // --------------------------------------------------------------------------------------------
-        //rowNum ++; colNum = 0;
-        //sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum+5, 0, 25));
-        //row = sheet.createRow(rowNum);
-        //cell = row.createCell(colNum);
-        //cell.setCellValue("备注：");
-        //
-        //XSSFCellStyle cellLastStyle = wb.createCellStyle();
-        //XSSFFont cellLastFont = wb.createFont();
-        //SheetGenerator.SetStyle.SheetGenerator.SetStyle(cellLastStyle, cellLastFont, HSSFColor.HSSFColorPredefined.LIGHT_YELLOW.getIndex(), HSSFColor.HSSFColorPredefined.BLACK.getIndex(), (short) 15);
-        //cellLastStyle.setVerticalAlignment(CellStyle.ALIGN_GENERAL);
-        //cellLastStyle.setAlignment(CellStyle.ALIGN_GENERAL);
-        //cell.setCellStyle(cellLastStyle);
+
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         byte[] content = null;
@@ -170,15 +158,5 @@ public class SheetRegressionGenerator {
         }
 
         return content;
-
-        //-----------------------------------------------------------------------------------
-        // OutputStream fileOut = null;
-        // try {
-        //     fileOut = new FileOutputStream("D://X-R图、X-S图、中位数图数据登入表.xlsx");
-        //     wb.write(fileOut);
-        //     fileOut.close();
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
     }
 }

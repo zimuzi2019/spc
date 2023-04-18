@@ -35,6 +35,8 @@ public class DrawService {
 
         if (graphType.startsWith("回归")) graphData = RegressionCompute.compute(drawData);
 
+        if (graphType.startsWith("T-K")) graphData = TKCompute.compute(drawData);
+
         return graphData;
     }
 }

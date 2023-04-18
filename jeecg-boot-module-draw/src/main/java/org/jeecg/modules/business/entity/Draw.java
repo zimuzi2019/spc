@@ -27,10 +27,10 @@ public class Draw {
     int[] dataArrayPUPTUTDefectsNum;
 
     // 回归控制图数据
-    double[][] dataArrayRegression;
-    double[] dataArrayRegressionStandard;
-    String[] dataArrayRegressionPrecision;
-    int[] dataArrayRegressionSort;
+    double[][] dataArrayRegressionTK;
+    double[] dataArrayRegressionTKStandard;
+    String[] dataArrayRegressionTKPrecision;
+    int[] dataArrayRegressionTKSort;
 
     public String getGraphType() {
         return graphType;
@@ -128,36 +128,36 @@ public class Draw {
         this.dataArrayPUPTUTDefectsNum = dataArrayPUPTUTDefectsNum;
     }
 
-    public double[][] getDataArrayRegression() {
-        return dataArrayRegression;
+    public double[][] getDataArrayRegressionTK() {
+        return dataArrayRegressionTK;
     }
 
-    public void setDataArrayRegression(double[][] dataArrayRegression) {
-        this.dataArrayRegression = dataArrayRegression;
+    public void setDataArrayRegressionTK(double[][] dataArrayRegressionTK) {
+        this.dataArrayRegressionTK = dataArrayRegressionTK;
     }
 
-    public double[] getDataArrayRegressionStandard() {
-        return dataArrayRegressionStandard;
+    public double[] getDataArrayRegressionTKStandard() {
+        return dataArrayRegressionTKStandard;
     }
 
-    public void setDataArrayRegressionStandard(double[] dataArrayRegressionStandard) {
-        this.dataArrayRegressionStandard = dataArrayRegressionStandard;
+    public void setDataArrayRegressionTKStandard(double[] dataArrayRegressionTKStandard) {
+        this.dataArrayRegressionTKStandard = dataArrayRegressionTKStandard;
     }
 
-    public String[] getDataArrayRegressionPrecision() {
-        return dataArrayRegressionPrecision;
+    public String[] getDataArrayRegressionTKPrecision() {
+        return dataArrayRegressionTKPrecision;
     }
 
-    public void setDataArrayRegressionPrecision(String[] dataArrayRegressionPrecision) {
-        this.dataArrayRegressionPrecision = dataArrayRegressionPrecision;
+    public void setDataArrayRegressionTKPrecision(String[] dataArrayRegressionTKPrecision) {
+        this.dataArrayRegressionTKPrecision = dataArrayRegressionTKPrecision;
     }
 
-    public int[] getDataArrayRegressionSort() {
-        return dataArrayRegressionSort;
+    public int[] getDataArrayRegressionTKSort() {
+        return dataArrayRegressionTKSort;
     }
 
-    public void setDataArrayRegressionSort(int[] dataArrayRegressionSort) {
-        this.dataArrayRegressionSort = dataArrayRegressionSort;
+    public void setDataArrayRegressionTKSort(int[] dataArrayRegressionTKSort) {
+        this.dataArrayRegressionTKSort = dataArrayRegressionTKSort;
     }
 
     @Override
@@ -175,10 +175,10 @@ public class Draw {
                 ", dataArrayCnP=" + Arrays.toString(dataArrayCnP) +
                 ", dataArrayPUPTUTSubgroupsCapacity=" + Arrays.toString(dataArrayPUPTUTSubgroupsCapacity) +
                 ", dataArrayPUPTUTDefectsNum=" + Arrays.toString(dataArrayPUPTUTDefectsNum) +
-                ", dataArrayRegression=" + Arrays.toString(dataArrayRegression) +
-                ", dataArrayRegressionStandard=" + Arrays.toString(dataArrayRegressionStandard) +
-                ", dataArrayRegressionPrecision=" + Arrays.toString(dataArrayRegressionPrecision) +
-                ", dataArrayRegressionSort=" + Arrays.toString(dataArrayRegressionSort) +
+                ", dataArrayRegressionTK=" + Arrays.toString(dataArrayRegressionTK) +
+                ", dataArrayRegressionTKStandard=" + Arrays.toString(dataArrayRegressionTKStandard) +
+                ", dataArrayRegressionTKPrecision=" + Arrays.toString(dataArrayRegressionTKPrecision) +
+                ", dataArrayRegressionTKSort=" + Arrays.toString(dataArrayRegressionTKSort) +
                 '}';
     }
 }

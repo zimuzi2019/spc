@@ -16,10 +16,10 @@ public class RegressionCompute {
 
         String graphType = drawData.getGraphType();
 
-        double[][] dataArrayRegression = drawData.getDataArrayRegression();
-        double[] dataArrayRegressionStandard = drawData.getDataArrayRegressionStandard();
-        String[] dataArrayRegressionPrecision = drawData.getDataArrayRegressionPrecision();
-        int[] dataArrayRegressionSort = drawData.getDataArrayRegressionSort();
+        double[][] dataArrayRegression = drawData.getDataArrayRegressionTK();
+        double[] dataArrayRegressionStandard = drawData.getDataArrayRegressionTKStandard();
+        String[] dataArrayRegressionPrecision = drawData.getDataArrayRegressionTKPrecision();
+        int[] dataArrayRegressionSort = drawData.getDataArrayRegressionTKSort();
         int subgroupCapacity = drawData.getSubgroupCapacity();
         int subgroupTotal = drawData.getSubgroupTotal();
 

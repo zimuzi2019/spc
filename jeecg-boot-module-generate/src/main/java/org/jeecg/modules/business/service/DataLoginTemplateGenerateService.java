@@ -26,8 +26,8 @@ public class DataLoginTemplateGenerateService {
             content = SheetCnPGenerator.generateCnP(graphType, subgroupTotal, subgroupCapacity, quantile);
         } else if (graphType.equals("P") || graphType.equals("U") || graphType.equals("P_T") || graphType.equals("U_T")) {
             content = SheetPUPTUTGenerator.generatePUPTUT(graphType, subgroupTotal, quantile);
-        } else if (graphType.equals("回归")) {
-            content = SheetRegressionGenerator.generateRegression(graphType, subgroupTotal, subgroupCapacity);
+        } else if (graphType.equals("回归") || graphType.equals("T-K")) {
+            content = SheetRegressionTKGenerator.generateRegressionTK(graphType, subgroupTotal, subgroupCapacity);
         }
 
         return content;

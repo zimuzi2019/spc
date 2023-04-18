@@ -36,8 +36,8 @@ public class SheetRead {
             drawData = SheetCnPRead.read(workbook);
         } else if ( graphTypeText.startsWith("P图") || graphTypeText.startsWith("U图") || graphTypeText.startsWith("P_T图") || graphTypeText.startsWith("U_T图")) {
             drawData = SheetPUPTUTRead.read(workbook);
-        } else if (graphTypeText.startsWith("回归")) {
-            drawData = SheetRegressionRead.read(workbook);
+        } else if (graphTypeText.startsWith("回归") || graphTypeText.contains("T-K")) {
+            drawData = SheetRegressionTKRead.read(workbook);
         }
 
         return drawData;
