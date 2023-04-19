@@ -37,6 +37,8 @@ public class DrawService {
 
         if (graphType.startsWith("T-K")) graphData = TKCompute.compute(drawData);
 
+        if (graphType.startsWith(("一阶嵌套"))) graphData = FirstOrderNestedCompute.compute(drawData);
+
         return graphData;
     }
 }

@@ -26,11 +26,14 @@ public class Draw {
     int[] dataArrayPUPTUTSubgroupsCapacity;
     int[] dataArrayPUPTUTDefectsNum;
 
-    // 回归控制图数据
+    // 回归、T-K控制图数据
     double[][] dataArrayRegressionTK;
     double[] dataArrayRegressionTKStandard;
     String[] dataArrayRegressionTKPrecision;
     int[] dataArrayRegressionTKSort;
+
+    // 一阶嵌套控制图数据
+    double[][] dataArrayFirstOrderNested;
 
     public String getGraphType() {
         return graphType;
@@ -160,6 +163,14 @@ public class Draw {
         this.dataArrayRegressionTKSort = dataArrayRegressionTKSort;
     }
 
+    public double[][] getDataArrayFirstOrderNested() {
+        return dataArrayFirstOrderNested;
+    }
+
+    public void setDataArrayFirstOrderNested(double[][] dataArrayFirstOrderNested) {
+        this.dataArrayFirstOrderNested = dataArrayFirstOrderNested;
+    }
+
     @Override
     public String toString() {
         return "Draw{" +
@@ -179,6 +190,7 @@ public class Draw {
                 ", dataArrayRegressionTKStandard=" + Arrays.toString(dataArrayRegressionTKStandard) +
                 ", dataArrayRegressionTKPrecision=" + Arrays.toString(dataArrayRegressionTKPrecision) +
                 ", dataArrayRegressionTKSort=" + Arrays.toString(dataArrayRegressionTKSort) +
+                ", dataArrayFirstOrderNested=" + Arrays.toString(dataArrayFirstOrderNested) +
                 '}';
     }
 }

@@ -28,6 +28,8 @@ public class DataLoginTemplateGenerateService {
             content = SheetPUPTUTGenerator.generatePUPTUT(graphType, subgroupTotal, quantile);
         } else if (graphType.equals("回归") || graphType.equals("T-K")) {
             content = SheetRegressionTKGenerator.generateRegressionTK(graphType, subgroupTotal, subgroupCapacity);
+        } else if (graphType.equals("一阶嵌套")) {
+            content = SheetFirstOrderNestedGenerator.generateFirstOrderNested(graphType, subgroupTotal, subgroupCapacity);
         }
 
         return content;

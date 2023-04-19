@@ -36,8 +36,10 @@ public class SheetRead {
             drawData = SheetCnPRead.read(workbook);
         } else if ( graphTypeText.startsWith("P图") || graphTypeText.startsWith("U图") || graphTypeText.startsWith("P_T图") || graphTypeText.startsWith("U_T图")) {
             drawData = SheetPUPTUTRead.read(workbook);
-        } else if (graphTypeText.startsWith("回归") || graphTypeText.contains("T-K")) {
+        } else if (graphTypeText.startsWith("回归控制图") || graphTypeText.startsWith("T-K控制图")) {
             drawData = SheetRegressionTKRead.read(workbook);
+        } else if (graphTypeText.startsWith("一阶嵌套控制图")) {
+            drawData = SheetFirstOrderNestedRead.read(workbook);
         }
 
         return drawData;

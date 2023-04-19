@@ -25,7 +25,7 @@ public class DataLoginTemplateGenerateController {
         // System.out.println(dataLoginTemplate);
         // Result<byte[]> result = new Result<>();
 
-        // 参数校验
+        // ----- 数据非空校验 -----
         String graphType = dataLoginTemplate.getGraphType();
         Integer subgroupTotal = dataLoginTemplate.getSubgroupTotal();
         Integer subgroupCapacity = dataLoginTemplate.getSubgroupCapacity();
@@ -43,9 +43,10 @@ public class DataLoginTemplateGenerateController {
             if (subgroupTotal == null || subgroupCapacity == null) flag = false;
         } else if (graphType.equals("P") || graphType.equals("U") || graphType.equals("P_T") || graphType.equals("U_T")) {
             if (subgroupTotal == null) flag = false;
-        } else if (graphType.equals("回归") || graphType.equals("T-K")) {
+        } else if (graphType.equals("回归") || graphType.equals("T-K") || graphType.equals("一阶嵌套")) {
             if (subgroupTotal == null || subgroupCapacity == null) flag = false;
         }
+        // ----------------------
 
 
         byte[] content = null;
