@@ -13,6 +13,8 @@ public class DataLoginTemplate {
 
     String quantile;
 
+    Integer varNum;
+
     public String getGraphType() {
         return graphType;
     }
@@ -61,6 +63,14 @@ public class DataLoginTemplate {
         this.quantile = quantile;
     }
 
+    public Integer getVarNum() {
+        return varNum;
+    }
+
+    public void setVarNum(Integer varNum) {
+        this.varNum = varNum;
+    }
+
     @Override
     public String toString() {
         return "DataLoginTemplate{" +
@@ -70,6 +80,7 @@ public class DataLoginTemplate {
                 ", LSL=" + LSL +
                 ", USL=" + USL +
                 ", quantile='" + quantile + '\'' +
+                ", varNum=" + varNum +
                 '}';
     }
 }

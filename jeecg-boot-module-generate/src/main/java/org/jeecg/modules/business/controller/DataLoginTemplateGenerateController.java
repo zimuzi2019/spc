@@ -1,5 +1,6 @@
 package org.jeecg.modules.business.controller;
 
+import io.swagger.models.auth.In;
 import org.jeecg.modules.business.entity.DataLoginTemplate;
 import org.jeecg.modules.business.service.DataLoginTemplateGenerateService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ public class DataLoginTemplateGenerateController {
         Integer subgroupCapacity = dataLoginTemplate.getSubgroupCapacity();
         Double LSL = dataLoginTemplate.getLSL();
         Double USL = dataLoginTemplate.getUSL();
+        Integer varNum = dataLoginTemplate.getVarNum();
 
 
         boolean flag = true;
@@ -45,6 +47,8 @@ public class DataLoginTemplateGenerateController {
             if (subgroupTotal == null) flag = false;
         } else if (graphType.equals("回归") || graphType.equals("T-K") || graphType.equals("一阶嵌套")) {
             if (subgroupTotal == null || subgroupCapacity == null) flag = false;
+        } else if (graphType.equals("单值多变量T2")){
+            if (subgroupTotal == null || varNum == null) flag = false;
         }
         // ----------------------
 

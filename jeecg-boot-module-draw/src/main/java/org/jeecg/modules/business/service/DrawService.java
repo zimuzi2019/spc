@@ -39,6 +39,8 @@ public class DrawService {
 
         if (graphType.startsWith(("一阶嵌套"))) graphData = FirstOrderNestedCompute.compute(drawData);
 
+        if (graphType.startsWith(("单值多变量T^2"))) graphData = T2SingleCompute.compute(drawData);
+
         return graphData;
     }
 }

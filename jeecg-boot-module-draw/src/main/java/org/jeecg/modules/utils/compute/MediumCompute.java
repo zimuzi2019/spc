@@ -190,7 +190,7 @@ public class MediumCompute {
         List<ArrayList<Integer> > lowerChainXMediumList = ChainCount.lowerChainCount(n, subgroupTotal, xMedium, xMediumBar);
         List<ArrayList<Integer> > lowerChainRList = ChainCount.lowerChainCount(n, subgroupTotal, r, rBar);
 
-        // 下侧链集合
+        // 上侧链集合
         List<ArrayList<Integer> > upperChainXMediumList = ChainCount.upperChainCount(n, subgroupTotal, xMedium, xMediumBar);
         List<ArrayList<Integer> > upperChainRList = ChainCount.upperChainCount(n, subgroupTotal, r, rBar);
 

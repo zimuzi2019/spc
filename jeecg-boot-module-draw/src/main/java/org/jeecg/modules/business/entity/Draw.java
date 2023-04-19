@@ -11,6 +11,8 @@ public class Draw {
 
     int subgroupCapacity;
 
+    int varNum;
+
     double usl;
 
     double sl;
@@ -34,6 +36,9 @@ public class Draw {
 
     // 一阶嵌套控制图数据
     double[][] dataArrayFirstOrderNested;
+
+    //单值多变量T2控制图数据
+    double[][] dataArrayT2Single;
 
     public String getGraphType() {
         return graphType;
@@ -65,6 +70,14 @@ public class Draw {
 
     public void setSubgroupCapacity(int subgroupCapacity) {
         this.subgroupCapacity = subgroupCapacity;
+    }
+
+    public int getVarNum() {
+        return varNum;
+    }
+
+    public void setVarNum(int varNum) {
+        this.varNum = varNum;
     }
 
     public double getUsl() {
@@ -171,6 +184,14 @@ public class Draw {
         this.dataArrayFirstOrderNested = dataArrayFirstOrderNested;
     }
 
+    public double[][] getDataArrayT2Single() {
+        return dataArrayT2Single;
+    }
+
+    public void setDataArrayT2Single(double[][] dataArrayT2Single) {
+        this.dataArrayT2Single = dataArrayT2Single;
+    }
+
     @Override
     public String toString() {
         return "Draw{" +
@@ -178,6 +199,7 @@ public class Draw {
                 ", quantile='" + quantile + '\'' +
                 ", subgroupTotal=" + subgroupTotal +
                 ", subgroupCapacity=" + subgroupCapacity +
+                ", varNum=" + varNum +
                 ", usl=" + usl +
                 ", sl=" + sl +
                 ", lsl=" + lsl +
@@ -191,6 +213,7 @@ public class Draw {
                 ", dataArrayRegressionTKPrecision=" + Arrays.toString(dataArrayRegressionTKPrecision) +
                 ", dataArrayRegressionTKSort=" + Arrays.toString(dataArrayRegressionTKSort) +
                 ", dataArrayFirstOrderNested=" + Arrays.toString(dataArrayFirstOrderNested) +
+                ", dataArrayT2Single=" + Arrays.toString(dataArrayT2Single) +
                 '}';
     }
 }
