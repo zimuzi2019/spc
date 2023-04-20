@@ -42,6 +42,9 @@ public class SheetRead {
             drawData = SheetFirstOrderNestedRead.read(workbook);
         } else if (graphTypeText.startsWith("单值多变量T^2控制图")) {
             drawData = SheetT2SingleRead.read(workbook);
+        } else if (graphTypeText.startsWith("综合控制图")) {
+            // 因为综合控制图只做了”嵌套-回归“控制图作为demo，这里就直接照抄了回归控制图和T-K控制图的读取程序，实际情况应该更复杂
+            drawData = SheetIntegratedDemoRead.read(workbook);
         }
 
         return drawData;

@@ -37,8 +37,12 @@ public class Draw {
     // 一阶嵌套控制图数据
     double[][] dataArrayFirstOrderNested;
 
-    //单值多变量T2控制图数据
+    // 单值多变量T2控制图数据
     double[][] dataArrayT2Single;
+
+    // 综合控制图（”嵌套-回归“控制图）数据
+    double[][] dataArrayIntegratedDemo;
+    double[] dataArrayIntegratedDemoStandard;
 
     public String getGraphType() {
         return graphType;
@@ -192,6 +196,22 @@ public class Draw {
         this.dataArrayT2Single = dataArrayT2Single;
     }
 
+    public double[][] getDataArrayIntegratedDemo() {
+        return dataArrayIntegratedDemo;
+    }
+
+    public void setDataArrayIntegratedDemo(double[][] dataArrayIntegratedDemo) {
+        this.dataArrayIntegratedDemo = dataArrayIntegratedDemo;
+    }
+
+    public double[] getDataArrayIntegratedDemoStandard() {
+        return dataArrayIntegratedDemoStandard;
+    }
+
+    public void setDataArrayIntegratedDemoStandard(double[] dataArrayIntegratedDemoStandard) {
+        this.dataArrayIntegratedDemoStandard = dataArrayIntegratedDemoStandard;
+    }
+
     @Override
     public String toString() {
         return "Draw{" +
@@ -214,6 +234,8 @@ public class Draw {
                 ", dataArrayRegressionTKSort=" + Arrays.toString(dataArrayRegressionTKSort) +
                 ", dataArrayFirstOrderNested=" + Arrays.toString(dataArrayFirstOrderNested) +
                 ", dataArrayT2Single=" + Arrays.toString(dataArrayT2Single) +
+                ", dataArrayIntegratedDemo=" + Arrays.toString(dataArrayIntegratedDemo) +
+                ", dataArrayIntegratedDemoStandard=" + Arrays.toString(dataArrayIntegratedDemoStandard) +
                 '}';
     }
 }

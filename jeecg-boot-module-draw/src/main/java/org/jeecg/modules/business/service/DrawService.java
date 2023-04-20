@@ -41,6 +41,9 @@ public class DrawService {
 
         if (graphType.startsWith(("单值多变量T^2"))) graphData = T2SingleCompute.compute(drawData);
 
+        // 综合控制图只做了”嵌套-回归“控制图作为demo
+        if (graphType.startsWith(("综合"))) graphData = IntegratedDemoCompute.compute(drawData);
+
         return graphData;
     }
 }

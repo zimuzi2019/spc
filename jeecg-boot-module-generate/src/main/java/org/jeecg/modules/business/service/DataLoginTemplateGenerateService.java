@@ -1,6 +1,5 @@
 package org.jeecg.modules.business.service;
 
-import io.swagger.models.auth.In;
 import org.jeecg.modules.sheetgenerator.*;
 import org.jeecg.modules.business.entity.DataLoginTemplate;
 import org.springframework.stereotype.Service;
@@ -34,6 +33,9 @@ public class DataLoginTemplateGenerateService {
             content = SheetFirstOrderNestedGenerator.generateFirstOrderNested(graphType, subgroupTotal, subgroupCapacity);
         } else if (graphType.equals("单值多变量T2")){
             content = SheetT2SingleGenerator.generateT2Single(graphType, subgroupTotal, varNum);
+        } else if (graphType.equals("综合")) {
+            // 因为综合控制图只做了”嵌套-回归“控制图作为demo，这里就直接照抄了回归控制图和T-K控制图的生成程序，实际情况应该更复杂
+            content = SheetIntegratedDemoGenerator.generateIntegratedDemo(graphType, subgroupTotal, subgroupCapacity);
         }
 
         return content;
