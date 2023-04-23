@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GraphDataFirstOrderNested implements GraphData{
+public class GraphDataSecondOrderNested implements GraphData{
     String graphType;
+
+    int batchNum;
 
     int subgroupCapacity;
 
     int subgroupTotal;
-
-    int samplesNum;
 
     String nestedness;
 
@@ -59,6 +59,14 @@ public class GraphDataFirstOrderNested implements GraphData{
         this.graphType = graphType;
     }
 
+    public int getBatchNum() {
+        return batchNum;
+    }
+
+    public void setBatchNum(int batchNum) {
+        this.batchNum = batchNum;
+    }
+
     public int getSubgroupCapacity() {
         return subgroupCapacity;
     }
@@ -73,14 +81,6 @@ public class GraphDataFirstOrderNested implements GraphData{
 
     public void setSubgroupTotal(int subgroupTotal) {
         this.subgroupTotal = subgroupTotal;
-    }
-
-    public int getSamplesNum() {
-        return samplesNum;
-    }
-
-    public void setSamplesNum(int samplesNum) {
-        this.samplesNum = samplesNum;
     }
 
     public String getNestedness() {
@@ -285,11 +285,11 @@ public class GraphDataFirstOrderNested implements GraphData{
 
     @Override
     public String toString() {
-        return "GraphDataFirstOrderNested{" +
+        return "GraphDataSecondOrderNested{" +
                 "graphType='" + graphType + '\'' +
+                ", batchNum=" + batchNum +
                 ", subgroupCapacity=" + subgroupCapacity +
                 ", subgroupTotal=" + subgroupTotal +
-                ", samplesNum=" + samplesNum +
                 ", nestedness='" + nestedness + '\'' +
                 ", uclXBar=" + uclXBar +
                 ", clXBar=" + clXBar +

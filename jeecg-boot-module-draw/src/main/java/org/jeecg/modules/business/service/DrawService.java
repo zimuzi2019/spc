@@ -39,6 +39,10 @@ public class DrawService {
 
         if (graphType.startsWith(("一阶嵌套"))) graphData = FirstOrderNestedCompute.compute(drawData);
 
+        if (graphType.startsWith(("二阶嵌套"))) graphData = SecondOrderNestedCompute.compute(drawData);
+
+        if (graphType.startsWith(("多变量T^2"))) graphData = T2Compute.compute(drawData);
+
         if (graphType.startsWith(("单值多变量T^2"))) graphData = T2SingleCompute.compute(drawData);
 
         // 综合控制图只做了”嵌套-回归“控制图作为demo

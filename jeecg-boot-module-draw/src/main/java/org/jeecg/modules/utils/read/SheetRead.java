@@ -40,6 +40,10 @@ public class SheetRead {
             drawData = SheetRegressionTKRead.read(workbook);
         } else if (graphTypeText.startsWith("一阶嵌套控制图")) {
             drawData = SheetFirstOrderNestedRead.read(workbook);
+        } else if (graphTypeText.startsWith("二阶嵌套控制图")){
+            drawData = SheetSecondOrderNestedRead.read(workbook);
+        } else if (graphTypeText.startsWith("多变量T^2控制图")) {
+            drawData = SheetT2Read.read(workbook);
         } else if (graphTypeText.startsWith("单值多变量T^2控制图")) {
             drawData = SheetT2SingleRead.read(workbook);
         } else if (graphTypeText.startsWith("综合控制图")) {

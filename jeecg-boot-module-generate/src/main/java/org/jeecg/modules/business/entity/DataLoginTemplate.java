@@ -3,6 +3,8 @@ package org.jeecg.modules.business.entity;
 public class DataLoginTemplate {
     String  graphType;
 
+    Integer batchNum;
+
     Integer subgroupTotal;
 
     Integer subgroupCapacity;
@@ -21,6 +23,14 @@ public class DataLoginTemplate {
 
     public void setGraphType(String graphType) {
         this.graphType = graphType;
+    }
+
+    public Integer getBatchNum() {
+        return batchNum;
+    }
+
+    public void setBatchNum(Integer batchNum) {
+        this.batchNum = batchNum;
     }
 
     public Integer getSubgroupTotal() {
@@ -75,6 +85,7 @@ public class DataLoginTemplate {
     public String toString() {
         return "DataLoginTemplate{" +
                 "graphType='" + graphType + '\'' +
+                ", batchNum=" + batchNum +
                 ", subgroupTotal=" + subgroupTotal +
                 ", subgroupCapacity=" + subgroupCapacity +
                 ", LSL=" + LSL +

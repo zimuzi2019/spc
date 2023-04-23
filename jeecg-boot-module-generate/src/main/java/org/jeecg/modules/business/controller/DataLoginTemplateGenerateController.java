@@ -28,6 +28,7 @@ public class DataLoginTemplateGenerateController {
 
         // ----- 数据非空校验 -----
         String graphType = dataLoginTemplate.getGraphType();
+        Integer batchNum = dataLoginTemplate.getBatchNum();
         Integer subgroupTotal = dataLoginTemplate.getSubgroupTotal();
         Integer subgroupCapacity = dataLoginTemplate.getSubgroupCapacity();
         Double LSL = dataLoginTemplate.getLSL();
@@ -47,6 +48,10 @@ public class DataLoginTemplateGenerateController {
             if (subgroupTotal == null) flag = false;
         } else if (graphType.equals("回归") || graphType.equals("T-K") || graphType.equals("一阶嵌套")) {
             if (subgroupTotal == null || subgroupCapacity == null) flag = false;
+        } else if (graphType.equals("二阶嵌套")) {
+            if (subgroupTotal == null || subgroupCapacity == null || batchNum == null) flag = false;
+        } else if (graphType.equals("单值多变量")) {
+            if (subgroupTotal == null || subgroupCapacity == null || varNum == null) flag = false;
         } else if (graphType.equals("单值多变量T2")){
             if (subgroupTotal == null || varNum == null) flag = false;
         }

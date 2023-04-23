@@ -7,6 +7,8 @@ public class Draw {
 
     String quantile;
 
+    int batchNum;
+
     int subgroupTotal;
 
     int subgroupCapacity;
@@ -37,6 +39,12 @@ public class Draw {
     // 一阶嵌套控制图数据
     double[][] dataArrayFirstOrderNested;
 
+    // 二阶嵌套控制图数据
+    double[][][] dataArraySecondOrderNested;
+
+    // 多变量T2控制图数据
+    double[][][] dataArrayT2;
+
     // 单值多变量T2控制图数据
     double[][] dataArrayT2Single;
 
@@ -58,6 +66,14 @@ public class Draw {
 
     public void setQuantile(String quantile) {
         this.quantile = quantile;
+    }
+
+    public int getBatchNum() {
+        return batchNum;
+    }
+
+    public void setBatchNum(int batchNum) {
+        this.batchNum = batchNum;
     }
 
     public int getSubgroupTotal() {
@@ -188,6 +204,22 @@ public class Draw {
         this.dataArrayFirstOrderNested = dataArrayFirstOrderNested;
     }
 
+    public double[][][] getDataArraySecondOrderNested() {
+        return dataArraySecondOrderNested;
+    }
+
+    public void setDataArraySecondOrderNested(double[][][] dataArraySecondOrderNested) {
+        this.dataArraySecondOrderNested = dataArraySecondOrderNested;
+    }
+
+    public double[][][] getDataArrayT2() {
+        return dataArrayT2;
+    }
+
+    public void setDataArrayT2(double[][][] dataArrayT2) {
+        this.dataArrayT2 = dataArrayT2;
+    }
+
     public double[][] getDataArrayT2Single() {
         return dataArrayT2Single;
     }
@@ -217,6 +249,7 @@ public class Draw {
         return "Draw{" +
                 "graphType='" + graphType + '\'' +
                 ", quantile='" + quantile + '\'' +
+                ", batchNum=" + batchNum +
                 ", subgroupTotal=" + subgroupTotal +
                 ", subgroupCapacity=" + subgroupCapacity +
                 ", varNum=" + varNum +
@@ -233,6 +266,8 @@ public class Draw {
                 ", dataArrayRegressionTKPrecision=" + Arrays.toString(dataArrayRegressionTKPrecision) +
                 ", dataArrayRegressionTKSort=" + Arrays.toString(dataArrayRegressionTKSort) +
                 ", dataArrayFirstOrderNested=" + Arrays.toString(dataArrayFirstOrderNested) +
+                ", dataArraySecondOrderNested=" + Arrays.toString(dataArraySecondOrderNested) +
+                ", dataArrayT2=" + Arrays.toString(dataArrayT2) +
                 ", dataArrayT2Single=" + Arrays.toString(dataArrayT2Single) +
                 ", dataArrayIntegratedDemo=" + Arrays.toString(dataArrayIntegratedDemo) +
                 ", dataArrayIntegratedDemoStandard=" + Arrays.toString(dataArrayIntegratedDemoStandard) +

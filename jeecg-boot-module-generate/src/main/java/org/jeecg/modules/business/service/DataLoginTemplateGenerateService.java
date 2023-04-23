@@ -1,5 +1,6 @@
 package org.jeecg.modules.business.service;
 
+import io.swagger.models.auth.In;
 import org.jeecg.modules.sheetgenerator.*;
 import org.jeecg.modules.business.entity.DataLoginTemplate;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ public class DataLoginTemplateGenerateService {
         System.out.println(dataLoginTemplate);
 
         String graphType = dataLoginTemplate.getGraphType();
+        Integer batchNum = dataLoginTemplate.getBatchNum();
         Integer subgroupTotal = dataLoginTemplate.getSubgroupTotal();
         Integer subgroupCapacity = dataLoginTemplate.getSubgroupCapacity();
         Double LSL = dataLoginTemplate.getLSL();
@@ -31,6 +33,10 @@ public class DataLoginTemplateGenerateService {
             content = SheetRegressionTKGenerator.generateRegressionTK(graphType, subgroupTotal, subgroupCapacity);
         } else if (graphType.equals("一阶嵌套")) {
             content = SheetFirstOrderNestedGenerator.generateFirstOrderNested(graphType, subgroupTotal, subgroupCapacity);
+        } else if (graphType.equals("二阶嵌套")) {
+            content = SheetSecondOrderNestedGenerator.generateSecondOrderNested(graphType, batchNum, subgroupTotal, subgroupCapacity);
+        } else if (graphType.equals("多变量T2")) {
+            content = SheetT2Generator.generateT2(graphType, subgroupTotal, subgroupCapacity, varNum);
         } else if (graphType.equals("单值多变量T2")){
             content = SheetT2SingleGenerator.generateT2Single(graphType, subgroupTotal, varNum);
         } else if (graphType.equals("综合")) {
