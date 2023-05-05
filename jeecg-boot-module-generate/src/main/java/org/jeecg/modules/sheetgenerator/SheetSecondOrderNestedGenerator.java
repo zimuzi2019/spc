@@ -120,7 +120,7 @@ public class SheetSecondOrderNestedGenerator {
         colNum = colNum + 2;
         sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum, colNum+subgroupCapacity-1));
         cell = row.createCell(colNum);
-        cell.setCellValue("样本编号");
+        cell.setCellValue("实际测量值");
         cell.setCellStyle(cellStyle3);
 
         rowNum++;

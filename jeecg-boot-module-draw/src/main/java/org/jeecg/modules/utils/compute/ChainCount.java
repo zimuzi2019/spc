@@ -157,7 +157,7 @@ public class ChainCount {
 
 
         for (int i = 0; i < len-1; i++) {
-            if (array[i] > mean[i] && array[i+1] > mean[i]) {
+            if (array[i] > mean[i] && array[i+1] > mean[i+1]) {
                 if (cntUpper == 0) upperStart = i+1;
                 cntUpper++;
             } else {
@@ -192,7 +192,7 @@ public class ChainCount {
 
 
         for (int i = 0; i < len-1; i++) {
-            if (array[i] < mean[i] && array[i+1] < mean[i]) {
+            if (array[i] < mean[i] && array[i+1] < mean[i+1]) {
                 if (cntLower == 0) lowerStart = i+1;
                 cntLower++;
             } else {

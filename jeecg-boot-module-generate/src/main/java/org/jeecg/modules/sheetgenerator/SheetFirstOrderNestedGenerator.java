@@ -99,7 +99,7 @@ public class SheetFirstOrderNestedGenerator {
 
         row = sheet.createRow(rowNum);
         cell = row.createCell(colNum);
-        cell.setCellValue("子组编号→");
+        cell.setCellValue("批次编号→");
         cell.setCellStyle(cellStyle1);
 
         colNum = colNum + 2;
@@ -114,7 +114,7 @@ public class SheetFirstOrderNestedGenerator {
         sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, colNum, colNum+1));
         row = sheet.createRow(rowNum);
         cell = row.createCell(colNum);
-        cell.setCellValue("样品编号↓");
+        cell.setCellValue("样本编号↓");
         cell.setCellStyle(cellStyle2);
 
         rowNum++;
