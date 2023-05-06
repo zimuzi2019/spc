@@ -124,6 +124,9 @@ public class XRCompute {
             uclR    = theataREstimate + 3 * sigmaREstimate + mu3REstimate * (3*3-1)/(6* Math.pow(sigmaREstimate, 2));
             lclR    = theataREstimate - 3 * sigmaREstimate + mu3REstimate * (3*3-1)/(6* Math.pow(sigmaREstimate, 2));
             clR     = theataREstimate + mu3REstimate * (-1)/(6* Math.pow(sigmaREstimate, 2));
+
+            if (lclR < 0) lclR = 0;
+            if (lclXBar < 0) lclXBar = 0;
         }
 
         // 过程的标准偏差

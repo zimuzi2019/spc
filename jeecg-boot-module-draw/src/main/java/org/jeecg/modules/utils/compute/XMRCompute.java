@@ -102,6 +102,9 @@ public class XMRCompute {
             uclMR    = theataMREstimate + 3 * sigmaMREstimate + mu3MREstimate * (3*3-1)/(6* Math.pow(sigmaMREstimate, 2));
             lclMR   = theataMREstimate - 3 * sigmaMREstimate + mu3MREstimate * (3*3-1)/(6* Math.pow(sigmaMREstimate, 2));
             clMR     = theataMREstimate + mu3MREstimate * (-1)/(6* Math.pow(sigmaMREstimate, 2));
+
+            if (lclMR < 0) lclMR = 0;
+            if (lclX < 0) lclX = 0;
         }
 
         // 过程的标准偏差

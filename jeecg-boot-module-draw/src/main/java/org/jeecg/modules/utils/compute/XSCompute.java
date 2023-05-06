@@ -137,6 +137,9 @@ public class XSCompute {
             uclS = theataSEstimate + 3 * sigmaSEstimate + mu3SEstimate * (3 * 3 - 1) / (6 * Math.pow(sigmaSEstimate, 2));
             lclS = theataSEstimate - 3 * sigmaSEstimate + mu3SEstimate * (3 * 3 - 1) / (6 * Math.pow(sigmaSEstimate, 2));
             clS = theataSEstimate + mu3SEstimate * (-1) / (6 * Math.pow(sigmaSEstimate, 2));
+
+            if (lclXBar < 0 ) lclXBar = 0;
+            if (lclS < 0 ) lclS = 0;
         }
 
 
